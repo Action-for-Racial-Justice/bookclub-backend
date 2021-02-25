@@ -9,5 +9,5 @@ COPY ./bin/bookclub-backend /opt/bookclub-backend/bookclub-backend
 
 EXPOSE 80
 
-CMD ["/opt/tally/bookclub-backend"]
+CMD ["/opt/bookclub-backend/bookclub-backend"]
 
