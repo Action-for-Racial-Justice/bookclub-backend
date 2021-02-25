@@ -22,10 +22,10 @@ build-linux:
 .PHONY: docker-build
 docker-build:  build-linux
 	@echo "\033[0;32m» Building bookclub backend image \033[0;39m"
-	docker build -t tally .
+	docker build -t bookclub_api .
 
 .PHONY: docker-run
 docker-run:
 	@echo "\033[0;32m» Running bookclub backend container\033[0;39m"
-	docker run -d --name tally_api --env-file config.env  --network tally-compose -p 8081:8081 tally:latest
+	docker run -d --name bookclub-api --env-file config.env  --network bookclub-compose -p 8081:8081 bookclub_api:latest
 
