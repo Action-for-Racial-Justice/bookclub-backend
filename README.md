@@ -1,8 +1,4 @@
-# Go-REST-API-Template 
-
-* Somewhat elegant repository to give HTTP REST API starter code in Go utilizing `github.com/google/wire` for dependency injection and building 
-
-* Intended for fellow gophers and USFCA professors trying to learn better go practices (I'm talking to you Matt)
+# Bookclub-Backend 
 
 ## Setup
 	1. `cp config.env.template config.env`
