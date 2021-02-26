@@ -6,8 +6,9 @@ FROM scratch
 
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY ./bin/bookclub-backend /opt/bookclub-backend/bookclub-backend  
+COPY config.env . 
 
-EXPOSE 80
+EXPOSE 8081
 
 CMD ["/opt/bookclub-backend/bookclub-backend"]
 
