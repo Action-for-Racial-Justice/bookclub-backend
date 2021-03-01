@@ -15,5 +15,5 @@
 ## Notes
 
 * You can reference the current port from the `config.env.template` or your `config.env`
-* If you augment the parameters of the wire binded structs (any package with `var Module` in it), ensure to run `make wire` to correctly update these code changes in your `wire_gen.go` file
+* If you augment the parameters/return-vals of the wire binded structs (any package with `var Module` in it), ensure to run `make wire` to correctly update these code changes in your `wire_gen.go` file
 * If you're getting an error describing that `interface does not implement {STRUCT_NAME}`, make sure that the prototypes of all receiver functions that are publicly defined with the package are embedded within the interface  
