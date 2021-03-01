@@ -10,4 +10,4 @@
 	3. Run  `make run` to execute the binary 
 
 ## To test it's properly working 
-	1. Run `curl --location --request GET 'http://localhost:8080/health' `, it should return a json health model with a current timestamp and boolean set to true 
+	1. Run `curl --location --request GET 'http://localhost:8081/health' `, it should return a json health model with a current timestamp and boolean set to true 
