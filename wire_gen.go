@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/config"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
 	"github.com/google/wire"
@@ -19,16 +20,21 @@ import (
 func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server, func(), error) {
 	configConfig := config.NewConfig(cfg)
 	serverConfig := config.NewServerConfig(configConfig)
-	bookClubService := service.New()
+	mysqlConfig := config.NewDBConfig(configConfig)
+	database, cleanup := mysql.New(mysqlConfig)
+	bookClubService := service.New(database)
 	bookClubHandler, err := handlers.New(bookClubService)
 	if err != nil {
+		cleanup()
 		return nil, nil, err
 	}
-	serverServer, cleanup, err := server.New(ctx, serverConfig, bookClubHandler)
+	serverServer, cleanup2, err := server.New(ctx, serverConfig, bookClubHandler)
 	if err != nil {
+		cleanup()
 		return nil, nil, err
 	}
 	return serverServer, func() {
+		cleanup2()
 		cleanup()
 	}, nil
 }
@@ -38,3 +44,5 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 var serviceModule = wire.NewSet(service.Module, wire.Bind(new(service.Service), new(*service.BookClubService)))
 
 var handlersModule = wire.NewSet(handlers.Module, wire.Bind(new(handlers.Handlers), new(*handlers.BookClubHandler)))
+
+var databaseModule = wire.NewSet(mysql.Module, wire.Bind(new(mysql.MySqlConnection), new(*mysql.Database)))

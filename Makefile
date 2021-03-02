@@ -29,3 +29,8 @@ docker-run:
 	@echo "\033[0;32m» Running bookclub backend container\033[0;39m"
 	docker run -d --name bookclub-api --env-file config.env  --network bookclub-compose -p 8081:8081 bookclub_api:latest
 
+.PHONY: docker-up
+docker-up:
+	@echo "\033[0;32m» Building bookend backend dependencies\033[0;39m"
+	docker-compose up -d
+

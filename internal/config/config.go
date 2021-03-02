@@ -4,8 +4,8 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
-	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/store/mysql"
 	"github.com/joho/godotenv"
 
 	"os"
