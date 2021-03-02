@@ -41,7 +41,7 @@ func New(cfg *Config) *DB {
 
 //Connect establishes connection to mysql server
 func (mysql *DB) Connect() (*sqlx.DB, error) {
-	connString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	connString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		mysql.config.Host, mysql.config.Port, mysql.config.User, mysql.config.Password, mysql.config.Database)
 	log.Println("Connection string -->", connString)
 	mysqlDB, err := sqlx.Open("mysql", connString)

@@ -9,7 +9,6 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
-	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/store"
 	"github.com/google/wire"
 )
 
@@ -34,9 +33,4 @@ var serviceModule = wire.NewSet(
 var handlersModule = wire.NewSet(
 	handlers.Module,
 	wire.Bind(new(handlers.Handlers), new(*handlers.BookClubHandler)),
-)
-
-var storageModule = wire.NewSet(
-	store.Module,
-	wire.Bind(new(store.StorageConnections), new(*store.ConduitStorageConnections)),
 )
