@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/store/mysql"
 	"github.com/joho/godotenv"
 
 	"os"
@@ -14,6 +15,7 @@ type FilePath string
 
 type Config struct {
 	serverConfig server.Config
+	DbConfig     mysql.Config
 }
 
 func NewConfig(fileName FilePath) *Config {
@@ -33,11 +35,22 @@ func NewConfig(fileName FilePath) *Config {
 			WriteTimeout:    convertToInt(os.Getenv("SERVER_WRITE_TIMEOUT")),
 			ShutdownTimeout: convertToInt(os.Getenv("SERVER_SHUTDOWN_TIME")),
 		},
+		DbConfig: mysql.Config{
+			Host:     os.Getenv("MYSQL_HOST"),
+			Port:     convertToInt(os.Getenv("MYSQL_PORT")),
+			Database: os.Getenv("DATABASE"),
+			User:     os.Getenv("POSTGRES_USER"),
+			Password: os.Getenv("PASSWORD"),
+		},
 	}
 }
 
 func NewServerConfig(cfg *Config) *server.Config {
 	return &cfg.serverConfig
+}
+
+func NewDBConfig(cfg *Config) *mysql.Config {
+	return &cfg.DbConfig
 }
 
 func convertToInt(str string) int {
