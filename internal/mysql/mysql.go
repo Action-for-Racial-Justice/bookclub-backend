@@ -17,7 +17,6 @@ var (
 
 type (
 	MySqlConnection interface {
-		MySQLConnect() error
 	}
 
 	Database struct { //conduitstroage
