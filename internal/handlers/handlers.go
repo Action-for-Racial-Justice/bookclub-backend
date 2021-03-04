@@ -1,3 +1,5 @@
+//go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
+
 package handlers
 
 import (
@@ -9,20 +11,24 @@ import (
 	"github.com/google/wire"
 )
 
+//Module to denote wire binding function
 var Module = wire.NewSet(
 	New,
 )
 
+//Handlers interface to describe BookClubHandlers struct receiver functions
 type Handlers interface {
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
 }
 
+//BookClubHandler struct to hold relevant inner data members and hold functions for pure handler logic
 type BookClubHandler struct {
 	service service.Service
 	router  *chi.Mux
 }
 
+//New ... constructor
 func New(service service.Service) (*BookClubHandler, error) {
 	handlers := &BookClubHandler{service: service}
 	router := chi.NewRouter()
