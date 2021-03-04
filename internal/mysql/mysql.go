@@ -19,8 +19,8 @@ type (
 	MySqlConnection interface {
 	}
 
-	Database struct { //conduitstroage
-		mysqlDB *DB //postgresconnections
+	Database struct {
+		mysqlDB *DB
 	}
 
 	Config struct {
@@ -69,29 +69,31 @@ func New(cfg *Config) (*Database, func()) {
 	return datab, close
 }
 
-//Connect establishes connection to mysql server
 func (mysql *DB) Connect() (*sqlx.DB, error) {
-	connString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		mysql.config.Host, mysql.config.Port, mysql.config.User, mysql.config.Password, mysql.config.Database)
+	connString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", mysql.config.User, mysql.config.Password, mysql.config.Host, mysql.config.Port, mysql.config.Database)
 	log.Println("Connection string -->", connString)
 
+	log.Println("made here")
 	mysqlDB, err := sqlx.Open("mysql", connString)
+	log.Println("made here2")
 	if err != nil && mysqlDB != nil {
 		log.Println("Error connecting to database")
 		log.Println(err)
 		return nil, err
 	}
 
+	log.Println("made here 3")
 	err = mysqlDB.Ping()
+	log.Println("made here 4")
 
 	if err != nil {
 		log.Println(fmt.Sprintf("mysql ping failed on startup, will keep trying. Error was %+v", err))
 	}
 
+	log.Println("made here")
 	return mysqlDB, nil
 }
 
-//Close closes current connection w/ mysql server
 func (mysql *DB) Close() error {
 	if mysql != nil {
 		err := mysql.DB.Close()
