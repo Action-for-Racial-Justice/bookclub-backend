@@ -17,12 +17,12 @@ var Module = wire.NewSet(
 )
 
 type BookClubService struct {
-	DB *mysql.Database
+	mysqlDB mysql.Mysql
 }
 
-func New(DB *mysql.Database) *BookClubService {
+func New(db mysql.Mysql) *BookClubService {
 	return &BookClubService{
-		DB: DB,
+		mysqlDB: db,
 	}
 }
 

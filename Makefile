@@ -31,6 +31,6 @@ docker-run:
 
 .PHONY: docker-up
 docker-up:
-	@echo "\033[0;32m» Building bookend backend dependencies\033[0;39m"
+	@echo "\033[0;32m» Building bookclub backend dependencies\033[0;39m"
 	docker-compose up -d
 

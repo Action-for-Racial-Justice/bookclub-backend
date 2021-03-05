@@ -38,7 +38,7 @@ func NewConfig(fileName FilePath) *Config {
 		DbConfig: mysql.Config{
 			Host:     os.Getenv("MYSQL_HOST"),
 			Port:     convertToInt(os.Getenv("MYSQL_PORT")),
-			Database: os.Getenv("DATABASE"),
+			Database: os.Getenv("MYSQL_DATABASE"),
 			User:     os.Getenv("MYSQL_USER"),
 			Password: os.Getenv("MYSQL_PASSWORD"),
 		},
@@ -50,7 +50,6 @@ func NewServerConfig(cfg *Config) *server.Config {
 }
 
 func NewDBConfig(cfg *Config) *mysql.Config {
-	log.Printf("%+v", cfg)
 	return &cfg.DbConfig
 }
 

@@ -40,5 +40,5 @@ var handlersModule = wire.NewSet(
 
 var databaseModule = wire.NewSet(
 	mysql.Module,
-	wire.Bind(new(mysql.MySqlConnection), new(*mysql.Database)),
+	wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)),
 )

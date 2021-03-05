@@ -16,10 +16,10 @@ var (
 )
 
 type (
-	MySqlConnection interface {
+	Mysql interface {
 	}
 
-	Database struct {
+	BookClubMysql struct {
 		mysqlDB *DB
 	}
 
@@ -32,71 +32,66 @@ type (
 	}
 
 	DB struct {
-		DB     *sqlx.DB
+		db     *sqlx.DB
 		config *Config
 	}
 )
 
-func New(cfg *Config) (*Database, func()) {
+func New(cfg *Config) (*BookClubMysql, func(), error) {
 
-	tempDB := &DB{
+	database := &DB{
 		config: cfg,
 	}
 
 	close := func() {
 		log.Println("shutting down mysql connection")
-		if tempDB.DB == nil {
+		if database.db == nil {
 			return
 		}
 
-		if err := tempDB.Close(); err != nil {
+		if err := database.Close(); err != nil {
 			log.Printf("Error occured closing DB connection: %+v", err)
 		}
 		log.Println("mysql connection shutdown")
 	}
-	datab := &Database{
-		mysqlDB: tempDB,
+	mysql := &BookClubMysql{
+		mysqlDB: database,
 	}
 
 	log.Println("Connecting to Database")
-	db, err := tempDB.Connect()
+	dbConnection, err := database.Connect()
 	if err != nil {
-		return nil, nil
+		return nil, nil, err
 	}
 
-	datab.mysqlDB.DB = db
+	mysql.mysqlDB.db = dbConnection
 
-	return datab, close
+	return mysql, close, nil
 }
 
 func (mysql *DB) Connect() (*sqlx.DB, error) {
-	connString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", mysql.config.User, mysql.config.Password, mysql.config.Host, mysql.config.Port, mysql.config.Database)
+	connString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
+		mysql.config.User, mysql.config.Password, mysql.config.Host, mysql.config.Port, mysql.config.Database)
+
 	log.Println("Connection string -->", connString)
 
-	log.Println("made here")
 	mysqlDB, err := sqlx.Open("mysql", connString)
-	log.Println("made here2")
 	if err != nil && mysqlDB != nil {
 		log.Println("Error connecting to database")
 		log.Println(err)
 		return nil, err
 	}
 
-	log.Println("made here 3")
-	err = mysqlDB.Ping()
-	log.Println("made here 4")
-
-	if err != nil {
+	if err = mysqlDB.Ping(); err != nil {
 		log.Println(fmt.Sprintf("mysql ping failed on startup, will keep trying. Error was %+v", err))
 	}
 
-	log.Println("made here")
 	return mysqlDB, nil
 }
 
 func (mysql *DB) Close() error {
 	if mysql != nil {
-		err := mysql.DB.Close()
+		err := mysql.db.Close()
 		if err != nil {
 			return err
 		}

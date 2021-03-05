@@ -21,8 +21,11 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 	configConfig := config.NewConfig(cfg)
 	serverConfig := config.NewServerConfig(configConfig)
 	mysqlConfig := config.NewDBConfig(configConfig)
-	database, cleanup := mysql.New(mysqlConfig)
-	bookClubService := service.New(database)
+	bookClubMysql, cleanup, err := mysql.New(mysqlConfig)
+	if err != nil {
+		return nil, nil, err
+	}
+	bookClubService := service.New(bookClubMysql)
 	bookClubHandler, err := handlers.New(bookClubService)
 	if err != nil {
 		cleanup()
@@ -45,4 +48,4 @@ var serviceModule = wire.NewSet(service.Module, wire.Bind(new(service.Service), 
 
 var handlersModule = wire.NewSet(handlers.Module, wire.Bind(new(handlers.Handlers), new(*handlers.BookClubHandler)))
 
-var databaseModule = wire.NewSet(mysql.Module, wire.Bind(new(mysql.MySqlConnection), new(*mysql.Database)))
+var databaseModule = wire.NewSet(mysql.Module, wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)))
