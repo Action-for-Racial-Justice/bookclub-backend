@@ -9,6 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+//Module to denote wire binding function
 var (
 	Module = wire.NewSet(
 		New,
@@ -16,13 +17,16 @@ var (
 )
 
 type (
+	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
 	}
 
+	//BookClubMysql struct to hold relevant inner data members and functions for database connection
 	BookClubMysql struct {
 		db *DB
 	}
 
+	//Config ... Configuration struct
 	Config struct {
 		Host     string
 		Port     int
@@ -31,12 +35,14 @@ type (
 		Password string
 	}
 
+	//DB inner data struct for our database, holds configuration and functions for db connection
 	DB struct {
 		db     *sqlx.DB
 		config *Config
 	}
 )
 
+//New ... constructor
 func New(cfg *Config) (*BookClubMysql, func(), error) {
 
 	database := &DB{
@@ -69,6 +75,7 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 	return mysql, close, nil
 }
 
+//Connect opens a database specified by its database driver name, and a connection string which contains relevant connection information
 func (mysql *DB) Connect() (*sqlx.DB, error) {
 	connString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
 		mysql.config.User, mysql.config.Password, mysql.config.Host, mysql.config.Port, mysql.config.Database)
@@ -89,6 +96,7 @@ func (mysql *DB) Connect() (*sqlx.DB, error) {
 	return mysqlDB, nil
 }
 
+//Close closes a database and prevents new queries from starting
 func (mysql *DB) Close() error {
 	if mysql != nil {
 		err := mysql.db.Close()

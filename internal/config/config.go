@@ -53,6 +53,7 @@ func NewServerConfig(cfg *Config) *server.Config {
 	return &cfg.serverConfig
 }
 
+//NewDBConfig returns database config from global config
 func NewDBConfig(cfg *Config) *mysql.Config {
 	return &cfg.DbConfig
 }

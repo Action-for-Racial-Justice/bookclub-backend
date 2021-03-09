@@ -25,6 +25,7 @@ type BookClubService struct {
 	mysqlDB mysql.Mysql
 }
 
+//New ... constructor
 func New(db mysql.Mysql) *BookClubService {
 	return &BookClubService{
 		mysqlDB: db,
