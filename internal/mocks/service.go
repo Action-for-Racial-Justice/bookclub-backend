@@ -5,35 +5,36 @@
 package mocks
 
 import (
+	reflect "reflect"
+
 	models "github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
-// MockService is a mock of Service interface
+// MockService is a mock of Service interface.
 type MockService struct {
 	ctrl     *gomock.Controller
 	recorder *MockServiceMockRecorder
 }
 
-// MockServiceMockRecorder is the mock recorder for MockService
+// MockServiceMockRecorder is the mock recorder for MockService.
 type MockServiceMockRecorder struct {
 	mock *MockService
 }
 
-// NewMockService creates a new mock instance
+// NewMockService creates a new mock instance.
 func NewMockService(ctrl *gomock.Controller) *MockService {
 	mock := &MockService{ctrl: ctrl}
 	mock.recorder = &MockServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// CheckHealth mocks base method
+// CheckHealth mocks base method.
 func (m *MockService) CheckHealth() *models.HealthCheck {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CheckHealth")
@@ -41,7 +42,7 @@ func (m *MockService) CheckHealth() *models.HealthCheck {
 	return ret0
 }
 
-// CheckHealth indicates an expected call of CheckHealth
+// CheckHealth indicates an expected call of CheckHealth.
 func (mr *MockServiceMockRecorder) CheckHealth() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckHealth", reflect.TypeOf((*MockService)(nil).CheckHealth))

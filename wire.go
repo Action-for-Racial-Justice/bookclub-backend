@@ -7,6 +7,7 @@ import (
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/config"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
 	"github.com/google/wire"
@@ -18,6 +19,8 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 		wire.Build(
 			config.NewConfig,
 			config.NewServerConfig,
+			config.NewDBConfig,
+			databaseModule,
 			serviceModule,
 			handlersModule,
 			server.New,
@@ -33,4 +36,9 @@ var serviceModule = wire.NewSet(
 var handlersModule = wire.NewSet(
 	handlers.Module,
 	wire.Bind(new(handlers.Handlers), new(*handlers.BookClubHandler)),
+)
+
+var databaseModule = wire.NewSet(
+	mysql.Module,
+	wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)),
 )

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/google/wire"
 )
 
@@ -21,11 +22,14 @@ var Module = wire.NewSet(
 
 //BookClubService struct to hold relevant inner data members and hold functions for business logic
 type BookClubService struct {
+	mysqlDB mysql.Mysql
 }
 
-//New ... service constructor
-func New() *BookClubService {
-	return &BookClubService{}
+//New ... constructor
+func New(db mysql.Mysql) *BookClubService {
+	return &BookClubService{
+		mysqlDB: db,
+	}
 }
 
 //CheckHealth checks API dependencies and returns health check struct accordingly
