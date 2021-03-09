@@ -20,7 +20,7 @@ type (
 	}
 
 	BookClubMysql struct {
-		mysqlDB *DB
+		db *DB
 	}
 
 	Config struct {
@@ -55,7 +55,7 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		log.Println("mysql connection shutdown")
 	}
 	mysql := &BookClubMysql{
-		mysqlDB: database,
+		db: database,
 	}
 
 	log.Println("Connecting to Database")
@@ -64,7 +64,7 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		return nil, nil, err
 	}
 
-	mysql.mysqlDB.db = dbConnection
+	mysql.db.db = dbConnection
 
 	return mysql, close, nil
 }
