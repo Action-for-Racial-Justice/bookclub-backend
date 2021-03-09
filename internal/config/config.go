@@ -11,13 +11,16 @@ import (
 	"os"
 )
 
+//FilePath struct to be propogated through wire
 type FilePath string
 
+//Config ...
 type Config struct {
 	serverConfig server.Config
 	DbConfig     mysql.Config
 }
 
+//NewConfig builds global config struct
 func NewConfig(fileName FilePath) *Config {
 
 	if err := godotenv.Load(string(fileName)); err != nil {
@@ -45,6 +48,7 @@ func NewConfig(fileName FilePath) *Config {
 	}
 }
 
+//NewServerConfig returns server config from global config
 func NewServerConfig(cfg *Config) *server.Config {
 	return &cfg.serverConfig
 }

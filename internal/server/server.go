@@ -14,6 +14,7 @@ import (
 )
 
 type (
+	// Config ...
 	Config struct {
 		Host            string
 		Port            int
@@ -23,12 +24,15 @@ type (
 		WriteTimeout    int
 		ShutdownTimeout int
 	}
+
+	//Server struct to hold http server
 	Server struct {
 		Cfg        *Config
 		serverHTTP *http.Server
 	}
 )
 
+//New ... server constructor
 func New(ctx context.Context, cfg *Config, apiHandlers handlers.Handlers) (*Server, func(), error) {
 
 	restServer := initializeServer(cfg, apiHandlers)
@@ -79,7 +83,7 @@ func (sv *Server) done() <-chan os.Signal {
 	return sigs
 }
 
-// waits for shutdown signal from shutdown cahnnel
+//Stop waits for shutdown signal from shutdown cahnnel
 func (sv *Server) Stop(stop func()) {
 	done := <-sv.done()
 	log.Printf("Received shutdown OS signal : --%s--", done.String())
