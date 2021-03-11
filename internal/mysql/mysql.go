@@ -1,3 +1,5 @@
+//go:generate mockgen -package=mocks -destination=../mocks/mysql.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql Mysql
+
 package mysql
 
 import (
@@ -79,8 +81,6 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 func (mysql *DB) Connect() (*sqlx.DB, error) {
 	connString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
 		mysql.config.User, mysql.config.Password, mysql.config.Host, mysql.config.Port, mysql.config.Database)
-
-	log.Println("Connection string -->", connString)
 
 	mysqlDB, err := sqlx.Open("mysql", connString)
 	if err != nil && mysqlDB != nil {

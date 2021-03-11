@@ -1,6 +1,6 @@
 module github.com/Action-for-Racial-Justice/bookclub-backend
 
-go 1.14
+go 1.16
 
 require (
 	github.com/epociask/go-rest-api-template v0.0.0-20210215062511-352fc53a0919
@@ -13,4 +13,5 @@ require (
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/joho/godotenv v1.3.0
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/stretchr/testify v1.7.0
 )
