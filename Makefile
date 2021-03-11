@@ -1,4 +1,5 @@
 BIN_NAME=bookclub-backend
+D_NAME=bookclub_api
 
 .PHONY: lint
 lint:
@@ -28,17 +29,17 @@ test:
 .PHONY: build-linux
 build-linux:
 	@echo "\033[0;32m» Building bookclub backend binary \033[0;39m"
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o bin/$(APP)
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o bin/$(BIN_NAME)
 
 .PHONY: docker-build
 docker-build:  lint build-linux
 	@echo "\033[0;32m» Building bookclub backend image \033[0;39m"
-	docker build -t bookclub_api .
+	docker build -t $(BIN_NAME) .
 
 .PHONY: docker-run
 docker-run:
 	@echo "\033[0;32m» Running bookclub backend container\033[0;39m"
-	docker run -d --name bookclub-api --env-file config.env  --network bookclub-compose -p 8081:8081 bookclub_api:latest
+	docker run -d --name $(D_NAME) --env-file config.env  --network bookclub-compose -p 8081:8081 $(BIN_NAME):latest
 
 .PHONY: docker-up
 docker-up:
@@ -49,3 +50,17 @@ docker-up:
 gen-mocks:
 	@echo "\033[0;32m» Generating mocks... \033[0;39m"
 	@GO111MODULE=on go generate --run "mockgen*" ./...
+
+
+.PHONY: docker-api-down
+docker-api-down:
+	@docker stop $(D_NAME)
+	@docker rm $(D_NAME)
+
+.PHONY: integration-tests
+integration-tests:
+	@echo "\033[0;32m» Starting integration tests\033[0;39m"
+	@echo "\033[0;32m» Building and running pytests \033[0;39m"
+	@docker build --network bookclub-compose -t bookclub_pytest -f integration_tests/Dockerfile .
+	@docker rmi bookclub_pytest
+
