@@ -5,54 +5,53 @@
 package mocks
 
 import (
+	gomock "github.com/golang/mock/gomock"
 	http "net/http"
 	reflect "reflect"
-
-	gomock "github.com/golang/mock/gomock"
 )
 
-// MockHandlers is a mock of Handlers interface.
+// MockHandlers is a mock of Handlers interface
 type MockHandlers struct {
 	ctrl     *gomock.Controller
 	recorder *MockHandlersMockRecorder
 }
 
-// MockHandlersMockRecorder is the mock recorder for MockHandlers.
+// MockHandlersMockRecorder is the mock recorder for MockHandlers
 type MockHandlersMockRecorder struct {
 	mock *MockHandlers
 }
 
-// NewMockHandlers creates a new mock instance.
+// NewMockHandlers creates a new mock instance
 func NewMockHandlers(ctrl *gomock.Controller) *MockHandlers {
 	mock := &MockHandlers{ctrl: ctrl}
 	mock.recorder = &MockHandlersMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use.
+// EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockHandlers) EXPECT() *MockHandlersMockRecorder {
 	return m.recorder
 }
 
-// HealthCheck mocks base method.
+// HealthCheck mocks base method
 func (m *MockHandlers) HealthCheck(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "HealthCheck", arg0, arg1)
 }
 
-// HealthCheck indicates an expected call of HealthCheck.
+// HealthCheck indicates an expected call of HealthCheck
 func (mr *MockHandlersMockRecorder) HealthCheck(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HealthCheck", reflect.TypeOf((*MockHandlers)(nil).HealthCheck), arg0, arg1)
 }
 
-// ServeHTTP mocks base method.
+// ServeHTTP mocks base method
 func (m *MockHandlers) ServeHTTP(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "ServeHTTP", arg0, arg1)
 }
 
-// ServeHTTP indicates an expected call of ServeHTTP.
+// ServeHTTP indicates an expected call of ServeHTTP
 func (mr *MockHandlersMockRecorder) ServeHTTP(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ServeHTTP", reflect.TypeOf((*MockHandlers)(nil).ServeHTTP), arg0, arg1)

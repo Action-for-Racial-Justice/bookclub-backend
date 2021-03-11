@@ -22,13 +22,13 @@ var Module = wire.NewSet(
 
 //BookClubService struct to hold relevant inner data members and hold functions for business logic
 type BookClubService struct {
-	mysqlDB mysql.Mysql
+	mysql mysql.Mysql
 }
 
 //New ... constructor
 func New(db mysql.Mysql) *BookClubService {
 	return &BookClubService{
-		mysqlDB: db,
+		mysql: db,
 	}
 }
 
