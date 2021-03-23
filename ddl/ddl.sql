@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS user (
+  id VARCHAR(255) NOT NULL,
+  fullName VARCHAR(255) NOT NULL,
+  isAdmin TINYINT NOT NULL DEFAULT 0,
+  isFacilitator TINYINT NOT NULL DEFAULT 0,
+
+  PRIMARY KEY (id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS session (
+  id INT NOT NULL AUTO_INCREMENT,
+  uid VARCHAR(255) NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  ipAddress VARCHAR(255) NOT NULL,
+  userAgent VARCHAR(255) NOT NULL,
+
+  CONSTRAINT fk_1 FOREIGN KEY (uid) REFERENCES user (id),
+  PRIMARY KEY (id)
+
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS user_library (
+  id INT NOT NULL AUTO_INCREMENT,
+  uid VARCHAR(255) NOT NULL,
+  curr_book int(5) NOT NULL,
+  read_books JSON NOT NULL,
+
+  CONSTRAINT fk_1 FOREIGN KEY (uid) REFERENCES user (id),
+  PRIMARY KEY (id)
+
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS books (
+  id int(5) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  author VARCHAR(255) NOT NULL,
+  isActive TINYINT,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO books VALUES
+(1,"The Divine Comedy","Dante Alighieri",1),
+(2,"SQL For Dummies","Allen G. Taylor",1),
+(3,"Inactive Book","Keaton Currie",1);
