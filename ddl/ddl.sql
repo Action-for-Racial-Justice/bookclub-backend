@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS session (
 CREATE TABLE IF NOT EXISTS user_library (
   id INT NOT NULL AUTO_INCREMENT,
   uid VARCHAR(255) NOT NULL,
-  read_books JSON NOT NULL,
+  booksRead JSON NOT NULL,
 
   CONSTRAINT l_fk_1 FOREIGN KEY (uid) REFERENCES user (id),
   PRIMARY KEY (id)
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS club (
   id VARCHAR(255) NOT NULL,
   leaderId VARCHAR(255) NOT NULL,
   clubTitle VARCHAR(255) NOT NULL,
-  curr_book int(5) NOT NULL,
+  currBook int(5) NOT NULL,
 
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderId) REFERENCES user (id),
   PRIMARY KEY (id)
