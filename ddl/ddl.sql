@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS user (
   isLeader tinyint(1) NOT NULL DEFAULT 0,
   clubAssigned tinyint(1) NOT NULL DEFAULT 0,
 
-  CONSTRAINT fk_1 FOREIGN KEY (clubId) REFERENCES club (id),
-
   PRIMARY KEY (id)
 ) ENGINE=INNODB;
 
