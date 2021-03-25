@@ -1,4 +1,3 @@
-
 import mysql.connector
 from decouple import Config, RepositoryEnv
 
@@ -12,7 +11,7 @@ MYSQL_USER: str = config("MYSQL_USER")
 MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
 
 if __name__ == '__main__':
-    sleep(8)
+    sleep(12)
     conn = mysql.connector.connect(
                             host=MYSQL_HOST, 
                             database=MYSQL_DATABASE,

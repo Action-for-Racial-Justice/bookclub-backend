@@ -13,6 +13,7 @@ import (
 //Service interface to describe BookClubService struct receiver functions
 type Service interface {
 	CheckHealth() *models.HealthCheck
+	GetUserData(string) *models.UserData
 }
 
 //Module to denote wire binding function

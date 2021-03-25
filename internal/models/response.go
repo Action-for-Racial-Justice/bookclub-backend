@@ -4,6 +4,12 @@ import (
 	"time"
 )
 
+type UserData struct {
+	ID           int    `json:"id" db:"id"`
+	FullName     string `json:"fullName" db:"fullName"`
+	ClubAssigned string `json:"clubAssigned" db:"clubAssigned"`
+}
+
 //ex
 //{"club": "keaton_club", "success": "true"}
 type UserGetResponse struct {

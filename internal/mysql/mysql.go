@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	_ "github.com/go-sql-driver/mysql" //driver
 	"github.com/google/wire"
 	"github.com/jmoiron/sqlx"
@@ -21,6 +22,7 @@ var (
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
+		GetUserDataForUserID(string) (*models.UserData, error)
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection

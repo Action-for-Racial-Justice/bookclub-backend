@@ -5,28 +5,46 @@
 package mocks
 
 import (
+	reflect "reflect"
+
+	models "github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockMysql is a mock of Mysql interface
+// MockMysql is a mock of Mysql interface.
 type MockMysql struct {
 	ctrl     *gomock.Controller
 	recorder *MockMysqlMockRecorder
 }
 
-// MockMysqlMockRecorder is the mock recorder for MockMysql
+// MockMysqlMockRecorder is the mock recorder for MockMysql.
 type MockMysqlMockRecorder struct {
 	mock *MockMysql
 }
 
-// NewMockMysql creates a new mock instance
+// NewMockMysql creates a new mock instance.
 func NewMockMysql(ctrl *gomock.Controller) *MockMysql {
 	mock := &MockMysql{ctrl: ctrl}
 	mock.recorder = &MockMysqlMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMysql) EXPECT() *MockMysqlMockRecorder {
 	return m.recorder
+}
+
+// GetUserDataForUserID mocks base method.
+func (m *MockMysql) GetUserDataForUserID(arg0 string) (*models.UserData, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserDataForUserID", arg0)
+	ret0, _ := ret[0].(*models.UserData)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserDataForUserID indicates an expected call of GetUserDataForUserID.
+func (mr *MockMysqlMockRecorder) GetUserDataForUserID(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserDataForUserID", reflect.TypeOf((*MockMysql)(nil).GetUserDataForUserID), arg0)
 }
