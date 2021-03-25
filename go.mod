@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/epociask/go-rest-api-template v0.0.0-20210215062511-352fc53a0919
 	github.com/go-chi/chi v1.5.2
+	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/render v1.0.1
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/mock v1.5.0
