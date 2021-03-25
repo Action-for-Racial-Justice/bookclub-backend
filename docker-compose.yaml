@@ -2,23 +2,30 @@ version: "3"
 
 services:
    arj-db:
-     container_name: bookclub-db
+     container_name: bookclub_db
      build:
        context: ./
-       dockerfile: ./mysql/Dockerfile
+       dockerfile: ./.docker/mysql/Dockerfile
      ports: 
        - "3306:3306"
      networks:
        - compose
-     volumes:
-       - db_data:/var/lib/mysql
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: arj_pw
        MYSQL_DATABASE: arj
        MYSQL_USER: arj
-       MYSQL_PASSWORD: Password1
+       MYSQL_PASSWORD:  Password1
+     depends_on: 
+      - db-seed 
 
+   db-seed:
+     build:
+       context: ./
+       dockerfile: ./.docker/mysql_seed/Dockerfile
+     networks: 
+      - compose 
+     
 volumes: 
   db_data:
     external: false 
