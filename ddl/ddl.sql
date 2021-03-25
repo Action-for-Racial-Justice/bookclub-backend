@@ -1,51 +1,50 @@
 CREATE TABLE IF NOT EXISTS user (
   id VARCHAR(255) NOT NULL,
   fullName VARCHAR(255) NOT NULL,
-  isAdmin tinyint(1) NOT NULL DEFAULT 0,
-  isLeader tinyint(1) NOT NULL DEFAULT 0,
   clubAssigned tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=INNODB;
+)
+
+INSERT INTO user VALUES
+("1","Keaton Currie", 0),
+("2","Ethen Pociask", 0),
+("3","Meghan Johnson", 0),
+("4","Stephanie Grasso", 0);
 
 CREATE TABLE IF NOT EXISTS session (
-  id INT NOT NULL AUTO_INCREMENT,
+  id VARCHAR(255) NOT NULL,
   uid VARCHAR(255) NOT NULL,
   token VARCHAR(255) NOT NULL,
-  ipAddress VARCHAR(255) NOT NULL,
-  userAgent VARCHAR(255) NOT NULL,
   CONSTRAINT s_fk_1 FOREIGN KEY (uid) REFERENCES user (id),
   PRIMARY KEY (id)
-) ENGINE=INNODB;
+)
 
-CREATE TABLE IF NOT EXISTS user_library (
-  id INT NOT NULL AUTO_INCREMENT,
-  uid VARCHAR(255) NOT NULL,
-  booksRead JSON NOT NULL,
-  CONSTRAINT l_fk_1 FOREIGN KEY (uid) REFERENCES user (id),
-  PRIMARY KEY (id)
-) ENGINE=INNODB;
-
-CREATE TABLE IF NOT EXISTS books (
-  id int(5) NOT NULL,
+CREATE TABLE IF NOT EXISTS book (
+  id VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   author VARCHAR(255) NOT NULL,
   isActive tinyint(1),
   PRIMARY KEY (id)
 );
 
-INSERT INTO books VALUES
-(1,"The Divine Comedy","Dante Alighieri",1),
-(2,"SQL For Dummies","Allen G. Taylor",1),
-(3,"Inactive Book","Keaton Currie",1);
+INSERT INTO book VALUES
+("1","The Divine Comedy","Dante Alighieri",1),
+("2","SQL For Dummies","Allen G. Taylor",1),
+("3","Inactive Book","Not A. Author",1);
 
 CREATE TABLE IF NOT EXISTS club (
   id VARCHAR(255) NOT NULL,
   leaderId VARCHAR(255) NOT NULL,
   clubTitle VARCHAR(255) NOT NULL,
-  currBook int(5) NOT NULL,
+  bookId VARCHAR(255) NOT NULL,
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderId) REFERENCES user (id),
   PRIMARY KEY (id)
-) ENGINE=INNODB;
+)
+
+INSERT INTO club VALUES
+("1", "1", "Keaton Club", "1"),
+("2","2", "Ethen Club", "2"),
+("3", "3", "Meghan Club", "3");
 
 CREATE TABLE IF NOT EXISTS club_member (
   id VARCHAR(255) NOT NULL,
@@ -54,4 +53,4 @@ CREATE TABLE IF NOT EXISTS club_member (
   CONSTRAINT cm_fk_1 FOREIGN KEY (uid) REFERENCES user (id),
   CONSTRAINT cm_fk_2 FOREIGN KEY (clubId) REFERENCES club (id),
   PRIMARY KEY (id)
-) ENGINE=INNODB;
+)
