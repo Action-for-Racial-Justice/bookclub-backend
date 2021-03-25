@@ -32,7 +32,7 @@ build-linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o bin/$(BIN_NAME)
 
 .PHONY: docker-build
-docker-build:  lint build-linux
+docker-build:  build-linux
 	@echo "\033[0;32m» Building bookclub backend image \033[0;39m"
 	docker build -t $(BIN_NAME) .
 
