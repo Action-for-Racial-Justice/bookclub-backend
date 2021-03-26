@@ -6,7 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-const GET_USER_DATA_QUERY = "SELECT * from user WHERE id=?"
+const GET_USER_DATA_QUERY = "SELECT * FROM user WHERE id=?"
 
 func (sql *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData, error) {
 
@@ -16,15 +16,15 @@ func (sql *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData,
 		return nil, err
 	}
 
-	rows, err := stmt.Exec(userID)
+	row := stmt.QueryRowx(userID)
 
-	if err != nil {
-		log.Printf("error while querying db for user data: %s", err)
-		return nil, err
-	}
+	// if err != nil {
+	// 	log.Printf("error while querying db for user data: %s", err)
+	// 	return nil, err
+	// }
 
 	var userData models.UserData
-	if err = row.Scan(&userData.ID, &userData.FullName, &userData.ClubAssigned); err != nil {
+	if err = row.StructScan(&userData); err != nil {
 		log.Printf("error while scanning result for user data: %s", err)
 		return nil, err
 	}

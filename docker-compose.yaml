@@ -20,6 +20,7 @@ services:
       - db-seed 
 
    db-seed:
+     container_name: bookclub_seed
      build:
        context: ./
        dockerfile: ./.docker/mysql_seed/Dockerfile
