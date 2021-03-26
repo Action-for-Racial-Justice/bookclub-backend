@@ -11,7 +11,7 @@ MYSQL_USER: str = config("MYSQL_USER")
 MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
 
 if __name__ == '__main__':
-    sleep(12)
+    sleep(20)
     conn = mysql.connector.connect(
                             host=MYSQL_HOST, 
                             database=MYSQL_DATABASE,
