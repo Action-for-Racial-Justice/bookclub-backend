@@ -39,7 +39,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	router.Use(cors.Handler(setCorsOptions()))
 
 	registerEndpoint("/health", router.Get, handlers.HealthCheck)
-	registerEndpoint("/v1/user/{id}", router.Get, handlers.GetUserData)
+	registerEndpoint("/v1/user", router.Get, handlers.GetUserData)
 	handlers.router = router
 
 	return handlers, nil
