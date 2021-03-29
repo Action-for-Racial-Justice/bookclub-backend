@@ -14,6 +14,9 @@ import (
 type Service interface {
 	CheckHealth() *models.HealthCheck
 	GetUserData(string) *models.UserData
+	GetClubData(string) *models.ClubData
+	GetBookData(string) *models.BookData
+	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }
 
 //Module to denote wire binding function

@@ -22,7 +22,10 @@ var (
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
+		CreateUserClubMember(clubMember *models.JoinClubRequest) error
 		GetUserDataForUserID(string) (*models.UserData, error)
+		GetClubDataForID(id string) (*models.ClubData, error)
+		GetBookDataForID(id string) (*models.BookData, error)
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection
