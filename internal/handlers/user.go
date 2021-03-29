@@ -1,13 +1,21 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/go-chi/render"
 )
 
 func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	reqParameters := r.Header["id"]
-	render.JSON(w, r, bh.service.GetUserData(reqParameters[0]))
+
+	var userRequest models.UserRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&userRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+	}
+	render.JSON(w, r, bh.service.GetUserData(userRequest.UserID))
 }

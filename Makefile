@@ -57,6 +57,10 @@ docker-api-down:
 	@docker stop $(D_NAME)
 	@docker rm $(D_NAME)
 
+.PHONY: docker-down
+docker-down:
+	docker-compose down 
+
 .PHONY: integration-tests
 integration-tests:
 	@echo "\033[0;32m» Starting integration tests\033[0;39m"
