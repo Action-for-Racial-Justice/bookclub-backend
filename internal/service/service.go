@@ -7,13 +7,14 @@ import (
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
 	"github.com/google/wire"
 )
 
 //Service interface to describe BookClubService struct receiver functions
 type Service interface {
 	CheckHealth() *models.HealthCheck
-	GetUserData(string) *models.UserData
+	GetUserData(userID string) (*models.UserData, error)
 	GetClubData(string) *models.ClubData
 	GetBookData(string) *models.BookData
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
@@ -26,13 +27,15 @@ var Module = wire.NewSet(
 
 //BookClubService struct to hold relevant inner data members and hold functions for business logic
 type BookClubService struct {
-	mysql mysql.Mysql
+	validator validator.Validator
+	mysql     mysql.Mysql
 }
 
 //New ... constructor
-func New(db mysql.Mysql) *BookClubService {
+func New(db mysql.Mysql, validator validator.Validator) *BookClubService {
 	return &BookClubService{
-		mysql: db,
+		mysql:     db,
+		validator: validator,
 	}
 }
 

@@ -44,7 +44,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	registerEndpoint("/health", router.Get, handlers.HealthCheck)
 	registerEndpoint("/v1/user", router.Get, handlers.GetUserData)
 	registerEndpoint("/v1/club/join", router.Post, handlers.CreateUserClubMember)
-	registerEndpoint("/v1/club/data", router.Get, handlers.GetClubData)
+	registerEndpoint("/v1/club", router.Get, handlers.GetClubData)
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
 	handlers.router = router
 
@@ -64,9 +64,7 @@ func registerEndpoint(endpoint string, routeMethod func(pattern string, handlerF
 //setCorsOptions acts as a setter function for the cors.Options struct
 func setCorsOptions() cors.Options {
 	corsOptions := cors.Options{
-		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
-		AllowedOrigins: []string{"https://*", "http://*"},
-		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
+		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
@@ -75,4 +73,10 @@ func setCorsOptions() cors.Options {
 	}
 
 	return corsOptions
+}
+
+func curateJSONError(err error) map[string]string {
+	errorMap := make(map[string]string, 0)
+	errorMap["error"] = err.Error()
+	return errorMap
 }

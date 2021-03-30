@@ -10,6 +10,8 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
+
 	"github.com/google/wire"
 )
 
@@ -21,6 +23,7 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 			config.NewServerConfig,
 			config.NewDBConfig,
 			databaseModule,
+			validatorModule,
 			serviceModule,
 			handlersModule,
 			server.New,
@@ -41,4 +44,9 @@ var handlersModule = wire.NewSet(
 var databaseModule = wire.NewSet(
 	mysql.Module,
 	wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)),
+)
+
+var validatorModule = wire.NewSet(
+	validator.Module,
+	wire.Bind(new(validator.Validator), new(*validator.BCValidator)),
 )

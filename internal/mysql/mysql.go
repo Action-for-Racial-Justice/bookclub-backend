@@ -19,6 +19,12 @@ var (
 	)
 )
 
+const (
+	GET_BOOK_DATA_QUERY     = "SELECT * FROM book where id = ?"
+	GET_USER_DATA_QUERY     = "SELECT * FROM user where id = ?"
+	CREATE_USER_CLUB_MEMBER = "INSERT INTO club_member(id, uid, clubId) VALUES(:ID, :userID, :clubID)"
+)
+
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
