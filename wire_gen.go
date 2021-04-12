@@ -10,6 +10,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/config"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
@@ -26,8 +27,10 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 	if err != nil {
 		return nil, nil, err
 	}
+	requestsConfig := config.NewRequestsConfig(configConfig)
+	requestsRequests := requests.New(requestsConfig)
 	bcValidator := validator.New()
-	bookClubService := service.New(bookClubMysql, bcValidator)
+	bookClubService := service.New(bookClubMysql, requestsRequests, bcValidator)
 	bookClubHandler, err := handlers.New(bookClubService)
 	if err != nil {
 		cleanup()
@@ -46,10 +49,12 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 
 // wire.go:
 
-var serviceModule = wire.NewSet(service.Module, wire.Bind(new(service.Service), new(*service.BookClubService)))
+var databaseModule = wire.NewSet(mysql.Module, wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)))
 
 var handlersModule = wire.NewSet(handlers.Module, wire.Bind(new(handlers.Handlers), new(*handlers.BookClubHandler)))
 
-var databaseModule = wire.NewSet(mysql.Module, wire.Bind(new(mysql.Mysql), new(*mysql.BookClubMysql)))
+var requestsModule = wire.NewSet(requests.Module, wire.Bind(new(requests.IRequests), new(*requests.Requests)))
+
+var serviceModule = wire.NewSet(service.Module, wire.Bind(new(service.Service), new(*service.BookClubService)))
 
 var validatorModule = wire.NewSet(validator.Module, wire.Bind(new(validator.Validator), new(*validator.BCValidator)))

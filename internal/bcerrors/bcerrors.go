@@ -1,9 +1,7 @@
 package bcerrors
 
 import (
-	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/google/uuid"
 )
@@ -28,23 +26,20 @@ func NewError(message string, errType int) *Error {
 
 func (err *Error) Error() string {
 
-	errMap := make(map[string]string)
-
-	errMap["id"] = err.id
-	errMap["type"] = err.errType
-	errMap["message"] = err.message
-
+	var rootCause string = ""
 	if err.rootCause != nil {
-		errMap["root_cause"] = err.rootCause.Error()
+		rootCause = err.rootCause.Error()
 	}
-	if err.externalMessage != "" {
-		errMap["external_message"] = err.externalMessage
-	}
-	jsonString, _ := json.Marshal(errMap)
-
-	fmt.Println(strings.Replace(string(jsonString), "\\", "", -1))
-	return strings.Replace(string(jsonString), "\\", "", -1)
+	return fmt.Sprintf(
+		"error_id: %s, type: %s, message: %s, root_cause: %s, external_message: %s",
+		err.id,
+		err.errType,
+		err.message,
+		rootCause,
+		err.externalMessage,
+	)
 }
+
 func (err *Error) WithExternalMessage(msg string) *Error {
 	err.externalMessage = msg
 	return err

@@ -5,7 +5,9 @@ import (
 	"strconv"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
+
 	"github.com/joho/godotenv"
 
 	"os"
@@ -16,8 +18,9 @@ type FilePath string
 
 //Config ...
 type Config struct {
-	serverConfig server.Config
-	DbConfig     mysql.Config
+	requestsConfig requests.Config
+	serverConfig   server.Config
+	dbConfig       mysql.Config
 }
 
 //NewConfig builds global config struct
@@ -38,12 +41,15 @@ func NewConfig(fileName FilePath) *Config {
 			WriteTimeout:    convertToInt(os.Getenv("SERVER_WRITE_TIMEOUT")),
 			ShutdownTimeout: convertToInt(os.Getenv("SERVER_SHUTDOWN_TIME")),
 		},
-		DbConfig: mysql.Config{
+		dbConfig: mysql.Config{
 			Host:     os.Getenv("MYSQL_HOST"),
 			Port:     convertToInt(os.Getenv("MYSQL_PORT")),
 			Database: os.Getenv("MYSQL_DATABASE"),
 			User:     os.Getenv("MYSQL_USER"),
 			Password: os.Getenv("MYSQL_PASSWORD"),
+		},
+		requestsConfig: requests.Config{
+			ArjBackendURL: os.Getenv("ARJ_BACKEND_URL"),
 		},
 	}
 }
@@ -55,7 +61,12 @@ func NewServerConfig(cfg *Config) *server.Config {
 
 //NewDBConfig returns database config from global config
 func NewDBConfig(cfg *Config) *mysql.Config {
-	return &cfg.DbConfig
+	return &cfg.dbConfig
+}
+
+//NewRequestsConfig returns requests config from global config
+func NewRequestsConfig(cfg *Config) *requests.Config {
+	return &cfg.requestsConfig
 }
 
 func convertToInt(str string) int {
