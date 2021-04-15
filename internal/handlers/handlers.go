@@ -21,7 +21,7 @@ var Module = wire.NewSet(
 type Handlers interface {
 	CreateUserClubMember(w http.ResponseWriter, r *http.Request)
 	GetClubs(w http.ResponseWriter, r *http.Request)
-	GetClub(w http.ResponseWriter, r *http.Request)
+	GetClubData(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
