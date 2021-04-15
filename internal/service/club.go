@@ -26,7 +26,7 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 
 func (svc *BookClubService) GetClub(userID string) *models.ClubData {
 
-	clubData, err := svc.mysql.GetClubForID(userID)
+	clubData, err := svc.mysql.GetClubDataForID(userID)
 	if err != nil {
 		log.Printf("Error while retrieving club data from mysql database: %s", err)
 		return nil

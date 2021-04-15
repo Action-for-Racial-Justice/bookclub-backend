@@ -41,7 +41,7 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 
 }
 
-func (sql *BookClubMysql) GetClubForID(id string) (*models.ClubData, error) {
+func (sql *BookClubMysql) GetClubDataForID(id string) (*models.ClubData, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
 	defer stmt.Close()

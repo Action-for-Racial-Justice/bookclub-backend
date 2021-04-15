@@ -32,7 +32,7 @@ type (
 	Mysql interface {
 		CreateUserClubMember(clubMember *models.JoinClubRequest) error
 		GetUserDataForUserID(string) (*models.UserData, error)
-		GetClubForID(id string) (*models.ClubData, error)
+		GetClubDataForID(id string) (*models.ClubData, error)
 		GetBookDataForID(id string) (*models.BookData, error)
 		GetListClubs() (*models.ListClubs, error)
 	}
