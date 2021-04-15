@@ -22,6 +22,8 @@ var (
 const (
 	GET_BOOK_DATA_QUERY     = "SELECT * FROM book where id = ?"
 	GET_USER_DATA_QUERY     = "SELECT * FROM user where id = ?"
+	GET_CLUBS_DATA_QUERY    = "SELECT * FROM club"
+	GET_CLUB_DATA_QUERY     = "SELECT * FROM club where id = ?"
 	CREATE_USER_CLUB_MEMBER = "INSERT INTO club_member(id, uid, clubId) VALUES(:ID, :userID, :clubID)"
 )
 
@@ -30,8 +32,9 @@ type (
 	Mysql interface {
 		CreateUserClubMember(clubMember *models.JoinClubRequest) error
 		GetUserDataForUserID(string) (*models.UserData, error)
-		GetClubDataForID(id string) (*models.ClubData, error)
+		GetClubForID(id string) (*models.ClubData, error)
 		GetBookDataForID(id string) (*models.BookData, error)
+		GetListClubs() (*models.ListClubs, error)
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection

@@ -63,19 +63,34 @@ func (mr *MockMysqlMockRecorder) GetBookDataForID(arg0 interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookDataForID", reflect.TypeOf((*MockMysql)(nil).GetBookDataForID), arg0)
 }
 
-// GetClubDataForID mocks base method.
-func (m *MockMysql) GetClubDataForID(arg0 string) (*models.ClubData, error) {
+// GetClubForID mocks base method.
+func (m *MockMysql) GetClubForID(arg0 string) (*models.ClubData, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClubDataForID", arg0)
+	ret := m.ctrl.Call(m, "GetClubForID", arg0)
 	ret0, _ := ret[0].(*models.ClubData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetClubDataForID indicates an expected call of GetClubDataForID.
-func (mr *MockMysqlMockRecorder) GetClubDataForID(arg0 interface{}) *gomock.Call {
+// GetClubForID indicates an expected call of GetClubForID.
+func (mr *MockMysqlMockRecorder) GetClubForID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubDataForID", reflect.TypeOf((*MockMysql)(nil).GetClubDataForID), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubForID", reflect.TypeOf((*MockMysql)(nil).GetClubForID), arg0)
+}
+
+// GetListClubs mocks base method.
+func (m *MockMysql) GetListClubs() (*models.ListClubs, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetListClubs")
+	ret0, _ := ret[0].(*models.ListClubs)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetListClubs indicates an expected call of GetListClubs.
+func (mr *MockMysqlMockRecorder) GetListClubs() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetListClubs", reflect.TypeOf((*MockMysql)(nil).GetListClubs))
 }
 
 // GetUserDataForUserID mocks base method.

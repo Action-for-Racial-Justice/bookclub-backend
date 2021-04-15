@@ -24,13 +24,35 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
-func (svc *BookClubService) GetClubData(userID string) *models.ClubData {
+func (svc *BookClubService) GetClub(userID string) *models.ClubData {
 
-	userData, err := svc.mysql.GetClubDataForID(userID)
+	clubData, err := svc.mysql.GetClubForID(userID)
 	if err != nil {
 		log.Printf("Error while retrieving club data from mysql database: %s", err)
 		return nil
 	}
 
-	return userData
+	return clubData
 }
+
+func (svc *BookClubService) GetClubs() *models.ListClubs {
+
+	clubs, err := svc.mysql.GetListClubs()
+	if err != nil {
+		log.Printf("Error while retrieving a list of clubs from mysql database: %s", err)
+		return nil
+	}
+
+	return clubs
+}
+
+// func (svc *BookClubService) UserCreateClub(userID string) *models.ClubData {
+
+// 	userData, err := svc.mysql.GetClubDataForID(userID)
+// 	if err != nil {
+// 		log.Printf("Error while retrieving club data from mysql database: %s", err)
+// 		return nil
+// 	}
+
+// 	return userData
+// }

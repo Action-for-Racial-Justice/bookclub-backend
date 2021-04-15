@@ -58,16 +58,28 @@ func (mr *MockHandlersMockRecorder) GetBookData(arg0, arg1 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookData", reflect.TypeOf((*MockHandlers)(nil).GetBookData), arg0, arg1)
 }
 
-// GetClubData mocks base method.
-func (m *MockHandlers) GetClubData(arg0 http.ResponseWriter, arg1 *http.Request) {
+// GetClub mocks base method.
+func (m *MockHandlers) GetClub(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "GetClubData", arg0, arg1)
+	m.ctrl.Call(m, "GetClub", arg0, arg1)
 }
 
-// GetClubData indicates an expected call of GetClubData.
-func (mr *MockHandlersMockRecorder) GetClubData(arg0, arg1 interface{}) *gomock.Call {
+// GetClub indicates an expected call of GetClub.
+func (mr *MockHandlersMockRecorder) GetClub(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubData", reflect.TypeOf((*MockHandlers)(nil).GetClubData), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClub", reflect.TypeOf((*MockHandlers)(nil).GetClub), arg0, arg1)
+}
+
+// GetClubs mocks base method.
+func (m *MockHandlers) GetClubs(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetClubs", arg0, arg1)
+}
+
+// GetClubs indicates an expected call of GetClubs.
+func (mr *MockHandlersMockRecorder) GetClubs(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubs", reflect.TypeOf((*MockHandlers)(nil).GetClubs), arg0, arg1)
 }
 
 // GetUserData mocks base method.

@@ -15,7 +15,8 @@ import (
 type Service interface {
 	CheckHealth() *models.HealthCheck
 	GetUserData(userID string) (*models.UserData, error)
-	GetClubData(string) *models.ClubData
+	GetClubs() *models.ListClubs
+	GetClub(string) *models.ClubData
 	GetBookData(string) *models.BookData
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }

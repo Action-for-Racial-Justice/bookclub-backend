@@ -11,7 +11,7 @@ import (
 func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var bookRequest models.BookRequest
+	var bookRequest models.BookDataRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&bookRequest); err != nil {
 		w.WriteHeader(http.StatusBadRequest)

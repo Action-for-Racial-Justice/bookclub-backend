@@ -62,26 +62,41 @@ func (mr *MockServiceMockRecorder) GetBookData(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookData", reflect.TypeOf((*MockService)(nil).GetBookData), arg0)
 }
 
-// GetClubData mocks base method.
-func (m *MockService) GetClubData(arg0 string) *models.ClubData {
+// GetClub mocks base method.
+func (m *MockService) GetClub(arg0 string) *models.ClubData {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClubData", arg0)
+	ret := m.ctrl.Call(m, "GetClub", arg0)
 	ret0, _ := ret[0].(*models.ClubData)
 	return ret0
 }
 
-// GetClubData indicates an expected call of GetClubData.
-func (mr *MockServiceMockRecorder) GetClubData(arg0 interface{}) *gomock.Call {
+// GetClub indicates an expected call of GetClub.
+func (mr *MockServiceMockRecorder) GetClub(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubData", reflect.TypeOf((*MockService)(nil).GetClubData), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClub", reflect.TypeOf((*MockService)(nil).GetClub), arg0)
+}
+
+// GetClubs mocks base method.
+func (m *MockService) GetClubs() *models.ListClubs {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetClubs")
+	ret0, _ := ret[0].(*models.ListClubs)
+	return ret0
+}
+
+// GetClubs indicates an expected call of GetClubs.
+func (mr *MockServiceMockRecorder) GetClubs() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubs", reflect.TypeOf((*MockService)(nil).GetClubs))
 }
 
 // GetUserData mocks base method.
-func (m *MockService) GetUserData(arg0 string) *models.UserData {
+func (m *MockService) GetUserData(arg0 string) (*models.UserData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserData", arg0)
 	ret0, _ := ret[0].(*models.UserData)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // GetUserData indicates an expected call of GetUserData.

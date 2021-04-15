@@ -14,10 +14,17 @@ type JoinClubRequest struct {
 	ID     uuid.UUID `db:"ID"`
 }
 
-type ClubRequest struct {
+type ClubDataRequest struct {
 	ID string `json:"id"`
 }
 
-type BookRequest struct {
+type BookDataRequest struct {
 	ID string `json:"id"`
+}
+
+type CreateClubRequest struct {
+	LeaderID string    `json:"leader_id" db:"leaderID"` //UserID of club creator
+	ClubName string    `json:"club_name" db:"clubName"`
+	ID       uuid.UUID `db:"ID"`
+	BookID   string    `json:"book_id" db:"bookID"`
 }

@@ -26,3 +26,7 @@ type BookData struct {
 	Author   string `json:"author" db:"author"`
 	IsActive bool   `json:"is_active" db:"isActive"`
 }
+
+type ListClubs struct {
+	Clubs []ClubData
+} 
