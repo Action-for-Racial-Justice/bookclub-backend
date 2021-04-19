@@ -103,7 +103,7 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 			return nil, err
 		}
 
-		row := stmt.QueryRowx(memberEntryID)
+		row := stmt.QueryRowx(memberEntryID.EntryID)
 		var clubData models.ClubData
 		if err = row.StructScan(&clubData); err != nil {
 			log.Printf("error while scanning result for club data: %s", err)
