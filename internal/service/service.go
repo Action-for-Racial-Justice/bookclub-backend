@@ -19,7 +19,7 @@ type Service interface {
 	GetClubs() *models.ListClubs
 	GetClubData(entryID string) *models.ClubData
 	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
-	GetBookData(string) *models.BookData
+	GetBookData(entryID string) *models.BookData
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }
 

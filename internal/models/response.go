@@ -27,7 +27,7 @@ type ClubMemberData struct {
 }
 
 type BookData struct {
-	EntryID  string `json:"entry_id" db:"EntryID"`
+	EntryID  string `json:"entry_id" db:"entryID"`
 	Name     string `json:"name" db:"name"`
 	Author   string `json:"author" db:"author"`
 	IsActive bool   `json:"is_active" db:"isActive"`
