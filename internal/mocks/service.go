@@ -105,6 +105,21 @@ func (mr *MockServiceMockRecorder) GetClubs() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubs", reflect.TypeOf((*MockService)(nil).GetClubs))
 }
 
+// GetUserClubs mocks base method.
+func (m *MockService) GetUserClubs(arg0 string) (*models.ListClubs, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserClubs", arg0)
+	ret0, _ := ret[0].(*models.ListClubs)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserClubs indicates an expected call of GetUserClubs.
+func (mr *MockServiceMockRecorder) GetUserClubs(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserClubs", reflect.TypeOf((*MockService)(nil).GetUserClubs), arg0)
+}
+
 // GetUserData mocks base method.
 func (m *MockService) GetUserData(arg0 string) (*models.UserData, error) {
 	m.ctrl.T.Helper()

@@ -47,6 +47,26 @@ func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, bh.service.GetClubs())
 }
 
+func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var userClubsRequest models.UserClubsRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&userClubsRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+	}
+	clubs, err := bh.service.GetUserClubs(userClubsRequest.UserID)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, clubs)
+}
+
 func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

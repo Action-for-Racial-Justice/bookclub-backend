@@ -8,6 +8,10 @@ type JoinClubRequest struct {
 	EntryID uuid.UUID `db:"entryID"`
 }
 
+type UserClubsRequest struct {
+	UserID string `json:"user_id" db:"userID"`
+}
+
 type ClubDataRequest struct {
 	EntryID string `json:"entry_id"`
 }

@@ -23,6 +23,7 @@ type Handlers interface {
 	GetClubs(w http.ResponseWriter, r *http.Request)
 	GetClubData(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
+	GetUserClubs(w http.ResponseWriter, r *http.Request)
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
@@ -45,6 +46,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 
 	registerEndpoint("/health", router.Get, handlers.HealthCheck)
 	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)
+	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
 	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
 	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)

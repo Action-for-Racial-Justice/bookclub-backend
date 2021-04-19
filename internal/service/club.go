@@ -48,6 +48,23 @@ func (svc *BookClubService) GetClubs() *models.ListClubs {
 	return clubs
 }
 
+func (svc *BookClubService) GetUserClubs(userID string) (*models.ListClubs, error) {
+
+	clubMembers, err := svc.mysql.GetUserClubMembers(userID)
+	if err != nil {
+		log.Printf("Error while retrieving a list of the users club member entries from mysql database: %s", err)
+		return nil, err
+	}
+
+	clubs, err := svc.mysql.GetUserClubs(clubMembers)
+	if err != nil {
+		log.Printf("Error while retrieving a list of users clubs from mysql database: %s", err)
+		return nil, err
+	}
+
+	return clubs, nil
+}
+
 /*takes in a createRequest, creates a new club, adds the leader to the club as a club member
 and returns the club member entry id */
 func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) (string, error) {

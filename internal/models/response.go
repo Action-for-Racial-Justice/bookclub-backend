@@ -20,6 +20,12 @@ type ClubData struct {
 	BookID   string `json:"book_id" db:"bookID"`
 }
 
+type ClubMemberData struct {
+	EntryID string `json:"entry_id" db:"entryID"`
+	UserID  string `json:"user_id" db:"userID"`
+	ClubID  string `json:"club_id" db:"clubID"`
+}
+
 type BookData struct {
 	EntryID  string `json:"entry_id" db:"EntryID"`
 	Name     string `json:"name" db:"name"`
