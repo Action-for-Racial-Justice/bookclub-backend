@@ -94,7 +94,7 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 
 	clubsList := make([]models.ClubData, 0)
 
-	for memberEntryID := range memberEntries {
+	for _, memberEntryID := range memberEntries {
 
 		stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
 
