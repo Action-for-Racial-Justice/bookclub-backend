@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS user (
   id VARCHAR(255) NOT NULL,
   fullName VARCHAR(255) NOT NULL,
   clubAssigned tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (entryID)
+  PRIMARY KEY (id)
 );
 
 INSERT INTO user VALUES

@@ -47,7 +47,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	registerEndpoint("/v1/user", router.Get, handlers.GetUserData)
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
 	registerEndpoint("/v1/club/{id}", router.Get, handlers.GetClubData)
-	registerEndpoint("v1/club/create", router.Post, handlers.CreateClub)
+	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
 	registerEndpoint("/v1/club/join", router.Post, handlers.CreateUserClubMember)
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
 	handlers.router = router

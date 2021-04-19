@@ -8,6 +8,10 @@ import (
 	"github.com/go-chi/render"
 )
 
+/*
+* Reference userRequest
+* Fetches User Data using the Users ID
+ */
 func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var userRequest models.UserRequest

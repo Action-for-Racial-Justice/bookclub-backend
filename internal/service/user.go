@@ -8,9 +8,9 @@ import (
 
 func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error) {
 
-	if err := svc.validator.ValidateUserID(userID); err != nil {
-		return nil, err
-	}
+	// if err := svc.validator.ValidateUserID(userID); err != nil {
+	// 	return nil, err
+	// }
 
 	userData, err := svc.mysql.GetUserDataForUserID(userID)
 	if err != nil {
