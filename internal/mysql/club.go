@@ -94,7 +94,7 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 
 	clubsList := make([]models.ClubData, 0)
 
-	for _, memberEntryID := range memberEntries {
+	for _, memberEntry := range memberEntries {
 
 		stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
 
@@ -103,13 +103,14 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 			return nil, err
 		}
 
-		row := stmt.QueryRowx(memberEntryID.EntryID)
+		row := stmt.QueryRowx(memberEntry.ClubID)
 		var clubData models.ClubData
 		if err = row.StructScan(&clubData); err != nil {
 			log.Printf("error while scanning result for club data: %s", err)
 			return nil, err
 		}
 
+		log.Printf("club Data: %+v", clubData)
 		clubsList = append(clubsList, clubData)
 		stmt.Close()
 	}
