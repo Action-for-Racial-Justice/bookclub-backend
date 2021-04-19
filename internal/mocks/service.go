@@ -48,6 +48,21 @@ func (mr *MockServiceMockRecorder) CheckHealth() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckHealth", reflect.TypeOf((*MockService)(nil).CheckHealth))
 }
 
+// CreateClub mocks base method.
+func (m *MockService) CreateClub(arg0 *models.CreateClubRequest) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateClub", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateClub indicates an expected call of CreateClub.
+func (mr *MockServiceMockRecorder) CreateClub(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockService)(nil).CreateClub), arg0)
+}
+
 // GetBookData mocks base method.
 func (m *MockService) GetBookData(arg0 string) *models.BookData {
 	m.ctrl.T.Helper()

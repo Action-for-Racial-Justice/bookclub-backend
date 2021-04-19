@@ -1,6 +1,8 @@
 package mysql
 
 import (
+	"errors"
+	"fmt"
 	"log"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
@@ -41,7 +43,7 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 
 }
 
-func (sql *BookClubMysql) GetClubDataForID(id string) (*models.ClubData, error) {
+func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.ClubData, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
 	defer stmt.Close()
@@ -51,7 +53,7 @@ func (sql *BookClubMysql) GetClubDataForID(id string) (*models.ClubData, error) 
 		return nil, err
 	}
 
-	row := stmt.QueryRowx(id)
+	row := stmt.QueryRowx(entryID)
 	var clubData models.ClubData
 	if err = row.StructScan(&clubData); err != nil {
 		log.Printf("error while scanning result for club data: %s", err)
@@ -60,4 +62,31 @@ func (sql *BookClubMysql) GetClubDataForID(id string) (*models.ClubData, error) 
 
 	return &clubData, nil
 
+}
+
+func (sql *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) error {
+	stmt, err := sql.db.db.PrepareNamed(CREATE_CLUB)
+	defer stmt.Close()
+
+	if err != nil {
+		log.Printf("error while preparing club create insert: %s", err)
+		return err
+	}
+
+	result, err := stmt.Exec(createRequest)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected == 0 {
+		err = errors.New(fmt.Sprintf("club already exist: ID:%s, ClubName:%s", createRequest.EntryID, createRequest.ClubName))
+		log.Print(err.Error())
+		return err
+	}
+
+	return nil
 }

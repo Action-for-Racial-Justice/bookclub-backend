@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
+/*Adds the user to the club and returns the club member entry id*/
 func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (string, error) {
 
 	if _, err := svc.mysql.GetUserDataForUserID(joinRequest.UserID); err != nil {
@@ -14,7 +15,7 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	}
 
 	id := uuid.New()
-	joinRequest.ID = id
+	joinRequest.EntryID = id
 	//TODO validate user struct values exist
 
 	if err := svc.mysql.CreateUserClubMember(joinRequest); err != nil {
@@ -24,9 +25,10 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
-func (svc *BookClubService) GetClubData(userID string) *models.ClubData {
+/*Given the club entry id*/
+func (svc *BookClubService) GetClubData(entryID string) *models.ClubData {
 
-	clubData, err := svc.mysql.GetClubDataForID(userID)
+	clubData, err := svc.mysql.GetClubDataForEntryID(entryID)
 	if err != nil {
 		log.Printf("Error while retrieving club data from mysql database: %s", err)
 		return nil
@@ -46,13 +48,26 @@ func (svc *BookClubService) GetClubs() *models.ListClubs {
 	return clubs
 }
 
-// func (svc *BookClubService) UserCreateClub(userID string) *models.ClubData {
+/*takes in a createRequest, creates a new club, adds the leader to the club as a club member
+and returns the club member entry id */
+func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) (string, error) {
 
-// 	userData, err := svc.mysql.GetClubDataForID(userID)
-// 	if err != nil {
-// 		log.Printf("Error while retrieving club data from mysql database: %s", err)
-// 		return nil
-// 	}
+	clubEntryID := uuid.New()
+	createRequest.EntryID = clubEntryID
 
-// 	return userData
-// }
+	if err := svc.mysql.CreateClub(createRequest); err != nil {
+		return "", err
+	}
+
+	joinRequest := models.JoinClubRequest{
+		UserID: createRequest.LeaderID,
+		ClubID: clubEntryID.String(),
+	}
+
+	memberEntryID, err := svc.UserJoinClub(&joinRequest)
+	if err != nil {
+		return "", err
+	}
+
+	return memberEntryID, nil
+}

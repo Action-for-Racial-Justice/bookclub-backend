@@ -39,7 +39,7 @@ func (bh *BookClubHandler) GetClubData(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 	}
-	render.JSON(w, r, bh.service.GetClubData(clubRequest.ID))
+	render.JSON(w, r, bh.service.GetClubData(clubRequest.EntryID))
 }
 
 func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
@@ -47,24 +47,24 @@ func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, bh.service.GetClubs())
 }
 
-// func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
+func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-// 	var createClubRequest models.CreateClubRequest
+	var createClubRequest models.CreateClubRequest
 
-// 	if err := json.NewDecoder(r.Body).Decode(&userJoinRequest); err != nil {
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		render.JSON(w, r, err.Error())
-// 		return
-// 	}
+	if err := json.NewDecoder(r.Body).Decode(&createClubRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
 
-// 	confirmationID, err := bh.service.UserJoinClub(&userJoinRequest)
+	entryID, err := bh.service.CreateClub(&createClubRequest)
 
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		render.JSON(w, r, err.Error())
-// 		return
-// 	}
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
 
-// 	render.JSON(w, r, confirmationID)
-// }
+	render.JSON(w, r, entryID)
+}

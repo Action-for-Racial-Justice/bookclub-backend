@@ -6,7 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-func (sql *BookClubMysql) GetBookDataForID(id string) (*models.BookData, error) {
+func (sql *BookClubMysql) GetBookDataForEntryID(entryID string) (*models.BookData, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_BOOK_DATA_QUERY)
 	defer stmt.Close()
@@ -16,7 +16,7 @@ func (sql *BookClubMysql) GetBookDataForID(id string) (*models.BookData, error) 
 		return nil, err
 	}
 
-	row := stmt.QueryRowx(id)
+	row := stmt.QueryRowx(entryID)
 	var bookData models.BookData
 	if err = row.StructScan(&bookData); err != nil {
 		log.Printf("error while scanning result for book data: %s", err)

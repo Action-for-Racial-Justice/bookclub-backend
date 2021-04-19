@@ -17,5 +17,5 @@ func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 	}
-	render.JSON(w, r, bh.service.GetBookData(bookRequest.ID))
+	render.JSON(w, r, bh.service.GetBookData(bookRequest.EntryID))
 }

@@ -8,7 +8,7 @@ import (
 
 func (svc *BookClubService) GetBookData(id string) *models.BookData {
 
-	bookData, err := svc.mysql.GetBookDataForID(id)
+	bookData, err := svc.mysql.GetBookDataForEntryID(id)
 	if err != nil {
 		log.Printf("Error while retrieving book data from mysql database: %s", err)
 		return nil

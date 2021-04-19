@@ -18,7 +18,7 @@ func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userResponse, err := bh.service.GetUserData(userRequest.UserID)
+	userResponse, err := bh.service.GetUserData(userRequest.ID)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		render.JSON(w, r, curateJSONError(err))
