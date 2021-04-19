@@ -68,5 +68,5 @@ func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) 
 		return "", err
 	}
 
-	return memberEntryID, nil
+	return createRequest.EntryID.String(), nil
 }
