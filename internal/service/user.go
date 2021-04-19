@@ -39,7 +39,7 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 	return arjResponse.Auth["token"], nil
 }
 
-func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (, error) {
+func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (*models.ArjUser, error) {
 	arjResponse, err := svc.requests.GetUserData(SSOToken)
 
 	log.Printf("%+v", arjResponse)

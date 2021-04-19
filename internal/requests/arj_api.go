@@ -11,12 +11,12 @@ import (
 
 const (
 	authEndpoint = "/v1/auth/login"
-	userEndpoint = "/user"
+	userEndpoint = "/v1/user"
 )
 
 //GetLoginResponse
 func (r *Requests) GetLoginResponse(userLoginRequest *models.UserLoginRequest) (*models.ArjAPILoginResponse, error) {
-	reqBodyBytes := new(bytes.Buffer)
+	var reqBodyBytes *bytes.Buffer = new(bytes.Buffer)
 	json.NewEncoder(reqBodyBytes).Encode(userLoginRequest)
 
 	resp, err := http.Post(r.config.ArjBackendURL+authEndpoint, "application/json", reqBodyBytes)

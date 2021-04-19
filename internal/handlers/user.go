@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
@@ -29,7 +28,7 @@ func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, userResponse)
 }
 
-func (bh *BookClubHandler) UserSignIn(w http.ResponseWriter, r *http.Request) {
+func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var signInRequest models.UserLoginRequest
 
@@ -46,16 +45,28 @@ func (bh *BookClubHandler) UserSignIn(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, curateJSONError(err))
 		return
 	}
+	w.WriteHeader(http.StatusOK)
+	render.JSON(w, r, models.SingleSignOn{Token: authToken})
+}
 
-	log.Printf("Auth token --> %s", authToken)
+func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var tokenizedRequest models.SingleSignOn
 
-	userData, err := bh.service.FetchUserDataFromToken(authToken)
+	if err := json.NewDecoder(r.Body).Decode(&tokenizedRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err)
+		return
+	}
+
+	userData, err := bh.service.FetchUserDataFromToken(tokenizedRequest.Token)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		render.JSON(w, r, curateJSONError(err))
 		return
 	}
-
-	log.Printf("%+v", userData)
+	w.WriteHeader(http.StatusOK)
+	render.JSON(w, r, userData)
 }
+
