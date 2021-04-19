@@ -58,7 +58,7 @@ func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) 
 		return "", err
 	}
 
-	memberEntryID, err := svc.UserJoinClub(&models.JoinClubRequest{
+	_, err := svc.UserJoinClub(&models.JoinClubRequest{
 		UserID: createRequest.LeaderID,
 		ClubID: createRequest.EntryID.String(),
 	})
