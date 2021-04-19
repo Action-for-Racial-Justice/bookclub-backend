@@ -1,7 +1,7 @@
 package models
 
 type UserData struct {
-	ID           string `json:"id" db:"ID"`
+	ID           string `json:"id" db:"id"`
 	FullName     string `json:"full_name" db:"fullName"`
 	ClubAssigned string `json:"club_assigned" db:"clubAssigned"`
 }
