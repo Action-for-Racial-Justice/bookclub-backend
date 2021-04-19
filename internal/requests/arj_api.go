@@ -14,7 +14,7 @@ const (
 	userEndpoint = "/v1/user"
 )
 
-//GetLoginResponse
+//GetLoginResponse sends request to login with the arj system as a whole
 func (r *Requests) GetLoginResponse(userLoginRequest *models.UserLoginRequest) (*models.ArjAPILoginResponse, error) {
 	var reqBodyBytes *bytes.Buffer = new(bytes.Buffer)
 	json.NewEncoder(reqBodyBytes).Encode(userLoginRequest)
@@ -26,23 +26,21 @@ func (r *Requests) GetLoginResponse(userLoginRequest *models.UserLoginRequest) (
 		return nil, err
 	}
 
-	println("status code", resp.StatusCode)
-	defer resp.Body.Close()
+	defer closeResponse(resp)
 	var decodedResponse models.ArjAPILoginResponse
 
 	if err := json.NewDecoder(resp.Body).Decode(&decodedResponse); err != nil {
-		if err != nil {
-			log.Printf("Response error #2 --> %s", err.Error())
-			return nil, err
-		}
+		log.Printf("Response error #2 --> %s", err.Error())
+		return nil, err
 	}
 
 	return &decodedResponse, nil
 }
 
-func (r *Requests) GetUserData(SSOToken string) (*models.ArjAPIUserDataResponse, error) {
+//GetUserData grabs and unmarshalls user data from a provided sso token
+func (r *Requests) GetUserData(ssoToken string) (*models.ArjAPIUserDataResponse, error) {
 
-	var bearer string = "Bearer " + SSOToken
+	var bearer string = "Bearer " + ssoToken
 
 	req, err := http.NewRequest("GET", r.config.ArjBackendURL+userEndpoint, nil)
 
@@ -59,6 +57,7 @@ func (r *Requests) GetUserData(SSOToken string) (*models.ArjAPIUserDataResponse,
 		log.Printf("Response error #2 --> %s", err.Error())
 		return nil, err
 	}
+	defer closeResponse(resp)
 
 	var decodedResponse models.ArjAPIUserDataResponse
 	if err := json.NewDecoder(resp.Body).Decode(&decodedResponse); err != nil {

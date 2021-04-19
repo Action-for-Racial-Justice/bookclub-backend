@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+//Error to wrap generic error with more meaningful one
 type Error struct {
 	id              string
 	errType         string
@@ -15,6 +16,7 @@ type Error struct {
 	message         string
 }
 
+//NewError constructs error
 func NewError(message string, errType int) *Error {
 	return &Error{
 		id:      uuid.New().String(),
@@ -24,6 +26,7 @@ func NewError(message string, errType int) *Error {
 	}
 }
 
+//Error string representation of error
 func (err *Error) Error() string {
 
 	var rootCause string = ""
@@ -40,10 +43,13 @@ func (err *Error) Error() string {
 	)
 }
 
+//WithExternalMessage adds external message field
 func (err *Error) WithExternalMessage(msg string) *Error {
 	err.externalMessage = msg
 	return err
 }
+
+//WithRootCause adds root cause error field
 func (err *Error) WithRootCause(cause error) *Error {
 	err.rootCause = cause
 	return err
