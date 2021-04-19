@@ -8,6 +8,13 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
+const (
+	CREATE_USER_CLUB_MEMBER = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID)"
+	GET_CLUBS_DATA_QUERY    = "SELECT * FROM club"
+	GET_CLUB_DATA_QUERY     = "SELECT * FROM club where entryID = ?"
+	CREATE_CLUB             = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID)"
+)
+
 func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_CLUBS_DATA_QUERY)
@@ -24,8 +31,9 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 		log.Printf("error while querying db for list of clubs: %s", err)
 		return nil, err
 	}
+	defer res.Close()
 
-	listClubs := make([]models.ClubData, 0)
+	clubsList := make([]models.ClubData, 0)
 	for res.Next() {
 
 		var club models.ClubData
@@ -33,13 +41,14 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 
 		if err != nil {
 			log.Printf("error while scanning result for list of clubs: %s", err)
+			return nil, err
 		}
 
-		listClubs = append(listClubs, club)
+		clubsList = append(clubsList, club)
 
 	}
 
-	return &models.ListClubs{Clubs: listClubs}, nil
+	return &models.ListClubs{Clubs: clubsList}, nil
 
 }
 

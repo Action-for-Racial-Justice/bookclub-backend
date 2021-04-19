@@ -20,12 +20,8 @@ var (
 )
 
 const (
-	GET_BOOK_DATA_QUERY     = "SELECT * FROM book where entryID = ?"
-	GET_USER_DATA_QUERY     = "SELECT * FROM user where id = ?"
-	GET_CLUBS_DATA_QUERY    = "SELECT * FROM club"
-	GET_CLUB_DATA_QUERY     = "SELECT * FROM club where entryID = ?"
-	CREATE_USER_CLUB_MEMBER = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID)"
-	CREATE_CLUB             = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(entryID, leaderID, clubName, bookID)"
+	GET_BOOK_DATA_QUERY = "SELECT * FROM book where entryID = ?"
+	GET_USER_DATA_QUERY = "SELECT * FROM user where id = ?"
 )
 
 type (

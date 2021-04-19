@@ -34,7 +34,7 @@ func (sql *BookClubMysql) CreateUserClubMember(clubMember *models.JoinClubReques
 	defer stmt.Close()
 
 	if err != nil {
-		log.Printf("error while preparing user clum member insert: %s", err)
+		log.Printf("error while preparing user club member insert: %s", err)
 		return err
 	}
 

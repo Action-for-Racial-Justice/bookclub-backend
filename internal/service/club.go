@@ -51,21 +51,20 @@ func (svc *BookClubService) GetClubs() *models.ListClubs {
 /*takes in a createRequest, creates a new club, adds the leader to the club as a club member
 and returns the club member entry id */
 func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) (string, error) {
-
-	clubEntryID := uuid.New()
-	createRequest.EntryID = clubEntryID
+	createRequest.EntryID = uuid.New()
 
 	if err := svc.mysql.CreateClub(createRequest); err != nil {
+		log.Printf("Error creating club -> %s", err.Error())
 		return "", err
 	}
 
-	joinRequest := models.JoinClubRequest{
+	memberEntryID, err := svc.UserJoinClub(&models.JoinClubRequest{
 		UserID: createRequest.LeaderID,
-		ClubID: clubEntryID.String(),
-	}
+		ClubID: createRequest.EntryID.String(),
+	})
 
-	memberEntryID, err := svc.UserJoinClub(&joinRequest)
 	if err != nil {
+		log.Printf("Error joining user to club -> %s", err.Error())
 		return "", err
 	}
 

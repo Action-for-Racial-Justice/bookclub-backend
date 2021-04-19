@@ -1,5 +1,4 @@
 version: "3"
-
 services:
    arj-db:
      container_name: bookclub_db
@@ -18,7 +17,6 @@ services:
        MYSQL_PASSWORD:  Password1
      depends_on: 
       - db-seed 
-
    db-seed:
      container_name: bookclub_seed
      build:
@@ -26,7 +24,6 @@ services:
        dockerfile: ./.docker/mysql_seed/Dockerfile
      networks: 
       - compose 
-     
 volumes: 
   db_data:
     external: false 

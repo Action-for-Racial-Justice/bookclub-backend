@@ -3,26 +3,27 @@ from decouple import Config, RepositoryEnv
 
 from time import sleep  
 
-config = Config(RepositoryEnv("config.env"))
-MYSQL_HOST: str = config("MYSQL_HOST")
-MYSQL_PORT: int = int(config("MYSQL_PORT"))
-MYSQL_DATABASE: str = config("MYSQL_DATABASE")
-MYSQL_USER: str = config("MYSQL_USER")
-MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
+#config = Config(RepositoryEnv("config.env"))
+#MYSQL_HOST: str = config("MYSQL_HOST")
+#MYSQL_PORT: int = int(config("MYSQL_PORT"))
+#MYSQL_DATABASE: str = config("MYSQL_DATABASE")
+#MYSQL_USER: str = config("MYSQL_USER")
+#MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
 
 if __name__ == '__main__':
-    sleep(20)
+    #print(MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD)
+#    sleep(20)
     conn = mysql.connector.connect(
-                            host=MYSQL_HOST, 
-                            database=MYSQL_DATABASE,
-                            user=MYSQL_USER, 
-                            password=MYSQL_PASSWORD, 
-                            port=MYSQL_PORT
+                            host="localhost", 
+                            database="arj",
+                            user="arj", 
+                            password="Password1", 
+                            port=3306
                         )
 
     cur = conn.cursor()
 
-    with open("ddl.sql", "r") as fr:
+    with open("../../ddl/ddl.sql", "r") as fr:
         seed_data: str = fr.read()
 
         try:
