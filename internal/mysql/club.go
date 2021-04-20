@@ -8,19 +8,19 @@ import (
 
 const GET_CLUB_DATA_QUERY = "SELECT * FROM club where id = ?"
 
-func (sql *BookClubMysql) GetClubDataForID(id string) (*models.ClubData, error) {
+//GetClubDataForID returns struct holding club data for an associated clubID from the clubs table
+func (bcm *BookClubMysql) GetClubDataForID(clubID string) (*models.ClubData, error) {
 
-	stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
-	defer stmt.Close()
+	stmt, err := bcm.mysql.db.Preparex(GET_CLUB_DATA_QUERY)
+	defer closeStatement(stmt)
 
 	if err != nil {
 		log.Printf("error while querying db for club data: %s", err)
 		return nil, err
 	}
 
-	row := stmt.QueryRowx(id)
 	var clubData models.ClubData
-	if err = row.StructScan(&clubData); err != nil {
+	if err = stmt.QueryRowx(clubID).StructScan(&clubData); err != nil {
 		log.Printf("error while scanning result for club data: %s", err)
 		return nil, err
 	}

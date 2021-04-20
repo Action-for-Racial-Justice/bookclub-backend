@@ -1,5 +1,6 @@
 package bcerrors
 
+//Incremental integer wrappers for different error types
 const (
 	InternalError = iota
 	ValidationError
