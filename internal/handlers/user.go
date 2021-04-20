@@ -12,7 +12,7 @@ import (
 // Returns data for a user given a UserRequest
 // responses:
 //	200: UserData
-//	400: Error
+//	400: ErrorResponse
 
 //GetUserData retrieves user data
 func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 // Returns a list of clubs for a given user, given a UserClubsRequest
 // responses:
 //	200: Clubs
-//	400:
+//	400: ErrorResponse
 
 //GetUserClubs returns a list of clubs for a given user, given a UserClubsRequest
 func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +65,7 @@ func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) 
 // swagger:route GET /user user getUserSSOToken
 // Returns a sso token if exists for a email and password
 // responses:
-//	200: ssoToken
+//	200:
 //	400:
 
 //GetSSOToken grabs sso token for login info
@@ -93,8 +93,8 @@ func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
 // swagger:route GET /user user getUserSSOToken
 // Returns a sso token if exists for a email and password
 // responses:
-//	200: ssoToken
-//	400:
+//	200:
+//	400: ErrorResponse
 
 //GetArjBackendUserData gets user data from ARJ monolithic api through SSO token
 func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.Request) {

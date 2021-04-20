@@ -13,7 +13,6 @@
 //	Produces:
 //	- application/json
 //	swagger:meta
-
 package handlers
 
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
@@ -99,7 +98,6 @@ func setCorsOptions() cors.Options {
 		AllowCredentials: false,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}
-
 	return corsOptions
 }
 

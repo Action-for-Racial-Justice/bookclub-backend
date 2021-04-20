@@ -73,3 +73,8 @@ gen-swagger:
 	@echo "\033[0;32m» Generating swagger spec... \033[0;39m"
 	@which swagger || tempdir=$(mktemp -d);cd $(tempdir); GO111MODULE=on go get -u github.com/go-swagger/go-swagger/cmd/swagger 2> /dev/null;rm -rf $(tempdir)
 	@swagger generate spec -o api/swagger.yaml --scan-models
+
+.PHONY: server-swagger
+serve-swagger:
+	swagger serve -F swagger api/swagger.yaml
+
