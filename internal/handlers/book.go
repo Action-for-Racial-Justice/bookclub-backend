@@ -11,9 +11,10 @@ import (
 // swagger:route GET /book book getBook
 // Returns data for a single book
 // responses:
-//	200: BookResponse
+//	200: Book
+//	400: Error
 
-// GetBookData returns the data for a single book given an Entry ID
+// GetBookData returns the data for a single book given a BookDataRequest
 func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

@@ -26,7 +26,7 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 }
 
 /*Given the club entry id*/
-func (svc *BookClubService) GetClubData(entryID string) *models.ClubResponse {
+func (svc *BookClubService) GetClubData(entryID string) *models.Club {
 
 	clubData, err := svc.mysql.GetClubDataForEntryID(entryID)
 	if err != nil {
@@ -37,7 +37,7 @@ func (svc *BookClubService) GetClubData(entryID string) *models.ClubResponse {
 	return clubData
 }
 
-func (svc *BookClubService) GetClubs() *models.ListClubsResponse {
+func (svc *BookClubService) GetClubs() *models.Clubs {
 
 	clubs, err := svc.mysql.GetListClubs()
 	if err != nil {
@@ -48,7 +48,7 @@ func (svc *BookClubService) GetClubs() *models.ListClubsResponse {
 	return clubs
 }
 
-func (svc *BookClubService) GetUserClubs(userID string) (*models.ListClubsResponse, error) {
+func (svc *BookClubService) GetUserClubs(userID string) (*models.Clubs, error) {
 
 	clubMembers, err := svc.mysql.GetUserClubMembers(userID)
 	if err != nil {

@@ -41,7 +41,7 @@ type Handlers interface {
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
-	//CreateClub(w http.ResponseWriter, r *http.Request)
+	CreateClub(w http.ResponseWriter, r *http.Request)
 }
 
 //BookClubHandler struct to hold relevant inner data members and hold functions for pure handler logic

@@ -6,7 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-func (svc *BookClubService) GetBookData(id string) *models.BookResponse {
+func (svc *BookClubService) GetBookData(id string) *models.Book {
 
 	bookData, err := svc.mysql.GetBookDataForEntryID(id)
 	if err != nil {

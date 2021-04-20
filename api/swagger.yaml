@@ -1,6 +1,78 @@
 basePath: /v1
 consumes:
 - application/json
+definitions:
+  Book:
+    description: Book is a book data entry
+    properties:
+      author:
+        type: string
+        x-go-name: Author
+      entry_id:
+        type: string
+        x-go-name: EntryID
+      is_active:
+        type: boolean
+        x-go-name: IsActive
+      name:
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  Club:
+    description: Club is a book club
+    properties:
+      book_id:
+        type: string
+        x-go-name: BookID
+      club_name:
+        type: string
+        x-go-name: ClubName
+      entry_id:
+        type: string
+        x-go-name: EntryID
+      user_id:
+        type: string
+        x-go-name: LeaderID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  ClubMember:
+    description: ClubMember is a record of a users membership in a given book club
+    properties:
+      club_id:
+        type: string
+        x-go-name: ClubID
+      entry_id:
+        type: string
+        x-go-name: EntryID
+      user_id:
+        type: string
+        x-go-name: UserID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  Clubs:
+    description: Clubs is a list of clubs
+    properties:
+      Clubs:
+        items:
+          $ref: '#/definitions/Club'
+        type: array
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  UserData:
+    description: UserData is a user for the bookclub application
+    properties:
+      club_assigned:
+        type: string
+        x-go-name: ClubAssigned
+      full_name:
+        type: string
+        x-go-name: FullName
+      id:
+        type: string
+        x-go-name: ID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
 info:
   description: Documentation for Bookclub API
   title: Bookclub API.
@@ -12,23 +84,106 @@ paths:
       operationId: getBook
       responses:
         "200":
-          $ref: '#/responses/BookResponse'
+          description: Book
+          schema:
+            $ref: '#/definitions/Book'
+        "400":
+          $ref: '#/responses/Error'
       tags:
       - book
+  /club:
+    get:
+      description: Returns a list of clubs
+      operationId: listClubs
+      responses:
+        "200":
+          description: Clubs
+          schema:
+            $ref: '#/definitions/Clubs'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/create:
+    post:
+      description: Creates a new club entry for the user given a CreateClubRequest
+        and response returns the Club EntryID
+      operationId: createClub
+      responses:
+        "200":
+          description: EntryID
+          schema:
+            $ref: '#/definitions/Club'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/id:
+    get:
+      description: Returns data for a club entry given a ClubDataRequest
+      operationId: getClubData
+      responses:
+        "200":
+          description: Club
+          schema:
+            $ref: '#/definitions/Club'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/join:
+    post:
+      description: Creates a new club member entry for the user given a JoinClubRequest
+        and response returns the ClubMember EntryID
+      operationId: newClubMember
+      responses:
+        "200":
+          description: EntryID
+          schema:
+            $ref: '#/definitions/ClubMember'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /health:
+    get:
+      description: Returns a healthy response if API dependencies are up
+      operationId: getHealth
+      responses:
+        "200":
+          $ref: '#/responses/HealthCheck'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - health
+  /user/clubs:
+    get:
+      description: Returns a list of clubs for a given user, given a UserClubsRequest
+      operationId: listUserClubs
+      responses:
+        "200":
+          description: Clubs
+          schema:
+            $ref: '#/definitions/Clubs'
+        "400":
+          description: ""
+      tags:
+      - user
+  /user/id:
+    get:
+      description: Returns data for a user given a UserRequest
+      operationId: getUserData
+      responses:
+        "200":
+          description: UserData
+          schema:
+            $ref: '#/definitions/UserData'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - user
 produces:
 - application/json
-responses:
-  BookResponse:
-    description: Data for a book entry
-    headers:
-      author:
-        type: string
-      entry_id:
-        type: string
-      is_active:
-        type: boolean
-      name:
-        type: string
 schemes:
 - http
 swagger: "2.0"
