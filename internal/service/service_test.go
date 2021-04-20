@@ -11,6 +11,7 @@ import (
 
 type testSuite struct {
 	mockMysql      *mocks.MockMysql
+	mockRequests   *mocks.MockIRequests
 	svc            *service.BookClubService
 	mockController *gomock.Controller
 }
@@ -20,7 +21,8 @@ func createTestSuite(t *testing.T) *testSuite {
 
 	mockSql := mocks.NewMockMysql(mockController)
 	mockValidator := mocks.NewMockValidator(mockController)
-	service := service.New(mockSql, mockValidator)
+	mockRequests := mocks.NewMockIRequests(mockController)
+	service := service.New(mockSql, mockRequests, mockValidator)
 
 	return &testSuite{mockMysql: mockSql, svc: service, mockController: mockController}
 }

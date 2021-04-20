@@ -5,35 +5,34 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
+	reflect "reflect"
 )
 
-// MockValidator is a mock of Validator interface.
+// MockValidator is a mock of Validator interface
 type MockValidator struct {
 	ctrl     *gomock.Controller
 	recorder *MockValidatorMockRecorder
 }
 
-// MockValidatorMockRecorder is the mock recorder for MockValidator.
+// MockValidatorMockRecorder is the mock recorder for MockValidator
 type MockValidatorMockRecorder struct {
 	mock *MockValidator
 }
 
-// NewMockValidator creates a new mock instance.
+// NewMockValidator creates a new mock instance
 func NewMockValidator(ctrl *gomock.Controller) *MockValidator {
 	mock := &MockValidator{ctrl: ctrl}
 	mock.recorder = &MockValidatorMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use.
+// EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockValidator) EXPECT() *MockValidatorMockRecorder {
 	return m.recorder
 }
 
-// ValidateUserID mocks base method.
+// ValidateUserID mocks base method
 func (m *MockValidator) ValidateUserID(arg0 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidateUserID", arg0)
@@ -41,7 +40,7 @@ func (m *MockValidator) ValidateUserID(arg0 string) error {
 	return ret0
 }
 
-// ValidateUserID indicates an expected call of ValidateUserID.
+// ValidateUserID indicates an expected call of ValidateUserID
 func (mr *MockValidatorMockRecorder) ValidateUserID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateUserID", reflect.TypeOf((*MockValidator)(nil).ValidateUserID), arg0)

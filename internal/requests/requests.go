@@ -1,3 +1,5 @@
+//go:generate mockgen -package=mocks -destination=../mocks/requests.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests IRequests
+
 package requests
 
 import (
