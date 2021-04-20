@@ -1,5 +1,19 @@
+// Package classification Bookclub API.
+//
+// Documentation for Bookclub API
+//
+//	Schemes: http
+//	BasePath: /v1
+//	Version: 0.0.1
+//
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//	swagger:meta
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
-
 package handlers
 
 import (

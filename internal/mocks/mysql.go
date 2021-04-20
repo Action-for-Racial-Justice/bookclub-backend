@@ -63,10 +63,10 @@ func (mr *MockMysqlMockRecorder) CreateUserClubMember(arg0 interface{}) *gomock.
 }
 
 // GetBookDataForEntryID mocks base method.
-func (m *MockMysql) GetBookDataForEntryID(arg0 string) (*models.BookData, error) {
+func (m *MockMysql) GetBookDataForEntryID(arg0 string) (*models.BookResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBookDataForEntryID", arg0)
-	ret0, _ := ret[0].(*models.BookData)
+	ret0, _ := ret[0].(*models.BookResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -78,10 +78,10 @@ func (mr *MockMysqlMockRecorder) GetBookDataForEntryID(arg0 interface{}) *gomock
 }
 
 // GetClubDataForEntryID mocks base method.
-func (m *MockMysql) GetClubDataForEntryID(arg0 string) (*models.ClubData, error) {
+func (m *MockMysql) GetClubDataForEntryID(arg0 string) (*models.ClubResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubDataForEntryID", arg0)
-	ret0, _ := ret[0].(*models.ClubData)
+	ret0, _ := ret[0].(*models.ClubResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -93,10 +93,10 @@ func (mr *MockMysqlMockRecorder) GetClubDataForEntryID(arg0 interface{}) *gomock
 }
 
 // GetListClubs mocks base method.
-func (m *MockMysql) GetListClubs() (*models.ListClubs, error) {
+func (m *MockMysql) GetListClubs() (*models.ListClubsResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetListClubs")
-	ret0, _ := ret[0].(*models.ListClubs)
+	ret0, _ := ret[0].(*models.ListClubsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -108,10 +108,10 @@ func (mr *MockMysqlMockRecorder) GetListClubs() *gomock.Call {
 }
 
 // GetUserClubMembers mocks base method.
-func (m *MockMysql) GetUserClubMembers(arg0 string) ([]models.ClubMemberData, error) {
+func (m *MockMysql) GetUserClubMembers(arg0 string) ([]models.ClubMemberResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubMembers", arg0)
-	ret0, _ := ret[0].([]models.ClubMemberData)
+	ret0, _ := ret[0].([]models.ClubMemberResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -123,10 +123,10 @@ func (mr *MockMysqlMockRecorder) GetUserClubMembers(arg0 interface{}) *gomock.Ca
 }
 
 // GetUserClubs mocks base method.
-func (m *MockMysql) GetUserClubs(arg0 []models.ClubMemberData) (*models.ListClubs, error) {
+func (m *MockMysql) GetUserClubs(arg0 []models.ClubMemberResponse) (*models.ListClubsResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubs", arg0)
-	ret0, _ := ret[0].(*models.ListClubs)
+	ret0, _ := ret[0].(*models.ListClubsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -138,10 +138,10 @@ func (mr *MockMysqlMockRecorder) GetUserClubs(arg0 interface{}) *gomock.Call {
 }
 
 // GetUserDataForUserID mocks base method.
-func (m *MockMysql) GetUserDataForUserID(arg0 string) (*models.UserData, error) {
+func (m *MockMysql) GetUserDataForUserID(arg0 string) (*models.UserDataResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserDataForUserID", arg0)
-	ret0, _ := ret[0].(*models.UserData)
+	ret0, _ := ret[0].(*models.UserDataResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

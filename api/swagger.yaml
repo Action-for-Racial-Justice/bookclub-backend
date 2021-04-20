@@ -1,0 +1,34 @@
+basePath: /v1
+consumes:
+- application/json
+info:
+  description: Documentation for Bookclub API
+  title: Bookclub API.
+  version: 0.0.1
+paths:
+  /book:
+    get:
+      description: Returns data for a single book
+      operationId: getBook
+      responses:
+        "200":
+          $ref: '#/responses/BookResponse'
+      tags:
+      - book
+produces:
+- application/json
+responses:
+  BookResponse:
+    description: Data for a book entry
+    headers:
+      author:
+        type: string
+      entry_id:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+schemes:
+- http
+swagger: "2.0"

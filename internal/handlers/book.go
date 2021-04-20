@@ -8,6 +8,12 @@ import (
 	"github.com/go-chi/render"
 )
 
+// swagger:route GET /book book getBook
+// Returns data for a single book
+// responses:
+//	200: BookResponse
+
+// GetBookData returns the data for a single book given an Entry ID
 func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

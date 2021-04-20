@@ -28,12 +28,12 @@ type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
 		CreateUserClubMember(clubMember *models.JoinClubRequest) error
-		GetUserDataForUserID(userID string) (*models.UserData, error)
-		GetUserClubMembers(userID string) ([]models.ClubMemberData, error)
-		GetUserClubs([]models.ClubMemberData) (*models.ListClubs, error)
-		GetClubDataForEntryID(entryID string) (*models.ClubData, error)
-		GetBookDataForEntryID(entryID string) (*models.BookData, error)
-		GetListClubs() (*models.ListClubs, error)
+		GetUserDataForUserID(userID string) (*models.UserDataResponse, error)
+		GetUserClubMembers(userID string) ([]models.ClubMemberResponse, error)
+		GetUserClubs([]models.ClubMemberResponse) (*models.ListClubsResponse, error)
+		GetClubDataForEntryID(entryID string) (*models.ClubResponse, error)
+		GetBookDataForEntryID(entryID string) (*models.BookResponse, error)
+		GetListClubs() (*models.ListClubsResponse, error)
 		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 

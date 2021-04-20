@@ -6,7 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error) {
+func (svc *BookClubService) GetUserData(userID string) (*models.UserDataResponse, error) {
 
 	if err := svc.validator.ValidateUserID(userID); err != nil {
 		return nil, err
