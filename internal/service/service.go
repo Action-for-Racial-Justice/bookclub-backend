@@ -7,12 +7,24 @@ import (
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
+
 	"github.com/google/wire"
 )
 
 //Service interface to describe BookClubService struct receiver functions
 type Service interface {
 	CheckHealth() *models.HealthCheck
+	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
+	FetchUserDataFromToken(string) (*models.ArjUser, error)
+	GetBookData(string) *models.Book
+	GetClubData(string) *models.Club
+	GetClubs() *models.Clubs
+	GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error)
+	GetUserClubs(string) (*models.Clubs, error)
+	GetUserData(string) (*models.UserData, error)
+	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }
 
 //Module to denote wire binding function
@@ -22,13 +34,17 @@ var Module = wire.NewSet(
 
 //BookClubService struct to hold relevant inner data members and hold functions for business logic
 type BookClubService struct {
-	mysql mysql.Mysql
+	requests  requests.IRequests
+	validator validator.Validator
+	mysql     mysql.Mysql
 }
 
 //New ... constructor
-func New(db mysql.Mysql) *BookClubService {
+func New(db mysql.Mysql, requests requests.IRequests, validator validator.Validator) *BookClubService {
 	return &BookClubService{
-		mysql: db,
+		mysql:     db,
+		requests:  requests,
+		validator: validator,
 	}
 }
 

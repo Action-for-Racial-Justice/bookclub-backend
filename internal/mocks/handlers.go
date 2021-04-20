@@ -33,6 +33,102 @@ func (m *MockHandlers) EXPECT() *MockHandlersMockRecorder {
 	return m.recorder
 }
 
+// CreateClub mocks base method
+func (m *MockHandlers) CreateClub(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "CreateClub", arg0, arg1)
+}
+
+// CreateClub indicates an expected call of CreateClub
+func (mr *MockHandlersMockRecorder) CreateClub(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockHandlers)(nil).CreateClub), arg0, arg1)
+}
+
+// CreateUserClubMember mocks base method
+func (m *MockHandlers) CreateUserClubMember(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "CreateUserClubMember", arg0, arg1)
+}
+
+// CreateUserClubMember indicates an expected call of CreateUserClubMember
+func (mr *MockHandlersMockRecorder) CreateUserClubMember(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserClubMember", reflect.TypeOf((*MockHandlers)(nil).CreateUserClubMember), arg0, arg1)
+}
+
+// GetBookData mocks base method
+func (m *MockHandlers) GetBookData(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetBookData", arg0, arg1)
+}
+
+// GetBookData indicates an expected call of GetBookData
+func (mr *MockHandlersMockRecorder) GetBookData(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookData", reflect.TypeOf((*MockHandlers)(nil).GetBookData), arg0, arg1)
+}
+
+// GetClubData mocks base method
+func (m *MockHandlers) GetClubData(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetClubData", arg0, arg1)
+}
+
+// GetClubData indicates an expected call of GetClubData
+func (mr *MockHandlersMockRecorder) GetClubData(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubData", reflect.TypeOf((*MockHandlers)(nil).GetClubData), arg0, arg1)
+}
+
+// GetClubs mocks base method
+func (m *MockHandlers) GetClubs(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetClubs", arg0, arg1)
+}
+
+// GetClubs indicates an expected call of GetClubs
+func (mr *MockHandlersMockRecorder) GetClubs(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubs", reflect.TypeOf((*MockHandlers)(nil).GetClubs), arg0, arg1)
+}
+
+// GetSSOToken mocks base method
+func (m *MockHandlers) GetSSOToken(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetSSOToken", arg0, arg1)
+}
+
+// GetSSOToken indicates an expected call of GetSSOToken
+func (mr *MockHandlersMockRecorder) GetSSOToken(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSSOToken", reflect.TypeOf((*MockHandlers)(nil).GetSSOToken), arg0, arg1)
+}
+
+// GetUserClubs mocks base method
+func (m *MockHandlers) GetUserClubs(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetUserClubs", arg0, arg1)
+}
+
+// GetUserClubs indicates an expected call of GetUserClubs
+func (mr *MockHandlersMockRecorder) GetUserClubs(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserClubs", reflect.TypeOf((*MockHandlers)(nil).GetUserClubs), arg0, arg1)
+}
+
+// GetUserData mocks base method
+func (m *MockHandlers) GetUserData(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetUserData", arg0, arg1)
+}
+
+// GetUserData indicates an expected call of GetUserData
+func (mr *MockHandlersMockRecorder) GetUserData(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserData", reflect.TypeOf((*MockHandlers)(nil).GetUserData), arg0, arg1)
+}
+
 // HealthCheck mocks base method
 func (m *MockHandlers) HealthCheck(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()

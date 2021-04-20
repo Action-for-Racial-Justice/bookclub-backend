@@ -1,0 +1,106 @@
+info: {}
+paths:
+  /book:
+    get:
+      description: Returns data for a single book
+      operationId: getBook
+      responses:
+        "200":
+          $ref: '#/responses/Book'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - book
+  /club:
+    get:
+      description: Returns a list of clubs
+      operationId: listClubs
+      responses:
+        "200":
+          $ref: '#/responses/Clubs'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/create:
+    post:
+      description: Creates a new club entry for the user given a CreateClubRequest
+        and response returns the Club EntryID
+      operationId: createClub
+      responses:
+        "200":
+          $ref: '#/responses/Club'
+          description: EntryID
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/id:
+    get:
+      description: Returns data for a club entry given a ClubDataRequest
+      operationId: getClubData
+      responses:
+        "200":
+          $ref: '#/responses/Club'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /club/join:
+    post:
+      description: Creates a new club member entry for the user given a JoinClubRequest
+        and response returns the ClubMember EntryID
+      operationId: newClubMember
+      responses:
+        "200":
+          $ref: '#/responses/ClubMember'
+          description: EntryID
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - club
+  /health:
+    get:
+      description: Returns a healthy response if API dependencies are up
+      operationId: getHealth
+      responses:
+        "200":
+          $ref: '#/responses/HealthCheck'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - health
+  /user:
+    get:
+      description: Returns a sso token if exists for a email and password
+      operationId: getUserSSOToken
+      responses:
+        "200":
+          $ref: '#/responses/ssoToken'
+        "400":
+          description: ""
+      tags:
+      - user
+  /user/clubs:
+    get:
+      description: Returns a list of clubs for a given user, given a UserClubsRequest
+      operationId: listUserClubs
+      responses:
+        "200":
+          $ref: '#/responses/Clubs'
+        "400":
+          description: ""
+      tags:
+      - user
+  /user/id:
+    get:
+      description: Returns data for a user given a UserRequest
+      operationId: getUserData
+      responses:
+        "200":
+          $ref: '#/responses/UserData'
+        "400":
+          $ref: '#/responses/Error'
+      tags:
+      - user
+swagger: "2.0"

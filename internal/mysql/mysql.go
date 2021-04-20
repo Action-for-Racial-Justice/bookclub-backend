@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	_ "github.com/go-sql-driver/mysql" //driver
 	"github.com/google/wire"
 	"github.com/jmoiron/sqlx"
@@ -21,11 +22,19 @@ var (
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
+		CreateUserClubMember(clubMember *models.JoinClubRequest) error
+		GetUserDataForUserID(userID string) (*models.UserData, error)
+		GetUserClubMembers(userID string) ([]models.ClubMember, error)
+		GetUserClubs([]models.ClubMember) (*models.Clubs, error)
+		GetClubDataForEntryID(entryID string) (*models.Club, error)
+		GetBookDataForEntryID(entryID string) (*models.Book, error)
+		GetListClubs() (*models.Clubs, error)
+		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection
 	BookClubMysql struct {
-		db *DB
+		mysql *DB
 	}
 
 	//Config ... Configuration struct
@@ -62,8 +71,8 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		}
 		log.Println("mysql connection shutdown")
 	}
-	mysql := &BookClubMysql{
-		db: database,
+	bcMysql := &BookClubMysql{
+		mysql: database,
 	}
 
 	log.Println("Connecting to Database")
@@ -72,9 +81,9 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		return nil, nil, err
 	}
 
-	mysql.db.db = dbConnection
+	bcMysql.mysql.db = dbConnection
 
-	return mysql, close, nil
+	return bcMysql, close, nil
 }
 
 //Connect opens a database specified by its database driver name, and a connection string which contains relevant connection information
@@ -105,4 +114,26 @@ func (mysql *DB) Close() error {
 		}
 	}
 	return nil
+}
+
+//Closes Statement
+func closeStatement(stmt *sqlx.Stmt) {
+	if err := stmt.Close(); err != nil {
+		log.Printf("Error trying to close statement: %s", err.Error())
+	}
+}
+
+//Closes Named Statement
+func closeNamedStatement(stmt *sqlx.NamedStmt) {
+	if err := stmt.Close(); err != nil {
+		log.Printf("Error trying to close statement: %s", err.Error())
+	}
+}
+
+//Closes Rows
+func closeRows(rows *sqlx.Rows) {
+	if err := rows.Close(); err != nil {
+		log.Printf("Error trying to close statement: %s", err.Error())
+
+	}
 }
