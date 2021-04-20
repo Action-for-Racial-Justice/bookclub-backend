@@ -64,10 +64,10 @@ func (mr *MockServiceMockRecorder) CreateClub(arg0 interface{}) *gomock.Call {
 }
 
 // GetBookData mocks base method.
-func (m *MockService) GetBookData(arg0 string) *models.BookData {
+func (m *MockService) GetBookData(arg0 string) *models.Book {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBookData", arg0)
-	ret0, _ := ret[0].(*models.BookData)
+	ret0, _ := ret[0].(*models.Book)
 	return ret0
 }
 
@@ -78,10 +78,10 @@ func (mr *MockServiceMockRecorder) GetBookData(arg0 interface{}) *gomock.Call {
 }
 
 // GetClubData mocks base method.
-func (m *MockService) GetClubData(arg0 string) *models.ClubData {
+func (m *MockService) GetClubData(arg0 string) *models.Club {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubData", arg0)
-	ret0, _ := ret[0].(*models.ClubData)
+	ret0, _ := ret[0].(*models.Club)
 	return ret0
 }
 
@@ -92,10 +92,10 @@ func (mr *MockServiceMockRecorder) GetClubData(arg0 interface{}) *gomock.Call {
 }
 
 // GetClubs mocks base method.
-func (m *MockService) GetClubs() *models.ListClubs {
+func (m *MockService) GetClubs() *models.Clubs {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubs")
-	ret0, _ := ret[0].(*models.ListClubs)
+	ret0, _ := ret[0].(*models.Clubs)
 	return ret0
 }
 
@@ -106,10 +106,10 @@ func (mr *MockServiceMockRecorder) GetClubs() *gomock.Call {
 }
 
 // GetUserClubs mocks base method.
-func (m *MockService) GetUserClubs(arg0 string) (*models.ListClubs, error) {
+func (m *MockService) GetUserClubs(arg0 string) (*models.Clubs, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubs", arg0)
-	ret0, _ := ret[0].(*models.ListClubs)
+	ret0, _ := ret[0].(*models.Clubs)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

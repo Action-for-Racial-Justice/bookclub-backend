@@ -1,5 +1,19 @@
+// Package classification Bookclub API.
+//
+// Documentation for Bookclub API
+//
+//	Schemes: http
+//	BasePath: /v1
+//	Version: 0.0.1
+//
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//	swagger:meta
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
-
 package handlers
 
 import (
@@ -27,7 +41,7 @@ type Handlers interface {
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
-	//CreateClub(w http.ResponseWriter, r *http.Request)
+	CreateClub(w http.ResponseWriter, r *http.Request)
 }
 
 //BookClubHandler struct to hold relevant inner data members and hold functions for pure handler logic

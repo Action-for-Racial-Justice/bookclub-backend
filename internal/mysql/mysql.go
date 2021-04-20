@@ -29,11 +29,11 @@ type (
 	Mysql interface {
 		CreateUserClubMember(clubMember *models.JoinClubRequest) error
 		GetUserDataForUserID(userID string) (*models.UserData, error)
-		GetUserClubMembers(userID string) ([]models.ClubMemberData, error)
-		GetUserClubs([]models.ClubMemberData) (*models.ListClubs, error)
-		GetClubDataForEntryID(entryID string) (*models.ClubData, error)
-		GetBookDataForEntryID(entryID string) (*models.BookData, error)
-		GetListClubs() (*models.ListClubs, error)
+		GetUserClubMembers(userID string) ([]models.ClubMember, error)
+		GetUserClubs([]models.ClubMember) (*models.Clubs, error)
+		GetClubDataForEntryID(entryID string) (*models.Club, error)
+		GetBookDataForEntryID(entryID string) (*models.Book, error)
+		GetListClubs() (*models.Clubs, error)
 		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 

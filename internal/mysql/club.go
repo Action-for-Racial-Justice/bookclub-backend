@@ -16,7 +16,7 @@ const (
 	CREATE_CLUB                      = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID)"
 )
 
-func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
+func (sql *BookClubMysql) GetListClubs() (*models.Clubs, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_CLUBS_DATA_QUERY)
 	defer stmt.Close()
@@ -34,10 +34,10 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 	}
 	defer res.Close()
 
-	clubsList := make([]models.ClubData, 0)
+	clubsList := make([]models.Club, 0)
 	for res.Next() {
 
-		var club models.ClubData
+		var club models.Club
 		err := res.StructScan(&club)
 
 		if err != nil {
@@ -49,11 +49,11 @@ func (sql *BookClubMysql) GetListClubs() (*models.ListClubs, error) {
 
 	}
 
-	return &models.ListClubs{Clubs: clubsList}, nil
+	return &models.Clubs{Clubs: clubsList}, nil
 
 }
 
-func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMemberData, error) {
+func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_USER_CLUB_MEMBERS_DATA_QUERY)
 	defer stmt.Close()
@@ -71,10 +71,10 @@ func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember
 	}
 	defer res.Close()
 
-	clubMembersList := make([]models.ClubMemberData, 0)
+	clubMembersList := make([]models.ClubMember, 0)
 	for res.Next() {
 
-		var clubMember models.ClubMemberData
+		var clubMember models.ClubMember
 		err := res.StructScan(&clubMember)
 
 		if err != nil {
@@ -90,9 +90,9 @@ func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember
 
 }
 
-func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*models.ListClubs, error) {
+func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMember) (*models.Clubs, error) {
 
-	clubsList := make([]models.ClubData, 0)
+	clubsList := make([]models.Club, 0)
 
 	for _, memberEntry := range memberEntries {
 
@@ -104,7 +104,7 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 		}
 
 		row := stmt.QueryRowx(memberEntry.ClubID)
-		var clubData models.ClubData
+		var clubData models.Club
 		if err = row.StructScan(&clubData); err != nil {
 			log.Printf("error while scanning result for club data: %s", err)
 			return nil, err
@@ -114,11 +114,11 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMemberData) (*
 		clubsList = append(clubsList, clubData)
 		stmt.Close()
 	}
-	return &models.ListClubs{Clubs: clubsList}, nil
+	return &models.Clubs{Clubs: clubsList}, nil
 
 }
 
-func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.ClubData, error) {
+func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.Club, error) {
 
 	stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
 	defer stmt.Close()
@@ -129,7 +129,7 @@ func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.ClubDat
 	}
 
 	row := stmt.QueryRowx(entryID)
-	var clubData models.ClubData
+	var clubData models.Club
 	if err = row.StructScan(&clubData); err != nil {
 		log.Printf("error while scanning result for club data: %s", err)
 		return nil, err

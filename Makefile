@@ -68,3 +68,8 @@ integration-tests:
 	@docker build --network bookclub-compose -t bookclub_pytest -f integration_tests/Dockerfile .
 	@docker rmi bookclub_pytest
 
+.PHONY: gen-swagger
+gen-swagger:
+	@echo "\033[0;32m» Generating swagger spec... \033[0;39m"
+	@which swagger || tempdir=$(mktemp -d);cd $(tempdir); GO111MODULE=on go get -u github.com/go-swagger/go-swagger/cmd/swagger 2> /dev/null;rm -rf $(tempdir)
+	@swagger generate spec -o api/swagger.yaml --scan-models
