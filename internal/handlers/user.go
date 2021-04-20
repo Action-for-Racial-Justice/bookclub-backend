@@ -14,7 +14,7 @@ import (
 //	200: UserData
 //	400: Error
 
-//Returns data for a user given a UserRequest
+//GetUserData retrieves user data
 func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var userRequest models.UserRequest
@@ -60,4 +60,60 @@ func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) 
 	}
 
 	render.JSON(w, r, clubs)
+}
+
+// swagger:route GET /user user getUserSSOToken
+// Returns a sso token if exists for a email and password
+// responses:
+//	200: ssoToken
+//	400:
+
+//GetSSOToken grabs sso token for login info
+func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var signInRequest models.UserLoginRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&signInRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err)
+		return
+	}
+
+	authToken, err := bh.service.GetSSOToken(&signInRequest)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		render.JSON(w, r, curateJSONError(err))
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	render.JSON(w, r, models.SingleSignOn{Token: authToken})
+}
+
+// swagger:route GET /user user getUserSSOToken
+// Returns a sso token if exists for a email and password
+// responses:
+//	200: ssoToken
+//	400:
+
+//GetArjBackendUserData gets user data from ARJ monolithic api through SSO token
+func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var tokenizedRequest models.SingleSignOn
+
+	if err := json.NewDecoder(r.Body).Decode(&tokenizedRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err)
+		return
+	}
+
+	userData, err := bh.service.FetchUserDataFromToken(tokenizedRequest.Token)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		render.JSON(w, r, curateJSONError(err))
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	render.JSON(w, r, userData)
 }

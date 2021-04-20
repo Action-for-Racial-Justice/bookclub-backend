@@ -16,9 +16,9 @@ const (
 	CREATE_CLUB                      = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID)"
 )
 
-func (sql *BookClubMysql) GetListClubs() (*models.Clubs, error) {
+func (bcm *BookClubMysql) GetListClubs() (*models.Clubs, error) {
 
-	stmt, err := sql.db.db.Preparex(GET_CLUBS_DATA_QUERY)
+	stmt, err := bcm.mysql.db.Preparex(GET_CLUBS_DATA_QUERY)
 	defer stmt.Close()
 
 	if err != nil {
@@ -53,15 +53,15 @@ func (sql *BookClubMysql) GetListClubs() (*models.Clubs, error) {
 
 }
 
-func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember, error) {
+func (bcm *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember, error) {
 
-	stmt, err := sql.db.db.Preparex(GET_USER_CLUB_MEMBERS_DATA_QUERY)
-	defer stmt.Close()
+	stmt, err := bcm.mysql.db.Preparex(GET_USER_CLUB_MEMBERS_DATA_QUERY)
 
 	if err != nil {
 		log.Printf("error while preparing query for getting list of users clubs: %s", err)
 		return nil, err
 	}
+	defer closeStatement(stmt)
 
 	res, err := stmt.Queryx(userID)
 
@@ -90,13 +90,13 @@ func (sql *BookClubMysql) GetUserClubMembers(userID string) ([]models.ClubMember
 
 }
 
-func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMember) (*models.Clubs, error) {
+func (bcm *BookClubMysql) GetUserClubs(memberEntries []models.ClubMember) (*models.Clubs, error) {
 
 	clubsList := make([]models.Club, 0)
 
 	for _, memberEntry := range memberEntries {
 
-		stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
+		stmt, err := bcm.mysql.db.Preparex(GET_CLUB_DATA_QUERY)
 
 		if err != nil {
 			log.Printf("error while querying db for club data: %s", err)
@@ -118,19 +118,18 @@ func (sql *BookClubMysql) GetUserClubs(memberEntries []models.ClubMember) (*mode
 
 }
 
-func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.Club, error) {
+func (bcm *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.Club, error) {
 
-	stmt, err := sql.db.db.Preparex(GET_CLUB_DATA_QUERY)
-	defer stmt.Close()
+	stmt, err := bcm.mysql.db.Preparex(GET_CLUB_DATA_QUERY)
+	defer closeStatement(stmt)
 
 	if err != nil {
 		log.Printf("error while querying db for club data: %s", err)
 		return nil, err
 	}
 
-	row := stmt.QueryRowx(entryID)
 	var clubData models.Club
-	if err = row.StructScan(&clubData); err != nil {
+	if err = stmt.QueryRowx(entryID).StructScan(&clubData); err != nil {
 		log.Printf("error while scanning result for club data: %s", err)
 		return nil, err
 	}
@@ -139,9 +138,9 @@ func (sql *BookClubMysql) GetClubDataForEntryID(entryID string) (*models.Club, e
 
 }
 
-func (sql *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) error {
-	stmt, err := sql.db.db.PrepareNamed(CREATE_CLUB)
-	defer stmt.Close()
+func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) error {
+	stmt, err := bcm.mysql.db.PrepareNamed(CREATE_CLUB)
+	defer closeNamedStatement(stmt)
 
 	if err != nil {
 		log.Printf("error while preparing club create insert: %s", err)

@@ -8,10 +8,11 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-func (sql *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData, error) {
+//GetUserDataForUserID returns userData struct holding bookclub user data for a userID string
+func (bcm *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData, error) {
 
-	stmt, err := sql.db.db.Preparex(GET_USER_DATA_QUERY)
-	defer stmt.Close()
+	stmt, err := bcm.mysql.db.Preparex(GET_USER_DATA_QUERY)
+	defer closeStatement(stmt)
 
 	if err != nil {
 		log.Printf("error while querying db for user data: %s", err)
@@ -29,14 +30,16 @@ func (sql *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData,
 
 }
 
-func (sql *BookClubMysql) CreateUserClubMember(clubMember *models.JoinClubRequest) error {
-	stmt, err := sql.db.db.PrepareNamed(CREATE_USER_CLUB_MEMBER)
-	defer stmt.Close()
+//CreateUserClubMember creates club member in the clubmember mysql table s
+func (bcm *BookClubMysql) CreateUserClubMember(clubMember *models.JoinClubRequest) error {
+	stmt, err := bcm.mysql.db.PrepareNamed(CREATE_USER_CLUB_MEMBER)
 
 	if err != nil {
 		log.Printf("error while preparing user club member insert: %s", err)
 		return err
 	}
+
+	defer closeNamedStatement(stmt)
 
 	result, err := stmt.Exec(clubMember)
 	if err != nil {

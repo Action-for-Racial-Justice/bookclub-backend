@@ -39,7 +39,7 @@ type (
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection
 	BookClubMysql struct {
-		db *DB
+		mysql *DB
 	}
 
 	//Config ... Configuration struct
@@ -76,8 +76,8 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		}
 		log.Println("mysql connection shutdown")
 	}
-	mysql := &BookClubMysql{
-		db: database,
+	bcMysql := &BookClubMysql{
+		mysql: database,
 	}
 
 	log.Println("Connecting to Database")
@@ -86,9 +86,9 @@ func New(cfg *Config) (*BookClubMysql, func(), error) {
 		return nil, nil, err
 	}
 
-	mysql.db.db = dbConnection
+	bcMysql.mysql.db = dbConnection
 
-	return mysql, close, nil
+	return bcMysql, close, nil
 }
 
 //Connect opens a database specified by its database driver name, and a connection string which contains relevant connection information
@@ -119,4 +119,16 @@ func (mysql *DB) Close() error {
 		}
 	}
 	return nil
+}
+
+func closeStatement(stmt *sqlx.Stmt) {
+	if err := stmt.Close(); err != nil {
+		log.Printf("Error trying to close statement")
+	}
+}
+
+func closeNamedStatement(stmt *sqlx.NamedStmt) {
+	if err := stmt.Close(); err != nil {
+		log.Printf("Error trying to close statement")
+	}
 }
