@@ -19,7 +19,8 @@ func createTestSuite(t *testing.T) *testSuite {
 	mockController := gomock.NewController(t)
 
 	mockSql := mocks.NewMockMysql(mockController)
-	service := service.New(mockSql)
+	mockValidator := mocks.NewMockValidator(mockController)
+	service := service.New(mockSql, mockValidator)
 
 	return &testSuite{mockMysql: mockSql, svc: service, mockController: mockController}
 }

@@ -1,5 +1,19 @@
+// Package classification Bookclub API.
+//
+// Documentation for Bookclub API
+//
+//	Schemes: http
+//	BasePath: /v1
+//	Version: 0.0.1
+//
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//	swagger:meta
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
-
 package handlers
 
 import (
@@ -20,12 +34,15 @@ var Module = wire.NewSet(
 //Handlers interface to describe BookClubHandlers struct receiver functions
 type Handlers interface {
 	CreateUserClubMember(w http.ResponseWriter, r *http.Request)
+	GetClubs(w http.ResponseWriter, r *http.Request)
 	GetClubData(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
+	GetUserClubs(w http.ResponseWriter, r *http.Request)
 	GetSSOToken(w http.ResponseWriter, r *http.Request)
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
+	CreateClub(w http.ResponseWriter, r *http.Request)
 }
 
 //BookClubHandler struct to hold relevant inner data members and hold functions for pure handler logic
@@ -43,7 +60,11 @@ func New(service service.Service) (*BookClubHandler, error) {
 	router.Use(cors.Handler(setCorsOptions()))
 
 	registerEndpoint("/health", router.Get, handlers.HealthCheck)
-	registerEndpoint("/v1/user", router.Get, handlers.GetUserData)
+	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)
+	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
+	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
+	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
+	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
 	registerEndpoint("/v1/club/join", router.Post, handlers.CreateUserClubMember)
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubData)
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)

@@ -6,8 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
-//GetBookDataForID returns a struct holding book fields given a supplied bookID
-func (bcm *BookClubMysql) GetBookDataForID(bookID string) (*models.BookData, error) {
+func (bcm *BookClubMysql) GetBookDataForEntryID(entryID string) (*models.Book, error) {
 
 	stmt, err := bcm.mysql.db.Preparex(GET_BOOK_DATA_QUERY)
 
@@ -17,9 +16,8 @@ func (bcm *BookClubMysql) GetBookDataForID(bookID string) (*models.BookData, err
 		return nil, err
 	}
 
-	row := stmt.QueryRowx(bookID)
-	var bookData models.BookData
-	if err = row.StructScan(&bookData); err != nil {
+	var bookData models.Book
+	if err = stmt.QueryRowx(entryID).StructScan(&bookData); err != nil {
 		log.Printf("error while scanning result for book data: %s", err)
 		return nil, err
 	}

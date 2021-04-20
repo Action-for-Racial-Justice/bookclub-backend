@@ -13,11 +13,11 @@ MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
 if __name__ == '__main__':
     sleep(20)
     conn = mysql.connector.connect(
-                            host=MYSQL_HOST, 
+                            host=MYSQL_HOST,
+                            port=MYSQL_PORT,
                             database=MYSQL_DATABASE,
                             user=MYSQL_USER, 
-                            password=MYSQL_PASSWORD, 
-                            port=MYSQL_PORT
+                            password=MYSQL_PASSWORD 
                         )
 
     cur = conn.cursor()

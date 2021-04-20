@@ -35,7 +35,7 @@ func (bcm *BookClubMysql) CreateUserClubMember(clubMember *models.JoinClubReques
 	stmt, err := bcm.mysql.db.PrepareNamed(CREATE_USER_CLUB_MEMBER)
 
 	if err != nil {
-		log.Printf("error while preparing user clum member insert: %s", err)
+		log.Printf("error while preparing user club member insert: %s", err)
 		return err
 	}
 

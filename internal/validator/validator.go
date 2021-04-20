@@ -1,3 +1,4 @@
+//go:generate mockgen -package=mocks -destination=../mocks/validator.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator Validator
 package validator
 
 import (

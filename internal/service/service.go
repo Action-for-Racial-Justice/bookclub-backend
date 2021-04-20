@@ -16,12 +16,14 @@ import (
 //Service interface to describe BookClubService struct receiver functions
 type Service interface {
 	CheckHealth() *models.HealthCheck
-	FetchUserDataFromToken(SSOToken string) (*models.ArjUser, error)
-	GetUserData(userID string) (*models.UserData, error)
-	GetClubData(string) *models.ClubData
-	GetBookData(string) *models.BookData
+	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
+	FetchUserDataFromToken(string) (*models.ArjUser, error)
+	GetBookData(string) *models.Book
+	GetClubData(string) *models.Club
+	GetClubs() *models.Clubs
 	GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error)
-
+	GetUserClubs(string) (*models.Clubs, error)
+	GetUserData(string) (*models.UserData, error)
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }
 

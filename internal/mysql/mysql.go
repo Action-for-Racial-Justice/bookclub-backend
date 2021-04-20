@@ -20,18 +20,21 @@ var (
 )
 
 const (
-	GET_BOOK_DATA_QUERY     = "SELECT * FROM book where id = ?"
-	GET_USER_DATA_QUERY     = "SELECT * FROM user where id = ?"
-	CREATE_USER_CLUB_MEMBER = "INSERT INTO club_member(id, uid, clubId) VALUES(:ID, :userID, :clubID)"
+	GET_BOOK_DATA_QUERY = "SELECT * FROM book where entryID = ?"
+	GET_USER_DATA_QUERY = "SELECT * FROM user where id = ?"
 )
 
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
 		CreateUserClubMember(clubMember *models.JoinClubRequest) error
-		GetUserDataForUserID(string) (*models.UserData, error)
-		GetClubDataForID(id string) (*models.ClubData, error)
-		GetBookDataForID(id string) (*models.BookData, error)
+		GetUserDataForUserID(userID string) (*models.UserData, error)
+		GetUserClubMembers(userID string) ([]models.ClubMember, error)
+		GetUserClubs([]models.ClubMember) (*models.Clubs, error)
+		GetClubDataForEntryID(entryID string) (*models.Club, error)
+		GetBookDataForEntryID(entryID string) (*models.Book, error)
+		GetListClubs() (*models.Clubs, error)
+		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection

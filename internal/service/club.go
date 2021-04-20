@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
+/*Adds the user to the club and returns the club member entry id*/
 func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (string, error) {
 
 	if _, err := svc.mysql.GetUserDataForUserID(joinRequest.UserID); err != nil {
@@ -14,7 +15,7 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	}
 
 	id := uuid.New()
-	joinRequest.ID = id
+	joinRequest.EntryID = id
 	//TODO validate user struct values exist
 
 	if err := svc.mysql.CreateUserClubMember(joinRequest); err != nil {
@@ -24,13 +25,65 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
-func (svc *BookClubService) GetClubData(userID string) *models.ClubData {
+/*Given the club entry id*/
+func (svc *BookClubService) GetClubData(entryID string) *models.Club {
 
-	userData, err := svc.mysql.GetClubDataForID(userID)
+	clubData, err := svc.mysql.GetClubDataForEntryID(entryID)
 	if err != nil {
 		log.Printf("Error while retrieving club data from mysql database: %s", err)
 		return nil
 	}
 
-	return userData
+	return clubData
+}
+
+func (svc *BookClubService) GetClubs() *models.Clubs {
+
+	clubs, err := svc.mysql.GetListClubs()
+	if err != nil {
+		log.Printf("Error while retrieving a list of clubs from mysql database: %s", err)
+		return nil
+	}
+
+	return clubs
+}
+
+func (svc *BookClubService) GetUserClubs(userID string) (*models.Clubs, error) {
+
+	clubMembers, err := svc.mysql.GetUserClubMembers(userID)
+	if err != nil {
+		log.Printf("Error while retrieving a list of the users club member entries from mysql database: %s", err)
+		return nil, err
+	}
+
+	clubs, err := svc.mysql.GetUserClubs(clubMembers)
+	if err != nil {
+		log.Printf("Error while retrieving a list of users clubs from mysql database: %s", err)
+		return nil, err
+	}
+
+	return clubs, nil
+}
+
+/*takes in a createRequest, creates a new club, adds the leader to the club as a club member
+and returns the club member entry id */
+func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) (string, error) {
+	createRequest.EntryID = uuid.New()
+
+	if err := svc.mysql.CreateClub(createRequest); err != nil {
+		log.Printf("Error creating club -> %s", err.Error())
+		return "", err
+	}
+
+	_, err := svc.UserJoinClub(&models.JoinClubRequest{
+		UserID: createRequest.LeaderID,
+		ClubID: createRequest.EntryID.String(),
+	})
+
+	if err != nil {
+		log.Printf("Error joining user to club -> %s", err.Error())
+		return "", err
+	}
+
+	return createRequest.EntryID.String(), nil
 }

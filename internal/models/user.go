@@ -2,7 +2,7 @@ package models
 
 //UserRequest ...
 type UserRequest struct {
-	UserID string `json:"user_id"`
+	ID string `json:"id"`
 }
 
 //User ...
