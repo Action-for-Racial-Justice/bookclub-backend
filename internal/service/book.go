@@ -6,6 +6,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
+//GetBookData returns book struct for a provided book ID
 func (svc *BookClubService) GetBookData(id string) *models.Book {
 
 	bookData, err := svc.mysql.GetBookDataForEntryID(id)

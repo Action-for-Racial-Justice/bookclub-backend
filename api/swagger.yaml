@@ -1,82 +1,4 @@
-basePath: /v1
-consumes:
-- application/json
-definitions:
-  Book:
-    description: Book is a book data entry
-    properties:
-      author:
-        type: string
-        x-go-name: Author
-      entry_id:
-        type: string
-        x-go-name: EntryID
-      is_active:
-        type: boolean
-        x-go-name: IsActive
-      name:
-        type: string
-        x-go-name: Name
-    type: object
-    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
-  Club:
-    description: Club is a book club
-    properties:
-      book_id:
-        type: string
-        x-go-name: BookID
-      club_name:
-        type: string
-        x-go-name: ClubName
-      entry_id:
-        type: string
-        x-go-name: EntryID
-      user_id:
-        type: string
-        x-go-name: LeaderID
-    type: object
-    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
-  ClubMember:
-    description: ClubMember is a record of a users membership in a given book club
-    properties:
-      club_id:
-        type: string
-        x-go-name: ClubID
-      entry_id:
-        type: string
-        x-go-name: EntryID
-      user_id:
-        type: string
-        x-go-name: UserID
-    type: object
-    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
-  Clubs:
-    description: Clubs is a list of clubs
-    properties:
-      Clubs:
-        items:
-          $ref: '#/definitions/Club'
-        type: array
-    type: object
-    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
-  UserData:
-    description: UserData is a user for the bookclub application
-    properties:
-      club_assigned:
-        type: string
-        x-go-name: ClubAssigned
-      full_name:
-        type: string
-        x-go-name: FullName
-      id:
-        type: string
-        x-go-name: ID
-    type: object
-    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
-info:
-  description: Documentation for Bookclub API
-  title: Bookclub API.
-  version: 0.0.1
+info: {}
 paths:
   /book:
     get:
@@ -84,9 +6,7 @@ paths:
       operationId: getBook
       responses:
         "200":
-          description: Book
-          schema:
-            $ref: '#/definitions/Book'
+          $ref: '#/responses/Book'
         "400":
           $ref: '#/responses/Error'
       tags:
@@ -97,9 +17,7 @@ paths:
       operationId: listClubs
       responses:
         "200":
-          description: Clubs
-          schema:
-            $ref: '#/definitions/Clubs'
+          $ref: '#/responses/Clubs'
         "400":
           $ref: '#/responses/Error'
       tags:
@@ -111,9 +29,8 @@ paths:
       operationId: createClub
       responses:
         "200":
+          $ref: '#/responses/Club'
           description: EntryID
-          schema:
-            $ref: '#/definitions/Club'
         "400":
           $ref: '#/responses/Error'
       tags:
@@ -124,9 +41,7 @@ paths:
       operationId: getClubData
       responses:
         "200":
-          description: Club
-          schema:
-            $ref: '#/definitions/Club'
+          $ref: '#/responses/Club'
         "400":
           $ref: '#/responses/Error'
       tags:
@@ -138,9 +53,8 @@ paths:
       operationId: newClubMember
       responses:
         "200":
+          $ref: '#/responses/ClubMember'
           description: EntryID
-          schema:
-            $ref: '#/definitions/ClubMember'
         "400":
           $ref: '#/responses/Error'
       tags:
@@ -156,15 +70,24 @@ paths:
           $ref: '#/responses/Error'
       tags:
       - health
+  /user:
+    get:
+      description: Returns a sso token if exists for a email and password
+      operationId: getUserSSOToken
+      responses:
+        "200":
+          $ref: '#/responses/ssoToken'
+        "400":
+          description: ""
+      tags:
+      - user
   /user/clubs:
     get:
       description: Returns a list of clubs for a given user, given a UserClubsRequest
       operationId: listUserClubs
       responses:
         "200":
-          description: Clubs
-          schema:
-            $ref: '#/definitions/Clubs'
+          $ref: '#/responses/Clubs'
         "400":
           description: ""
       tags:
@@ -175,15 +98,9 @@ paths:
       operationId: getUserData
       responses:
         "200":
-          description: UserData
-          schema:
-            $ref: '#/definitions/UserData'
+          $ref: '#/responses/UserData'
         "400":
           $ref: '#/responses/Error'
       tags:
       - user
-produces:
-- application/json
-schemes:
-- http
 swagger: "2.0"

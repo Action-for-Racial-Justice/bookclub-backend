@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/bcerrors"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
@@ -17,7 +18,13 @@ const (
 //GetLoginResponse sends request to login with the arj system as a whole
 func (r *Requests) GetLoginResponse(userLoginRequest *models.UserLoginRequest) (*models.ArjAPILoginResponse, error) {
 	var reqBodyBytes *bytes.Buffer = new(bytes.Buffer)
-	json.NewEncoder(reqBodyBytes).Encode(userLoginRequest)
+	if err := json.NewEncoder(reqBodyBytes).Encode(userLoginRequest); err != nil {
+		return nil, bcerrors.NewError(
+			"Could not decode user login request",
+			bcerrors.DecodeError,
+		).WithRootCause(err)
+
+	}
 
 	resp, err := http.Post(r.config.ArjBackendURL+authEndpoint, "application/json", reqBodyBytes)
 

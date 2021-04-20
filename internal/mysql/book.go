@@ -6,9 +6,14 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
+const (
+	getBookDataQuery = "SELECT * FROM book where entryID = ?"
+)
+
+//GetBookDataForEntryID returns book data struct for a provided book entry ID
 func (bcm *BookClubMysql) GetBookDataForEntryID(entryID string) (*models.Book, error) {
 
-	stmt, err := bcm.mysql.db.Preparex(GET_BOOK_DATA_QUERY)
+	stmt, err := bcm.mysql.db.Preparex(getBookDataQuery)
 
 	defer closeStatement(stmt)
 	if err != nil {

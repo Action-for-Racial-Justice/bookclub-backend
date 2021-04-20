@@ -19,11 +19,6 @@ var (
 	)
 )
 
-const (
-	GET_BOOK_DATA_QUERY = "SELECT * FROM book where entryID = ?"
-	GET_USER_DATA_QUERY = "SELECT * FROM user where id = ?"
-)
-
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
@@ -121,14 +116,24 @@ func (mysql *DB) Close() error {
 	return nil
 }
 
+//Closes Statement
 func closeStatement(stmt *sqlx.Stmt) {
 	if err := stmt.Close(); err != nil {
-		log.Printf("Error trying to close statement")
+		log.Printf("Error trying to close statement: %s", err.Error())
 	}
 }
 
+//Closes Named Statement
 func closeNamedStatement(stmt *sqlx.NamedStmt) {
 	if err := stmt.Close(); err != nil {
-		log.Printf("Error trying to close statement")
+		log.Printf("Error trying to close statement: %s", err.Error())
+	}
+}
+
+//Closes Rows
+func closeRows(rows *sqlx.Rows) {
+	if err := rows.Close(); err != nil {
+		log.Printf("Error trying to close statement: %s", err.Error())
+
 	}
 }

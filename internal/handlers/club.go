@@ -14,7 +14,7 @@ import (
 //	200: ClubMember EntryID
 //	400: Error
 
-//Creates a new club member entry for the user given a JoinClubRequest
+//CreateUserClubMember creates a new club member entry for the user given a JoinClubRequest
 func (bh *BookClubHandler) CreateUserClubMember(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -43,7 +43,7 @@ func (bh *BookClubHandler) CreateUserClubMember(w http.ResponseWriter, r *http.R
 //	200: Club
 //	400: Error
 
-//Gets data for a club entry given a ClubDataRequest
+//GetClubData gets data for a club entry given a ClubDataRequest
 func (bh *BookClubHandler) GetClubData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -62,7 +62,7 @@ func (bh *BookClubHandler) GetClubData(w http.ResponseWriter, r *http.Request) {
 //	200: Clubs
 //	400: Error
 
-//Returns a list of clubs
+//GetClubs renders a list of clubs
 func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	render.JSON(w, r, bh.service.GetClubs())
@@ -74,7 +74,7 @@ func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
 //	200: Club EntryID
 //	400: Error
 
-//Creates a new club entry for the user given a CreateClubRequest
+//CreateClub creates a new club entry for the user given a CreateClubRequest
 func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

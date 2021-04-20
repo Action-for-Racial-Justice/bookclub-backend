@@ -13,7 +13,7 @@ type UserData struct {
 // Club is a book club
 // swagger:model Club
 
-//Club ... 
+//Club ...
 type Club struct {
 	EntryID  string `json:"entry_id" db:"entryID"`
 	LeaderID string `json:"user_id" db:"leaderID"`
@@ -24,7 +24,7 @@ type Club struct {
 // Book is a book data entry
 // swagger:model Book
 
-//Book ... 
+//Book ...
 type Book struct {
 	EntryID  string `json:"entry_id" db:"entryID"`
 	Name     string `json:"name" db:"name"`
@@ -35,7 +35,7 @@ type Book struct {
 // Clubs is a list of clubs
 // swagger:model Clubs
 
-//Clubs ... 
+//Clubs ...
 type Clubs struct {
 	Clubs []Club
 }

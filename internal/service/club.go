@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-/*Adds the user to the club and returns the club member entry id*/
+//UserJoinClub adds the user to the club and returns the club member entry id
 func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (string, error) {
 
 	if _, err := svc.mysql.GetUserDataForUserID(joinRequest.UserID); err != nil {
@@ -25,8 +25,9 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
-/*Given the club entry id*/
+//GetClubData returns club data for a club entry ID
 func (svc *BookClubService) GetClubData(entryID string) *models.Club {
+	//TODO return error here
 
 	clubData, err := svc.mysql.GetClubDataForEntryID(entryID)
 	if err != nil {
@@ -37,7 +38,9 @@ func (svc *BookClubService) GetClubData(entryID string) *models.Club {
 	return clubData
 }
 
+//GetClubs gets a slice of all clubs
 func (svc *BookClubService) GetClubs() *models.Clubs {
+	//TODO return error here
 
 	clubs, err := svc.mysql.GetListClubs()
 	if err != nil {
@@ -48,6 +51,7 @@ func (svc *BookClubService) GetClubs() *models.Clubs {
 	return clubs
 }
 
+//GetUserClubs gets a list of clubs that a userID is in
 func (svc *BookClubService) GetUserClubs(userID string) (*models.Clubs, error) {
 
 	clubMembers, err := svc.mysql.GetUserClubMembers(userID)
@@ -65,8 +69,9 @@ func (svc *BookClubService) GetUserClubs(userID string) (*models.Clubs, error) {
 	return clubs, nil
 }
 
-/*takes in a createRequest, creates a new club, adds the leader to the club as a club member
-and returns the club member entry id */
+//CreateClub takes in a createRequest, creates a new club,
+// adds the leader to the club as a club member
+// and returns the club member entry id
 func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) (string, error) {
 	createRequest.EntryID = uuid.New()
 

@@ -12,7 +12,7 @@ import (
 //	200: HealthCheck
 //	400: Error
 
-//Returns a list of clubs for a given user, given a UserClubsRequest
+// HealthCheck returns a renders health check struct that snapshots dependency health
 func (bh *BookClubHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	render.JSON(w, r, bh.service.CheckHealth())

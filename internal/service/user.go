@@ -7,6 +7,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
+//GetUserData returns user data for a user id
 func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error) {
 
 	if err := svc.validator.ValidateUserID(userID); err != nil {
@@ -22,12 +23,10 @@ func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error)
 	return userData, nil
 }
 
+//GetSSOToken returns single sign on token for a user login request
 func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error) {
-	log.Printf("%+v", userLoginRequest)
-
 	arjResponse, err := svc.requests.GetLoginResponse(userLoginRequest)
 
-	log.Printf("%+v", arjResponse)
 	if err != nil {
 		return "", err
 	}
@@ -39,10 +38,10 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 	return arjResponse.Auth["token"], nil
 }
 
+//FetchUserDataFromToken gets user data from monolith API for a provided sso session token
 func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (*models.ArjUser, error) {
 	arjResponse, err := svc.requests.GetUserData(SSOToken)
 
-	log.Printf("%+v", arjResponse)
 	if err != nil {
 		return nil, err
 	}

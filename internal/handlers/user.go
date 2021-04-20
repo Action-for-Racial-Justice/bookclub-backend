@@ -41,7 +41,7 @@ func (bh *BookClubHandler) GetUserData(w http.ResponseWriter, r *http.Request) {
 //	200: Clubs
 //	400:
 
-//Returns a list of clubs for a given user, given a UserClubsRequest
+//GetUserClubs returns a list of clubs for a given user, given a UserClubsRequest
 func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
