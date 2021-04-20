@@ -39,3 +39,11 @@ type Book struct {
 type Clubs struct {
 	Clubs []Club
 }
+
+// Error response type
+// swagger:model error
+
+//ErrorResponse ...
+type ErrorResponse struct {
+	ErrList []string `json:"errors"`
+}

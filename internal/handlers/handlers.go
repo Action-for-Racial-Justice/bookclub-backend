@@ -1,5 +1,3 @@
-package handlers
-
 // Package classification Bookclub API.
 //
 // Documentation for Bookclub API
@@ -15,12 +13,17 @@ package handlers
 //	Produces:
 //	- application/json
 //	swagger:meta
+
+package handlers
+
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
 
 import (
 	"net/http"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -100,8 +103,12 @@ func setCorsOptions() cors.Options {
 	return corsOptions
 }
 
-func curateJSONError(err error) map[string]string {
-	errorMap := make(map[string]string, 0)
-	errorMap["error"] = err.Error()
-	return errorMap
+func curateJSONError(errs ...error) models.ErrorResponse {
+
+	errList := make([]string, 0)
+
+	for _, err := range errs {
+		errList = append(errList, err.Error())
+	}
+	return models.ErrorResponse{ErrList: errList}
 }
