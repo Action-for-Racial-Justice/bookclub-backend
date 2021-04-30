@@ -172,14 +172,14 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 //CreateClub inserts row into club table
 func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) error {
 
-	stmt, err := bcm.mysql.db.PrepareNamed(deleteClubMembersQuery)
+	stmt, err := bcm.mysql.db.Preparex(deleteClubMembersQuery)
 
 	if err != nil {
 		log.Printf("error while preparing club members delete: %s", err)
 		return err
 	}
 
-	result, err := stmt.Exec(deleteRequest)
+	result, err := stmt.Exec(deleteRequest.ClubID)
 	if err != nil {
 		return err
 	}
@@ -194,17 +194,17 @@ func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) err
 		)
 	}
 
-	closeNamedStatement(stmt)
+	closeStatement(stmt)
 
-	stmt2, err := bcm.mysql.db.PrepareNamed(deleteClubQuery)
+	stmt2, err := bcm.mysql.db.Preparex(deleteClubQuery)
 
 	if err != nil {
 		log.Printf("error while preparing club delete: %s", err)
 		return err
 	}
-	defer closeNamedStatement(stmt2)
+	defer closeStatement(stmt2)
 
-	result2, err := stmt.Exec(deleteRequest)
+	result2, err := stmt.Exec(deleteRequest.UserID)
 	if err != nil {
 		return err
 	}

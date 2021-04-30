@@ -46,18 +46,6 @@ func (mr *MockHandlersMockRecorder) CreateClub(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockHandlers)(nil).CreateClub), arg0, arg1)
 }
 
-// DeleteClub mocks base method.
-func (m *MockHandlers) DeleteClub(arg0 http.ResponseWriter, arg1 *http.Request) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "DeleteClub", arg0, arg1)
-}
-
-// DeleteClub indicates an expected call of DeleteClub.
-func (mr *MockHandlersMockRecorder) DeleteClub(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteClub", reflect.TypeOf((*MockHandlers)(nil).DeleteClub), arg0, arg1)
-}
-
 // GetBookData mocks base method.
 func (m *MockHandlers) GetBookData(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()

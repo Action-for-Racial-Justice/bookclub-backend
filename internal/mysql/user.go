@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	createClubMemberQuery = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID)"
-	deleteClubMemberQuery = "DELETE FROM club_member WHERE userID = $1 AND clubID = $2;"
-	getUserDataQuery      = "SELECT * FROM user where id = ?"
-	isUserLeaderQuery     = "SELECT * FROM club WHERE leaderID = $1 AND clubID = $2;"
+	createClubMemberQuery = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID);"
+	deleteClubMemberQuery = "DELETE FROM club_member WHERE userID = $1 AND clubID = $2 VALUES(:userID, :clubID);"
+	getUserDataQuery      = "SELECT * FROM user where id = ?;"
+	isUserLeaderQuery     = "SELECT * FROM club WHERE leaderID = $1 AND clubID = $2 VALUES(:userID, :clubID);"
 )
 
 //GetUserDataForUserID returns userData struct holding bookclub user data for a userID string
