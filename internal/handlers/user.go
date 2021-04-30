@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/go-chi/render"
@@ -93,8 +94,9 @@ func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
 // swagger:route GET /user user getUserSSOToken
 // Returns a sso token if exists for a email and password
 // responses:
-//	200:
+//	200: ArjUser
 //	400: ErrorResponse
+//  500: ErrorResponse
 
 //GetArjBackendUserData gets user data from ARJ monolithic api through SSO token
 func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.Request) {
@@ -116,4 +118,25 @@ func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.
 	}
 	w.WriteHeader(http.StatusOK)
 	render.JSON(w, r, userData)
+}
+
+// swagger:route DELETE /user/session user EndUserSession
+// Returns Nothing
+// responses:
+//	200:
+//	400: ErrorResponse
+
+//EndUserSession ends user session by talking to crappy monolith API
+func (bh *BookClubHandler) EndUserSession(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	splitToken := strings.TrimSpace(
+		strings.Split(
+			r.Header.Get("Authorization"), "Bearer")[1],
+	)
+
+	if err := bh.service.DeleteUserSession(splitToken); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, curateJSONError(err))
+	}
+	w.WriteHeader(http.StatusOK)
 }

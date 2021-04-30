@@ -37,6 +37,7 @@ var Module = wire.NewSet(
 //Handlers interface to describe BookClubHandlers struct receiver functions
 type Handlers interface {
 	CreateUserClubMember(w http.ResponseWriter, r *http.Request)
+	EndUserSession(w http.ResponseWriter, r *http.Request)
 	GetClubs(w http.ResponseWriter, r *http.Request)
 	GetClubData(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
@@ -62,16 +63,24 @@ func New(service service.Service) (*BookClubHandler, error) {
 
 	router.Use(cors.Handler(setCorsOptions()))
 
+	//health endpoint
 	registerEndpoint("/health", router.Get, handlers.HealthCheck)
+
+	//book endpoints
+	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
+
+	//user endpoints
 	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)
 	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
+	registerEndpoint("/v1/user/session", router.Post, handlers.GetSSOToken)
+	registerEndpoint("/v1/user/session", router.Delete, handlers.EndUserSession)
+
+	//club endpoints
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
 	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
 	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
 	registerEndpoint("/v1/club/join", router.Post, handlers.CreateUserClubMember)
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubData)
-	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
-	registerEndpoint("/v1/user", router.Post, handlers.GetSSOToken)
 
 	handlers.router = router
 

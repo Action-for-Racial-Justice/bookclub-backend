@@ -17,11 +17,13 @@ var Module = wire.NewSet(
 
 //Config ...
 type Config struct {
-	ArjBackendURL string
+	ArjBackendURL  string
+	GoogleBooksURL string
 }
 
 //IRequests to hold request functions
 type IRequests interface {
+	EndUserSession(string) error
 	GetLoginResponse(*models.UserLoginRequest) (*models.ArjAPILoginResponse, error)
 	GetUserData(string) (*models.ArjAPIUserDataResponse, error)
 }

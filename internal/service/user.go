@@ -39,8 +39,8 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 }
 
 //FetchUserDataFromToken gets user data from monolith API for a provided sso session token
-func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (*models.ArjUser, error) {
-	arjResponse, err := svc.requests.GetUserData(SSOToken)
+func (svc *BookClubService) FetchUserDataFromToken(ssoToken string) (*models.ArjUser, error) {
+	arjResponse, err := svc.requests.GetUserData(ssoToken)
 
 	if err != nil {
 		return nil, err
@@ -51,4 +51,17 @@ func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (*models.Arj
 	}
 
 	return &arjResponse.User, nil
+}
+
+func (svc *BookClubService) DeleteUserSession(ssoToken string) error {
+
+	// if err := svc.validator.ValidateSSOToken(ssoToken); err != nil {
+	// 	return err
+	// }
+
+	if err := svc.requests.EndUserSession(ssoToken); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -26,3 +26,8 @@ func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {
 	}
 	render.JSON(w, r, bh.service.GetBookData(bookRequest.EntryID))
 }
+
+func (bh *BookClubHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+}

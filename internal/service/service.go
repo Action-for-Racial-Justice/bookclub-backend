@@ -17,6 +17,7 @@ import (
 type Service interface {
 	CheckHealth() *models.HealthCheck
 	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
+	DeleteUserSession(string) error
 	FetchUserDataFromToken(string) (*models.ArjUser, error)
 	GetBookData(string) *models.Book
 	GetClubData(string) *models.Club
