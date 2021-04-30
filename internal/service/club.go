@@ -25,6 +25,27 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
+//UserJoinClub adds the user to the club and returns the club member entry id
+func (svc *BookClubService) UserLeaveClub(leaveRequest *models.LeaveClubRequest) error {
+
+	leader, err := svc.mysql.IsUserClubLeader(leaveRequest)
+	if err != nil {
+		return err
+	}
+
+	if leader {
+		if err := svc.mysql.DeleteClub(leaveRequest); err != nil {
+			return err
+		}
+	}
+
+	if err := svc.mysql.DeleteUserClubMember(leaveRequest); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //GetClubData returns club data for a club entry ID
 func (svc *BookClubService) GetClubData(entryID string) *models.Club {
 	//TODO return error here

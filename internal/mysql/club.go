@@ -13,6 +13,8 @@ const (
 	getUserClubMembersQuery = "SELECT * FROM club_member where userID = ?"
 	getClubDataQuery        = "SELECT * FROM club where entryID = ?"
 	createClubQuery         = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID)"
+	deleteClubMembersQuery  = "DELETE * FROM club_member WHERE clubID = ?"
+	deleteClubQuery         = "DELETE FROM club WHERE leaderID = ?"
 )
 
 //GetListClubs gets slice of all the clubs
@@ -160,6 +162,59 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 			fmt.Sprintf("club already exist: ID:%s, ClubName:%s",
 				createRequest.EntryID,
 				createRequest.ClubName),
+			bcerrors.InternalError,
+		)
+	}
+
+	return nil
+}
+
+//CreateClub inserts row into club table
+func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) error {
+
+	stmt, err := bcm.mysql.db.PrepareNamed(deleteClubMembersQuery)
+
+	if err != nil {
+		log.Printf("error while preparing club members delete: %s", err)
+		return err
+	}
+
+	result, err := stmt.Exec(deleteRequest)
+	if err != nil {
+		return err
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected == 0 {
+		return bcerrors.NewError(
+			"club does not exist, could not delete member entries",
+			bcerrors.InternalError,
+		)
+	}
+
+	closeNamedStatement(stmt)
+
+	stmt2, err := bcm.mysql.db.PrepareNamed(deleteClubQuery)
+
+	if err != nil {
+		log.Printf("error while preparing club delete: %s", err)
+		return err
+	}
+	defer closeNamedStatement(stmt2)
+
+	result2, err := stmt.Exec(deleteRequest)
+	if err != nil {
+		return err
+	}
+	rowsAffected2, err := result2.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected2 == 0 {
+		return bcerrors.NewError(
+			"club does not exist, could not be deleted",
 			bcerrors.InternalError,
 		)
 	}

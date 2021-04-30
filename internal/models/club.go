@@ -38,3 +38,8 @@ type JoinClubRequest struct {
 	ClubID  string    `json:"club_id" db:"clubID"`
 	EntryID uuid.UUID `db:"entryID"`
 }
+
+type LeaveClubRequest struct {
+	UserID string `json:"user_id" db:"userID"`
+	ClubID string `json:"club_id" db:"clubID"`
+}

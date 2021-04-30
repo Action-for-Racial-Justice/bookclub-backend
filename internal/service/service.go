@@ -25,6 +25,7 @@ type Service interface {
 	GetUserClubs(string) (*models.Clubs, error)
 	GetUserData(string) (*models.UserData, error)
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
+	UserLeaveClub(leaveRequest *models.LeaveClubRequest) error
 }
 
 //Module to denote wire binding function

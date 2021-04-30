@@ -5,35 +5,36 @@
 package mocks
 
 import (
+	reflect "reflect"
+
 	models "github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
-// MockService is a mock of Service interface
+// MockService is a mock of Service interface.
 type MockService struct {
 	ctrl     *gomock.Controller
 	recorder *MockServiceMockRecorder
 }
 
-// MockServiceMockRecorder is the mock recorder for MockService
+// MockServiceMockRecorder is the mock recorder for MockService.
 type MockServiceMockRecorder struct {
 	mock *MockService
 }
 
-// NewMockService creates a new mock instance
+// NewMockService creates a new mock instance.
 func NewMockService(ctrl *gomock.Controller) *MockService {
 	mock := &MockService{ctrl: ctrl}
 	mock.recorder = &MockServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// CheckHealth mocks base method
+// CheckHealth mocks base method.
 func (m *MockService) CheckHealth() *models.HealthCheck {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CheckHealth")
@@ -41,13 +42,13 @@ func (m *MockService) CheckHealth() *models.HealthCheck {
 	return ret0
 }
 
-// CheckHealth indicates an expected call of CheckHealth
+// CheckHealth indicates an expected call of CheckHealth.
 func (mr *MockServiceMockRecorder) CheckHealth() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckHealth", reflect.TypeOf((*MockService)(nil).CheckHealth))
 }
 
-// CreateClub mocks base method
+// CreateClub mocks base method.
 func (m *MockService) CreateClub(arg0 *models.CreateClubRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateClub", arg0)
@@ -56,13 +57,13 @@ func (m *MockService) CreateClub(arg0 *models.CreateClubRequest) (string, error)
 	return ret0, ret1
 }
 
-// CreateClub indicates an expected call of CreateClub
+// CreateClub indicates an expected call of CreateClub.
 func (mr *MockServiceMockRecorder) CreateClub(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockService)(nil).CreateClub), arg0)
 }
 
-// FetchUserDataFromToken mocks base method
+// FetchUserDataFromToken mocks base method.
 func (m *MockService) FetchUserDataFromToken(arg0 string) (*models.ArjUser, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchUserDataFromToken", arg0)
@@ -71,13 +72,13 @@ func (m *MockService) FetchUserDataFromToken(arg0 string) (*models.ArjUser, erro
 	return ret0, ret1
 }
 
-// FetchUserDataFromToken indicates an expected call of FetchUserDataFromToken
+// FetchUserDataFromToken indicates an expected call of FetchUserDataFromToken.
 func (mr *MockServiceMockRecorder) FetchUserDataFromToken(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchUserDataFromToken", reflect.TypeOf((*MockService)(nil).FetchUserDataFromToken), arg0)
 }
 
-// GetBookData mocks base method
+// GetBookData mocks base method.
 func (m *MockService) GetBookData(arg0 string) *models.Book {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBookData", arg0)
@@ -85,13 +86,13 @@ func (m *MockService) GetBookData(arg0 string) *models.Book {
 	return ret0
 }
 
-// GetBookData indicates an expected call of GetBookData
+// GetBookData indicates an expected call of GetBookData.
 func (mr *MockServiceMockRecorder) GetBookData(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookData", reflect.TypeOf((*MockService)(nil).GetBookData), arg0)
 }
 
-// GetClubData mocks base method
+// GetClubData mocks base method.
 func (m *MockService) GetClubData(arg0 string) *models.Club {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubData", arg0)
@@ -99,13 +100,13 @@ func (m *MockService) GetClubData(arg0 string) *models.Club {
 	return ret0
 }
 
-// GetClubData indicates an expected call of GetClubData
+// GetClubData indicates an expected call of GetClubData.
 func (mr *MockServiceMockRecorder) GetClubData(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubData", reflect.TypeOf((*MockService)(nil).GetClubData), arg0)
 }
 
-// GetClubs mocks base method
+// GetClubs mocks base method.
 func (m *MockService) GetClubs() *models.Clubs {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubs")
@@ -113,13 +114,13 @@ func (m *MockService) GetClubs() *models.Clubs {
 	return ret0
 }
 
-// GetClubs indicates an expected call of GetClubs
+// GetClubs indicates an expected call of GetClubs.
 func (mr *MockServiceMockRecorder) GetClubs() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubs", reflect.TypeOf((*MockService)(nil).GetClubs))
 }
 
-// GetSSOToken mocks base method
+// GetSSOToken mocks base method.
 func (m *MockService) GetSSOToken(arg0 *models.UserLoginRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSSOToken", arg0)
@@ -128,13 +129,13 @@ func (m *MockService) GetSSOToken(arg0 *models.UserLoginRequest) (string, error)
 	return ret0, ret1
 }
 
-// GetSSOToken indicates an expected call of GetSSOToken
+// GetSSOToken indicates an expected call of GetSSOToken.
 func (mr *MockServiceMockRecorder) GetSSOToken(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSSOToken", reflect.TypeOf((*MockService)(nil).GetSSOToken), arg0)
 }
 
-// GetUserClubs mocks base method
+// GetUserClubs mocks base method.
 func (m *MockService) GetUserClubs(arg0 string) (*models.Clubs, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubs", arg0)
@@ -143,13 +144,13 @@ func (m *MockService) GetUserClubs(arg0 string) (*models.Clubs, error) {
 	return ret0, ret1
 }
 
-// GetUserClubs indicates an expected call of GetUserClubs
+// GetUserClubs indicates an expected call of GetUserClubs.
 func (mr *MockServiceMockRecorder) GetUserClubs(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserClubs", reflect.TypeOf((*MockService)(nil).GetUserClubs), arg0)
 }
 
-// GetUserData mocks base method
+// GetUserData mocks base method.
 func (m *MockService) GetUserData(arg0 string) (*models.UserData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserData", arg0)
@@ -158,13 +159,13 @@ func (m *MockService) GetUserData(arg0 string) (*models.UserData, error) {
 	return ret0, ret1
 }
 
-// GetUserData indicates an expected call of GetUserData
+// GetUserData indicates an expected call of GetUserData.
 func (mr *MockServiceMockRecorder) GetUserData(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserData", reflect.TypeOf((*MockService)(nil).GetUserData), arg0)
 }
 
-// UserJoinClub mocks base method
+// UserJoinClub mocks base method.
 func (m *MockService) UserJoinClub(arg0 *models.JoinClubRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UserJoinClub", arg0)
@@ -173,8 +174,22 @@ func (m *MockService) UserJoinClub(arg0 *models.JoinClubRequest) (string, error)
 	return ret0, ret1
 }
 
-// UserJoinClub indicates an expected call of UserJoinClub
+// UserJoinClub indicates an expected call of UserJoinClub.
 func (mr *MockServiceMockRecorder) UserJoinClub(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserJoinClub", reflect.TypeOf((*MockService)(nil).UserJoinClub), arg0)
+}
+
+// UserLeaveClub mocks base method.
+func (m *MockService) UserLeaveClub(arg0 *models.LeaveClubRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UserLeaveClub", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UserLeaveClub indicates an expected call of UserLeaveClub.
+func (mr *MockServiceMockRecorder) UserLeaveClub(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserLeaveClub", reflect.TypeOf((*MockService)(nil).UserLeaveClub), arg0)
 }

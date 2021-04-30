@@ -5,35 +5,36 @@
 package mocks
 
 import (
+	reflect "reflect"
+
 	models "github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
-// MockMysql is a mock of Mysql interface
+// MockMysql is a mock of Mysql interface.
 type MockMysql struct {
 	ctrl     *gomock.Controller
 	recorder *MockMysqlMockRecorder
 }
 
-// MockMysqlMockRecorder is the mock recorder for MockMysql
+// MockMysqlMockRecorder is the mock recorder for MockMysql.
 type MockMysqlMockRecorder struct {
 	mock *MockMysql
 }
 
-// NewMockMysql creates a new mock instance
+// NewMockMysql creates a new mock instance.
 func NewMockMysql(ctrl *gomock.Controller) *MockMysql {
 	mock := &MockMysql{ctrl: ctrl}
 	mock.recorder = &MockMysqlMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMysql) EXPECT() *MockMysqlMockRecorder {
 	return m.recorder
 }
 
-// CreateClub mocks base method
+// CreateClub mocks base method.
 func (m *MockMysql) CreateClub(arg0 *models.CreateClubRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateClub", arg0)
@@ -41,13 +42,13 @@ func (m *MockMysql) CreateClub(arg0 *models.CreateClubRequest) error {
 	return ret0
 }
 
-// CreateClub indicates an expected call of CreateClub
+// CreateClub indicates an expected call of CreateClub.
 func (mr *MockMysqlMockRecorder) CreateClub(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockMysql)(nil).CreateClub), arg0)
 }
 
-// CreateUserClubMember mocks base method
+// CreateUserClubMember mocks base method.
 func (m *MockMysql) CreateUserClubMember(arg0 *models.JoinClubRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateUserClubMember", arg0)
@@ -55,13 +56,41 @@ func (m *MockMysql) CreateUserClubMember(arg0 *models.JoinClubRequest) error {
 	return ret0
 }
 
-// CreateUserClubMember indicates an expected call of CreateUserClubMember
+// CreateUserClubMember indicates an expected call of CreateUserClubMember.
 func (mr *MockMysqlMockRecorder) CreateUserClubMember(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserClubMember", reflect.TypeOf((*MockMysql)(nil).CreateUserClubMember), arg0)
 }
 
-// GetBookDataForEntryID mocks base method
+// DeleteClub mocks base method.
+func (m *MockMysql) DeleteClub(arg0 *models.LeaveClubRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteClub", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteClub indicates an expected call of DeleteClub.
+func (mr *MockMysqlMockRecorder) DeleteClub(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteClub", reflect.TypeOf((*MockMysql)(nil).DeleteClub), arg0)
+}
+
+// DeleteUserClubMember mocks base method.
+func (m *MockMysql) DeleteUserClubMember(arg0 *models.LeaveClubRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteUserClubMember", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteUserClubMember indicates an expected call of DeleteUserClubMember.
+func (mr *MockMysqlMockRecorder) DeleteUserClubMember(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUserClubMember", reflect.TypeOf((*MockMysql)(nil).DeleteUserClubMember), arg0)
+}
+
+// GetBookDataForEntryID mocks base method.
 func (m *MockMysql) GetBookDataForEntryID(arg0 string) (*models.Book, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBookDataForEntryID", arg0)
@@ -70,13 +99,13 @@ func (m *MockMysql) GetBookDataForEntryID(arg0 string) (*models.Book, error) {
 	return ret0, ret1
 }
 
-// GetBookDataForEntryID indicates an expected call of GetBookDataForEntryID
+// GetBookDataForEntryID indicates an expected call of GetBookDataForEntryID.
 func (mr *MockMysqlMockRecorder) GetBookDataForEntryID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBookDataForEntryID", reflect.TypeOf((*MockMysql)(nil).GetBookDataForEntryID), arg0)
 }
 
-// GetClubDataForEntryID mocks base method
+// GetClubDataForEntryID mocks base method.
 func (m *MockMysql) GetClubDataForEntryID(arg0 string) (*models.Club, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetClubDataForEntryID", arg0)
@@ -85,13 +114,13 @@ func (m *MockMysql) GetClubDataForEntryID(arg0 string) (*models.Club, error) {
 	return ret0, ret1
 }
 
-// GetClubDataForEntryID indicates an expected call of GetClubDataForEntryID
+// GetClubDataForEntryID indicates an expected call of GetClubDataForEntryID.
 func (mr *MockMysqlMockRecorder) GetClubDataForEntryID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClubDataForEntryID", reflect.TypeOf((*MockMysql)(nil).GetClubDataForEntryID), arg0)
 }
 
-// GetListClubs mocks base method
+// GetListClubs mocks base method.
 func (m *MockMysql) GetListClubs() (*models.Clubs, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetListClubs")
@@ -100,13 +129,13 @@ func (m *MockMysql) GetListClubs() (*models.Clubs, error) {
 	return ret0, ret1
 }
 
-// GetListClubs indicates an expected call of GetListClubs
+// GetListClubs indicates an expected call of GetListClubs.
 func (mr *MockMysqlMockRecorder) GetListClubs() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetListClubs", reflect.TypeOf((*MockMysql)(nil).GetListClubs))
 }
 
-// GetUserClubMembers mocks base method
+// GetUserClubMembers mocks base method.
 func (m *MockMysql) GetUserClubMembers(arg0 string) ([]models.ClubMember, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubMembers", arg0)
@@ -115,13 +144,13 @@ func (m *MockMysql) GetUserClubMembers(arg0 string) ([]models.ClubMember, error)
 	return ret0, ret1
 }
 
-// GetUserClubMembers indicates an expected call of GetUserClubMembers
+// GetUserClubMembers indicates an expected call of GetUserClubMembers.
 func (mr *MockMysqlMockRecorder) GetUserClubMembers(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserClubMembers", reflect.TypeOf((*MockMysql)(nil).GetUserClubMembers), arg0)
 }
 
-// GetUserClubs mocks base method
+// GetUserClubs mocks base method.
 func (m *MockMysql) GetUserClubs(arg0 []models.ClubMember) (*models.Clubs, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserClubs", arg0)
@@ -130,13 +159,13 @@ func (m *MockMysql) GetUserClubs(arg0 []models.ClubMember) (*models.Clubs, error
 	return ret0, ret1
 }
 
-// GetUserClubs indicates an expected call of GetUserClubs
+// GetUserClubs indicates an expected call of GetUserClubs.
 func (mr *MockMysqlMockRecorder) GetUserClubs(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserClubs", reflect.TypeOf((*MockMysql)(nil).GetUserClubs), arg0)
 }
 
-// GetUserDataForUserID mocks base method
+// GetUserDataForUserID mocks base method.
 func (m *MockMysql) GetUserDataForUserID(arg0 string) (*models.UserData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserDataForUserID", arg0)
@@ -145,8 +174,23 @@ func (m *MockMysql) GetUserDataForUserID(arg0 string) (*models.UserData, error) 
 	return ret0, ret1
 }
 
-// GetUserDataForUserID indicates an expected call of GetUserDataForUserID
+// GetUserDataForUserID indicates an expected call of GetUserDataForUserID.
 func (mr *MockMysqlMockRecorder) GetUserDataForUserID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserDataForUserID", reflect.TypeOf((*MockMysql)(nil).GetUserDataForUserID), arg0)
+}
+
+// IsUserClubLeader mocks base method.
+func (m *MockMysql) IsUserClubLeader(arg0 *models.LeaveClubRequest) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsUserClubLeader", arg0)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IsUserClubLeader indicates an expected call of IsUserClubLeader.
+func (mr *MockMysqlMockRecorder) IsUserClubLeader(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsUserClubLeader", reflect.TypeOf((*MockMysql)(nil).IsUserClubLeader), arg0)
 }

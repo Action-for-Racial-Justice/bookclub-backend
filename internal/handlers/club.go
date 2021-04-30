@@ -15,7 +15,7 @@ import (
 //	400: Error
 
 //CreateUserClubMember creates a new club member entry for the user given a JoinClubRequest
-func (bh *BookClubHandler) CreateUserClubMember(w http.ResponseWriter, r *http.Request) {
+func (bh *BookClubHandler) JoinClub(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var userJoinRequest models.JoinClubRequest
@@ -95,4 +95,26 @@ func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.JSON(w, r, entryID)
+}
+
+func (bh *BookClubHandler) LeaveClub(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var leaveClubRequest models.LeaveClubRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&leaveClubRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	err := bh.service.UserLeaveClub(&leaveClubRequest)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, http.StatusOK)
 }
