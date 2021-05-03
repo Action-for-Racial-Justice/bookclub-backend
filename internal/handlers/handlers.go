@@ -47,6 +47,7 @@ type Handlers interface {
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
 	CreateClub(w http.ResponseWriter, r *http.Request)
+	SearchBooks(w http.ResponseWriter, r *http.Request)
 }
 
 //BookClubHandler struct to hold relevant inner data members and hold functions for pure handler logic
@@ -68,6 +69,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 
 	//book endpoints
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
+	registerEndpoint("/v1/book/search", router.Get, handlers.SearchBooks)
 
 	//user endpoints
 	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)

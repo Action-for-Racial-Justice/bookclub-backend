@@ -7,13 +7,15 @@ type UserClubsRequest struct {
 	UserID string `json:"user_id" db:"userID"`
 }
 
-//ClubDataRequest ...
-type ClubDataRequest struct {
-	EntryID string `json:"entry_id"`
+// Clubs is a list of clubs
+// swagger:model Clubs
+//Clubs ...
+type Clubs struct {
+	Clubs []Club
 }
 
-//BookDataRequest ...
-type BookDataRequest struct {
+//ClubDataRequest ...
+type ClubDataRequest struct {
 	EntryID string `json:"entry_id"`
 }
 
@@ -40,4 +42,14 @@ type JoinClubRequest struct {
 	UserID  string    `json:"user_id" db:"userID"`
 	ClubID  string    `json:"club_id" db:"clubID"`
 	EntryID uuid.UUID `db:"entryID"`
+}
+
+// Club is a book club
+// swagger:model Club
+//Club ...
+type Club struct {
+	EntryID  string `json:"entry_id" db:"entryID"`
+	LeaderID string `json:"user_id" db:"leaderID"`
+	ClubName string `json:"club_name" db:"clubName"`
+	BookID   string `json:"book_id" db:"bookID"`
 }

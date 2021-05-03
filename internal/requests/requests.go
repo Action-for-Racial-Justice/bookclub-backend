@@ -23,6 +23,10 @@ type Config struct {
 
 //IRequests to hold request functions
 type IRequests interface {
+	// Google API functions
+	QueryBooksByName(string) (*models.SearchQueryResponse, error)
+
+	// ARJ functions
 	EndUserSession(string) error
 	GetLoginResponse(*models.UserLoginRequest) (*models.ArjAPILoginResponse, error)
 	GetUserData(string) (*models.ArjAPIUserDataResponse, error)

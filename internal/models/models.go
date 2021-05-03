@@ -9,3 +9,9 @@ type HealthCheck struct {
 	Timestamp time.Time `json:"timestamp"`
 	Healthy   bool      `json:"healthy"`
 }
+
+// swagger:model ErrorResponse
+//ErrorResponse ...
+type ErrorResponse struct {
+	ErrList []string `json:"error_slice"`
+}

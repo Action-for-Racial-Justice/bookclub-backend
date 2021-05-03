@@ -55,3 +55,17 @@ CREATE TABLE IF NOT EXISTS club_member (
   CONSTRAINT cm_fk_2 FOREIGN KEY (clubID) REFERENCES club (entryID),
   PRIMARY KEY (entryID)
 );
+
+CREATE TABLE IF NOT EXISTS user_interest (
+    id int(5) NOT NULL AUTO_INCREMENT,
+    uid VARCHAR(255) NOT NULL,
+    interestId int(5) NOT NULL,
+    ranking int(5) NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE uid_ik (uid,interestId),
+
+    CONSTRAINT ui_fk_1 FOREIGN KEY (uid) REFERENCES user (id),
+    CONSTRAINT ui_fk_2 FOREIGN KEY (interestId) REFERENCES interest (id)
+) ENGINE=INNODB;

@@ -49,7 +49,8 @@ func NewConfig(fileName FilePath) *Config {
 			Password: os.Getenv("MYSQL_PASSWORD"),
 		},
 		requestsConfig: requests.Config{
-			ArjBackendURL: os.Getenv("ARJ_BACKEND_URL"),
+			ArjBackendURL:  os.Getenv("ARJ_BACKEND_URL"),
+			GoogleBooksURL: os.Getenv("BOOKS_API_URL"),
 		},
 	}
 }

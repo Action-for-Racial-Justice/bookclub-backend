@@ -25,6 +25,7 @@ type Service interface {
 	GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error)
 	GetUserClubs(string) (*models.Clubs, error)
 	GetUserData(string) (*models.UserData, error)
+	SearchBooks(string) ([]*models.BookResult, error)
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 }
 

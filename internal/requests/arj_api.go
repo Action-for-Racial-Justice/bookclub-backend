@@ -108,3 +108,7 @@ func (r *Requests) EndUserSession(ssoToken string) error {
 	}
 	return nil
 }
+
+// func (r *Requests) GetUserInterests(ssoToken string) error {
+
+// }

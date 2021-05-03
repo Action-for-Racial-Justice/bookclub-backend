@@ -3,6 +3,7 @@ package service
 import (
 	"log"
 
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/bcerrors"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 )
 
@@ -16,4 +17,13 @@ func (svc *BookClubService) GetBookData(id string) *models.Book {
 	}
 
 	return bookData
+}
+
+func (svc *BookClubService) SearchBooks(query string) ([]*models.BookResult, error) {
+
+	resp, err := svc.requests.QueryBooksByName(query)
+	if err != nil {
+		return nil, bcerrors.NewError("Failed to get response from google books API", bcerrors.InternalError)
+	}
+	return resp.Items, nil
 }
