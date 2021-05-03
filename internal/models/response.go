@@ -2,7 +2,6 @@ package models
 
 // UserData is a user for the bookclub application
 // swagger:model UserData
-
 //UserData ...
 type UserData struct {
 	ID           string `json:"id" db:"id"`
@@ -12,7 +11,6 @@ type UserData struct {
 
 // Club is a book club
 // swagger:model Club
-
 //Club ...
 type Club struct {
 	EntryID  string `json:"entry_id" db:"entryID"`
@@ -23,7 +21,6 @@ type Club struct {
 
 // Book is a book data entry
 // swagger:model Book
-
 //Book ...
 type Book struct {
 	EntryID  string `json:"entry_id" db:"entryID"`
@@ -34,8 +31,13 @@ type Book struct {
 
 // Clubs is a list of clubs
 // swagger:model Clubs
-
 //Clubs ...
 type Clubs struct {
 	Clubs []Club
+}
+
+// swagger:model ErrorResponse
+//ErrorResponse ...
+type ErrorResponse struct {
+	ErrList []string `json:"error_slice"`
 }

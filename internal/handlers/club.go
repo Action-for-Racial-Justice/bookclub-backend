@@ -12,7 +12,7 @@ import (
 // Creates a new club member entry for the user given a JoinClubRequest and response returns the ClubMember EntryID
 // responses:
 //	200: ClubMember EntryID
-//	400: Error
+//	400: ErrorResponse
 
 //CreateUserClubMember creates a new club member entry for the user given a JoinClubRequest
 func (bh *BookClubHandler) CreateUserClubMember(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +41,7 @@ func (bh *BookClubHandler) CreateUserClubMember(w http.ResponseWriter, r *http.R
 // Returns data for a club entry given a ClubDataRequest
 // responses:
 //	200: Club
-//	400: Error
+//	400: ErrorResponse
 
 //GetClubData gets data for a club entry given a ClubDataRequest
 func (bh *BookClubHandler) GetClubData(w http.ResponseWriter, r *http.Request) {
@@ -60,7 +60,7 @@ func (bh *BookClubHandler) GetClubData(w http.ResponseWriter, r *http.Request) {
 // Returns a list of clubs
 // responses:
 //	200: Clubs
-//	400: Error
+//	400: ErrorResponse
 
 //GetClubs renders a list of clubs
 func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func (bh *BookClubHandler) GetClubs(w http.ResponseWriter, r *http.Request) {
 // Creates a new club entry for the user given a CreateClubRequest and response returns the Club EntryID
 // responses:
 //	200: Club EntryID
-//	400: Error
+//	400: ErrorResponse
 
 //CreateClub creates a new club entry for the user given a CreateClubRequest
 func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {

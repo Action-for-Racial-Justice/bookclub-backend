@@ -12,7 +12,7 @@ import (
 // Returns data for a single book
 // responses:
 //	200: Book
-//	400: Error
+//	400: ErrorResponse
 
 // GetBookData returns the data for a single book given a BookDataRequest
 func (bh *BookClubHandler) GetBookData(w http.ResponseWriter, r *http.Request) {

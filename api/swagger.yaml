@@ -1,4 +1,89 @@
-info: {}
+basePath: /v1
+consumes:
+- application/json
+definitions:
+  Book:
+    description: Book is a book data entry
+    properties:
+      author:
+        type: string
+        x-go-name: Author
+      entry_id:
+        type: string
+        x-go-name: EntryID
+      is_active:
+        type: boolean
+        x-go-name: IsActive
+      name:
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  Club:
+    description: Club is a book club
+    properties:
+      book_id:
+        type: string
+        x-go-name: BookID
+      club_name:
+        type: string
+        x-go-name: ClubName
+      entry_id:
+        type: string
+        x-go-name: EntryID
+      user_id:
+        type: string
+        x-go-name: LeaderID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  Clubs:
+    description: Clubs is a list of clubs
+    properties:
+      Clubs:
+        items:
+          $ref: '#/definitions/Club'
+        type: array
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  ErrorResponse:
+    properties:
+      error_slice:
+        items:
+          type: string
+        type: array
+        x-go-name: ErrList
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  HealthCheck:
+    description: HealthCheck contains a timestamp and a boolean indicator
+    properties:
+      healthy:
+        type: boolean
+        x-go-name: Healthy
+      timestamp:
+        format: date-time
+        type: string
+        x-go-name: Timestamp
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  UserData:
+    description: UserData is a user for the bookclub application
+    properties:
+      club_assigned:
+        type: string
+        x-go-name: ClubAssigned
+      full_name:
+        type: string
+        x-go-name: FullName
+      id:
+        type: string
+        x-go-name: ID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+info:
+  description: Documentation for Bookclub API
+  title: Bookclub API.
+  version: 0.0.1
 paths:
   /book:
     get:
@@ -6,9 +91,13 @@ paths:
       operationId: getBook
       responses:
         "200":
-          $ref: '#/responses/Book'
+          description: Book
+          schema:
+            $ref: '#/definitions/Book'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - book
   /club:
@@ -17,9 +106,13 @@ paths:
       operationId: listClubs
       responses:
         "200":
-          $ref: '#/responses/Clubs'
+          description: Clubs
+          schema:
+            $ref: '#/definitions/Clubs'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - club
   /club/create:
@@ -29,10 +122,13 @@ paths:
       operationId: createClub
       responses:
         "200":
-          $ref: '#/responses/Club'
           description: EntryID
+          schema:
+            $ref: '#/definitions/Club'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - club
   /club/id:
@@ -41,9 +137,13 @@ paths:
       operationId: getClubData
       responses:
         "200":
-          $ref: '#/responses/Club'
+          description: Club
+          schema:
+            $ref: '#/definitions/Club'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - club
   /club/join:
@@ -56,7 +156,9 @@ paths:
           $ref: '#/responses/ClubMember'
           description: EntryID
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - club
   /health:
@@ -65,9 +167,13 @@ paths:
       operationId: getHealth
       responses:
         "200":
-          $ref: '#/responses/HealthCheck'
+          description: HealthCheck
+          schema:
+            $ref: '#/definitions/HealthCheck'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - health
   /user:
@@ -76,9 +182,11 @@ paths:
       operationId: getUserSSOToken
       responses:
         "200":
-          $ref: '#/responses/ssoToken'
-        "400":
           description: ""
+        "400":
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - user
   /user/clubs:
@@ -87,9 +195,13 @@ paths:
       operationId: listUserClubs
       responses:
         "200":
-          $ref: '#/responses/Clubs'
+          description: Clubs
+          schema:
+            $ref: '#/definitions/Clubs'
         "400":
-          description: ""
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - user
   /user/id:
@@ -98,9 +210,17 @@ paths:
       operationId: getUserData
       responses:
         "200":
-          $ref: '#/responses/UserData'
+          description: UserData
+          schema:
+            $ref: '#/definitions/UserData'
         "400":
-          $ref: '#/responses/Error'
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       tags:
       - user
+produces:
+- application/json
+schemes:
+- http
 swagger: "2.0"

@@ -10,7 +10,7 @@ import (
 // Returns a healthy response if API dependencies are up
 // responses:
 //	200: HealthCheck
-//	400: Error
+//	400: ErrorResponse
 
 // HealthCheck returns a renders health check struct that snapshots dependency health
 func (bh *BookClubHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
