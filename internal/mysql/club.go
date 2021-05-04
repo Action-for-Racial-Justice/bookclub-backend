@@ -9,12 +9,12 @@ import (
 )
 
 const (
-	getAllClubsQuery        = "SELECT * FROM club"
-	getUserClubMembersQuery = "SELECT * FROM club_member where userID = ?"
-	getClubDataQuery        = "SELECT * FROM club where entryID = ?"
-	createClubQuery         = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID)"
-	deleteClubMembersQuery  = "DELETE * FROM club_member WHERE clubID = ?"
-	deleteClubQuery         = "DELETE FROM club WHERE leaderID = ?"
+	getAllClubsQuery        = "SELECT * FROM club;"
+	getUserClubMembersQuery = "SELECT * FROM club_member where userID = ?;"
+	getClubDataQuery        = "SELECT * FROM club where entryID = ?;"
+	createClubQuery         = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID);"
+	deleteClubMembersQuery  = "DELETE FROM club_member WHERE clubID = :clubID;"
+	deleteClubQuery         = "DELETE FROM club WHERE leaderID = :userID AND entryID = :clubID;"
 )
 
 //GetListClubs gets slice of all the clubs
@@ -172,14 +172,14 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 //CreateClub inserts row into club table
 func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) error {
 
-	stmt, err := bcm.mysql.db.Preparex(deleteClubMembersQuery)
+	stmt, err := bcm.mysql.db.PrepareNamed(deleteClubMembersQuery)
 
 	if err != nil {
 		log.Printf("error while preparing club members delete: %s", err)
 		return err
 	}
 
-	result, err := stmt.Exec(deleteRequest.ClubID)
+	result, err := stmt.Exec(deleteRequest)
 	if err != nil {
 		return err
 	}
@@ -194,17 +194,17 @@ func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) err
 		)
 	}
 
-	closeStatement(stmt)
+	defer closeNamedStatement(stmt)
 
-	stmt2, err := bcm.mysql.db.Preparex(deleteClubQuery)
+	stmt2, err := bcm.mysql.db.PrepareNamed(deleteClubQuery)
 
 	if err != nil {
 		log.Printf("error while preparing club delete: %s", err)
 		return err
 	}
-	defer closeStatement(stmt2)
+	defer closeNamedStatement(stmt2)
 
-	result2, err := stmt.Exec(deleteRequest.UserID)
+	result2, err := stmt2.Exec(deleteRequest)
 	if err != nil {
 		return err
 	}

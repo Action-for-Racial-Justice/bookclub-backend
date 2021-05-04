@@ -17,7 +17,7 @@ services:
        MYSQL_USER: arj
        MYSQL_PASSWORD:  Password1
      depends_on: 
-      - db-seed 
+      - db-seed
 
    db-seed:
      container_name: bookclub_seed
