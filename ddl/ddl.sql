@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS club (
   description VARCHAR(1000) NOT NULL,
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderID) REFERENCES user (id),
   CONSTRAINT c_fk_2 FOREIGN KEY (bookID) REFERENCES book (entryID),
-  PRIMARY KEY (entryID, clubName)
+  PRIMARY KEY (entryID),
+  UNIQUE INDEX clubName_UNIQUE (clubName ASC)
 );
 
 INSERT INTO club VALUES
