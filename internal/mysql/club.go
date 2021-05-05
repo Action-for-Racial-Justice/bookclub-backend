@@ -169,7 +169,7 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 	return nil
 }
 
-//CreateClub inserts row into club table
+//DeleteClub deletes all club member entries, and then deletes the club entry
 func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) error {
 
 	stmt, err := bcm.mysql.db.PrepareNamed(deleteClubMembersQuery)

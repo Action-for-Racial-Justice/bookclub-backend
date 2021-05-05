@@ -14,7 +14,7 @@ import (
 //	200: ClubMember EntryID
 //	400: Error
 
-//CreateUserClubMember creates a new club member entry for the user given a JoinClubRequest
+//JoinClub creates a new club member entry for the user given a JoinClubRequest
 func (bh *BookClubHandler) JoinClub(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -97,6 +97,13 @@ func (bh *BookClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, entryID)
 }
 
+// swagger:route POST /club/leave club leaveClub
+// Leaves a club by deleting the club member entry/entries. If the user is the leader, the club is deleted.
+// responses:
+//	200:
+//	400: Error
+
+//LeaveClub leaves a club, or deletes the club if the user is the leader
 func (bh *BookClubHandler) LeaveClub(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

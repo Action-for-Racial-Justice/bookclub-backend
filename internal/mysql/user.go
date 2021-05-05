@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
@@ -13,7 +12,7 @@ const (
 	createClubMemberQuery = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID);"
 	deleteClubMemberQuery = "DELETE FROM club_member WHERE userID = :userID AND clubID = :clubID;"
 	getUserDataQuery      = "SELECT * FROM user where id = ?;"
-	isUserLeaderQuery     = "SELECT * FROM club WHERE leaderID = :userID AND entryID = :clubID;"
+	isUserLeaderQuery     = "SELECT COUNT(*) FROM club WHERE leaderID = :userID AND entryID = :clubID;"
 )
 
 //GetUserDataForUserID returns userData struct holding bookclub user data for a userID string
@@ -38,8 +37,10 @@ func (bcm *BookClubMysql) GetUserDataForUserID(userID string) (*models.UserData,
 
 }
 
-//GetUserDataForUserID returns userData struct holding bookclub user data for a userID string
+//IsUserClubLeader returns true if the user is the leader of the club
 func (bcm *BookClubMysql) IsUserClubLeader(leaveRequest *models.LeaveClubRequest) (bool, error) {
+
+	var count int
 
 	stmt, err := bcm.mysql.db.PrepareNamed(isUserLeaderQuery)
 	defer closeNamedStatement(stmt)
@@ -49,20 +50,20 @@ func (bcm *BookClubMysql) IsUserClubLeader(leaveRequest *models.LeaveClubRequest
 		return false, err
 	}
 
-	_, err = stmt.Exec(leaveRequest)
+	result := stmt.QueryRowx(leaveRequest)
+
+	err = result.Scan(&count)
 
 	if err != nil {
-		switch err {
-		case sql.ErrNoRows:
-			log.Println("user not leader, no error")
-			return false, err
-		default:
-			log.Printf("error while executing isUserLeaderQuery: %s", err)
-			return false, err
-		}
+		log.Printf("error while executing isUserLeaderQuery: %s", err)
+		return false, err
+	} else if count == 0 {
+		log.Println("user is not leader")
+		return false, nil
+	} else {
+		log.Println("user is leader, returning true")
+		return true, nil
 	}
-	return true, nil
-
 }
 
 //CreateUserClubMember creates club member in the clubmember mysql table s
@@ -96,7 +97,7 @@ func (bcm *BookClubMysql) CreateUserClubMember(clubMember *models.JoinClubReques
 	return nil
 }
 
-//CreateUserClubMember creates club member in the clubmember mysql table s
+//DeleteUserClubMember deletes a single club member entry for the user
 func (bcm *BookClubMysql) DeleteUserClubMember(clubMember *models.LeaveClubRequest) error {
 	stmt, err := bcm.mysql.db.PrepareNamed(deleteClubMemberQuery)
 

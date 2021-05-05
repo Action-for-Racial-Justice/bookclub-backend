@@ -25,7 +25,7 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 	return id.String(), nil
 }
 
-//UserJoinClub adds the user to the club and returns the club member entry id
+//UserLeaveClub checks if the user is the leader of the club or a member, and deletes or leaves the club respectively
 func (svc *BookClubService) UserLeaveClub(leaveRequest *models.LeaveClubRequest) error {
 
 	leader, err := svc.mysql.IsUserClubLeader(leaveRequest)
@@ -37,10 +37,10 @@ func (svc *BookClubService) UserLeaveClub(leaveRequest *models.LeaveClubRequest)
 		if err := svc.mysql.DeleteClub(leaveRequest); err != nil {
 			return err
 		}
-	}
-
-	if err := svc.mysql.DeleteUserClubMember(leaveRequest); err != nil {
-		return err
+	} else {
+		if err := svc.mysql.DeleteUserClubMember(leaveRequest); err != nil {
+			return err
+		}
 	}
 
 	return nil
