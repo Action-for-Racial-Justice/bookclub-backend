@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	createClubMemberQuery = "INSERT INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID);"
+	createClubMemberQuery = "INSERT IGNORE INTO club_member(entryID, userID, clubID) VALUES(:entryID, :userID, :clubID);"
 	deleteClubMemberQuery = "DELETE FROM club_member WHERE userID = :userID AND clubID = :clubID;"
 	getUserDataQuery      = "SELECT * FROM user where id = ?;"
 	isUserLeaderQuery     = "SELECT COUNT(*) FROM club WHERE leaderID = :userID AND entryID = :clubID;"

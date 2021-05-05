@@ -12,7 +12,7 @@ const (
 	getAllClubsQuery        = "SELECT * FROM club;"
 	getUserClubMembersQuery = "SELECT * FROM club_member where userID = ?;"
 	getClubDataQuery        = "SELECT * FROM club where entryID = ?;"
-	createClubQuery         = "INSERT INTO club(entryID, leaderID, clubName, bookID) VALUES(:entryID, :leaderID, :clubName, :bookID);"
+	createClubQuery         = "INSERT IGNORE INTO club(entryID, leaderID, clubName, bookID, description) VALUES(:entryID, :leaderID, :clubName, :bookID, :description);"
 	deleteClubMembersQuery  = "DELETE FROM club_member WHERE clubID = :clubID;"
 	deleteClubQuery         = "DELETE FROM club WHERE leaderID = :userID AND entryID = :clubID;"
 )
