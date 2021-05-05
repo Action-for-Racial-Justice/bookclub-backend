@@ -15,6 +15,7 @@ const (
 	createClubQuery         = "INSERT IGNORE INTO club(entryID, leaderID, clubName, bookID, description) VALUES(:entryID, :leaderID, :clubName, :bookID, :description);"
 	deleteClubMembersQuery  = "DELETE FROM club_member WHERE clubID = :clubID;"
 	deleteClubQuery         = "DELETE FROM club WHERE leaderID = :userID AND entryID = :clubID;"
+	addClubBookQuery        = "UPDATE club SET bookID = :bookID WHERE entryID = :clubID;"
 )
 
 //GetListClubs gets slice of all the clubs
@@ -215,6 +216,36 @@ func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) err
 	if rowsAffected2 == 0 {
 		return bcerrors.NewError(
 			"club does not exist, could not be deleted",
+			bcerrors.InternalError,
+		)
+	}
+
+	return nil
+}
+
+//AddClubBook adds a book ID to the club entry
+func (bcm *BookClubMysql) AddClubBook(addBookRequest *models.AddBookRequest) error {
+	stmt, err := bcm.mysql.db.PrepareNamed(addClubBookQuery)
+
+	if err != nil {
+		log.Printf("error while preparing add book to club query: %s", err)
+		return err
+	}
+	defer closeNamedStatement(stmt)
+
+	result, err := stmt.Exec(addBookRequest)
+	if err != nil {
+		return err
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected == 0 {
+		return bcerrors.NewError(
+			fmt.Sprintf("add club book update failed: BookID:%s, ClubID:%s",
+				addBookRequest.BookID,
+				addBookRequest.ClubID),
 			bcerrors.InternalError,
 		)
 	}

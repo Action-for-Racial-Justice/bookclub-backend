@@ -113,3 +113,14 @@ func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) 
 
 	return createRequest.EntryID.String(), nil
 }
+
+//AddClubBook adds a book to the club entry
+func (svc *BookClubService) AddClubBook(addBookRequest *models.AddBookRequest) error {
+
+	if err := svc.mysql.AddClubBook(addBookRequest); err != nil {
+		log.Printf("Error adding book to club -> %s", err.Error())
+		return err
+	}
+
+	return nil
+}

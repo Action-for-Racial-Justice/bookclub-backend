@@ -19,34 +19,21 @@ CREATE TABLE IF NOT EXISTS session (
   PRIMARY KEY (entryID)
 );
 
-CREATE TABLE IF NOT EXISTS book (
-  entryID VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  author VARCHAR(255) NOT NULL,
-  isActive boolean,
-  PRIMARY KEY (entryID)
-);
-
-INSERT INTO book VALUES
-("1","The Divine Comedy","Dante Alighieri",1),
-("2","SQL For Dummies","Allen G. Taylor",1),
-("3","Inactive Book","Not A. Author",1);
-
 CREATE TABLE IF NOT EXISTS club (
   entryID VARCHAR(255) NOT NULL,
   leaderID VARCHAR(255) NOT NULL,
   clubName VARCHAR(255) NOT NULL,
-  bookID VARCHAR(255),
+  bookID VARCHAR(255) NULL,
   description VARCHAR(1000) NOT NULL,
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderID) REFERENCES user (id),
-  CONSTRAINT c_fk_2 FOREIGN KEY (bookID) REFERENCES book (entryID),
-  PRIMARY KEY (entryID, clubName)
+  PRIMARY KEY (entryID),
+  UNIQUE INDEX clubName_UNIQUE (clubName ASC)
 );
 
 INSERT INTO club VALUES
 ("1","1","Keaton Club","1", "test description 1"),
 ("2","2","Ethen Club","2", "test description 2"),
-("3","3","Meghan Club","3", "Here is a long description of a club Here is a long description of a club Here is a long description of a club);
+("3","3","Meghan Club","3", "Here is a long description of a club Here");
 
 CREATE TABLE IF NOT EXISTS club_member (
   entryID VARCHAR(255) NOT NULL,
