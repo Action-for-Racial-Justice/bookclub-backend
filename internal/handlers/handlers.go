@@ -13,6 +13,7 @@
 //	Produces:
 //	- application/json
 //	swagger:meta
+
 package handlers
 
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers

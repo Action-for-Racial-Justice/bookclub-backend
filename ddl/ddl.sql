@@ -36,16 +36,17 @@ CREATE TABLE IF NOT EXISTS club (
   entryID VARCHAR(255) NOT NULL,
   leaderID VARCHAR(255) NOT NULL,
   clubName VARCHAR(255) NOT NULL,
-  bookID VARCHAR(255) NOT NULL,
+  bookID VARCHAR(255),
+  description VARCHAR(1000) NOT NULL,
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderID) REFERENCES user (id),
   CONSTRAINT c_fk_2 FOREIGN KEY (bookID) REFERENCES book (entryID),
   PRIMARY KEY (entryID, clubName)
 );
 
 INSERT INTO club VALUES
-("1","1","Keaton Club","1"),
-("2","2","Ethen Club","2"),
-("3","3","Meghan Club","3");
+("1","1","Keaton Club","1", "test description 1"),
+("2","2","Ethen Club","2", "test description 2"),
+("3","3","Meghan Club","3", "Here is a long description of a club Here is a long description of a club Here is a long description of a club);
 
 CREATE TABLE IF NOT EXISTS club_member (
   entryID VARCHAR(255) NOT NULL,

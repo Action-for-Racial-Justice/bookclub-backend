@@ -19,10 +19,11 @@ type BookDataRequest struct {
 
 //CreateClubRequest ...
 type CreateClubRequest struct {
-	LeaderID string    `json:"user_id" db:"leaderID"` //UserID of club creator
-	ClubName string    `json:"club_name" db:"clubName"`
-	EntryID  uuid.UUID `db:"entryID"`
-	BookID   string    `json:"book_id" db:"bookID"`
+	LeaderID    string    `json:"user_id" db:"leaderID"` //UserID of club creator
+	ClubName    string    `json:"club_name" db:"clubName"`
+	EntryID     uuid.UUID `db:"entryID"`
+	BookID      string    `json:"book_id" db:"bookID"`
+	Description string    `json:"description" db:"description"`
 }
 
 //ClubMember ...
