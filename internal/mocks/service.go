@@ -34,6 +34,20 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
+// AddClubBook mocks base method.
+func (m *MockService) AddClubBook(arg0 *models.AddBookRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddClubBook", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddClubBook indicates an expected call of AddClubBook.
+func (mr *MockServiceMockRecorder) AddClubBook(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddClubBook", reflect.TypeOf((*MockService)(nil).AddClubBook), arg0)
+}
+
 // CheckHealth mocks base method.
 func (m *MockService) CheckHealth() *models.HealthCheck {
 	m.ctrl.T.Helper()
@@ -165,7 +179,7 @@ func (mr *MockServiceMockRecorder) GetUserData(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserData", reflect.TypeOf((*MockService)(nil).GetUserData), arg0)
 }
 
-// User	Club mocks base method.
+// UserJoinClub mocks base method.
 func (m *MockService) UserJoinClub(arg0 *models.JoinClubRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UserJoinClub", arg0)

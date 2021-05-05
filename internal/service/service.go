@@ -15,6 +15,7 @@ import (
 
 //Service interface to describe BookClubService struct receiver functions
 type Service interface {
+	AddClubBook(addBookRequest *models.AddBookRequest) error
 	CheckHealth() *models.HealthCheck
 	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
 	FetchUserDataFromToken(string) (*models.ArjUser, error)

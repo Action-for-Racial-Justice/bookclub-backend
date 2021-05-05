@@ -34,6 +34,20 @@ func (m *MockMysql) EXPECT() *MockMysqlMockRecorder {
 	return m.recorder
 }
 
+// AddClubBook mocks base method.
+func (m *MockMysql) AddClubBook(arg0 *models.AddBookRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddClubBook", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddClubBook indicates an expected call of AddClubBook.
+func (mr *MockMysqlMockRecorder) AddClubBook(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddClubBook", reflect.TypeOf((*MockMysql)(nil).AddClubBook), arg0)
+}
+
 // CreateClub mocks base method.
 func (m *MockMysql) CreateClub(arg0 *models.CreateClubRequest) error {
 	m.ctrl.T.Helper()

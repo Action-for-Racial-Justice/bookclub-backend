@@ -45,3 +45,9 @@ type LeaveClubRequest struct {
 	UserID string `json:"user_id" db:"userID"`
 	ClubID string `json:"club_id" db:"clubID"`
 }
+
+//LeaveClubRequest ...
+type AddBookRequest struct {
+	BookID string `json:"book_id" db:"bookID"`
+	ClubID string `json:"club_id" db:"clubID"`
+}

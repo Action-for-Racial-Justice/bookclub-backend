@@ -125,3 +125,32 @@ func (bh *BookClubHandler) LeaveClub(w http.ResponseWriter, r *http.Request) {
 
 	render.JSON(w, r, http.StatusOK)
 }
+
+// swagger:route POST /club/book club addClubBook
+// Adds a book ID to a given club
+// responses:
+//	200: Club EntryID
+//	400: ErrorResponse
+
+//CreateClub creates a new club entry for the user given a CreateClubRequest
+func (bh *BookClubHandler) AddClubBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var addBookRequest models.AddBookRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&addBookRequest); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	err := bh.service.AddClubBook(&addBookRequest)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, http.StatusOK)
+}

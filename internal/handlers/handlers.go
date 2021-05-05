@@ -37,6 +37,7 @@ var Module = wire.NewSet(
 
 //Handlers interface to describe BookClubHandlers struct receiver functions
 type Handlers interface {
+	AddClubBook(w http.ResponseWriter, r *http.Request)
 	JoinClub(w http.ResponseWriter, r *http.Request)
 	GetClubs(w http.ResponseWriter, r *http.Request)
 	GetClubData(w http.ResponseWriter, r *http.Request)
@@ -65,6 +66,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	router.Use(cors.Handler(setCorsOptions()))
 
 	//Post
+	registerEndpoint("/v1/club/book", router.Post, handlers.AddClubBook)
 	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
 	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
 	registerEndpoint("/v1/club/join", router.Post, handlers.JoinClub)

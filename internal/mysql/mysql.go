@@ -22,6 +22,7 @@ var (
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
+		AddClubBook(addBookRequest *models.AddBookRequest) error
 		CreateUserClubMember(joinRequest *models.JoinClubRequest) error
 		DeleteClub(deleteRequest *models.LeaveClubRequest) error
 		DeleteUserClubMember(deleteRequest *models.LeaveClubRequest) error

@@ -34,6 +34,18 @@ func (m *MockHandlers) EXPECT() *MockHandlersMockRecorder {
 	return m.recorder
 }
 
+// AddClubBook mocks base method.
+func (m *MockHandlers) AddClubBook(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "AddClubBook", arg0, arg1)
+}
+
+// AddClubBook indicates an expected call of AddClubBook.
+func (mr *MockHandlersMockRecorder) AddClubBook(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddClubBook", reflect.TypeOf((*MockHandlers)(nil).AddClubBook), arg0, arg1)
+}
+
 // CreateClub mocks base method.
 func (m *MockHandlers) CreateClub(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
