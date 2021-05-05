@@ -132,7 +132,7 @@ func (bh *BookClubHandler) LeaveClub(w http.ResponseWriter, r *http.Request) {
 //	200: Club EntryID
 //	400: ErrorResponse
 
-//CreateClub creates a new club entry for the user given a CreateClubRequest
+//AddClubBook adds a book ID to a given club
 func (bh *BookClubHandler) AddClubBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

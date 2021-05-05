@@ -223,7 +223,7 @@ func (bcm *BookClubMysql) DeleteClub(deleteRequest *models.LeaveClubRequest) err
 	return nil
 }
 
-//AddClubBook
+//AddClubBook adds a book ID to the club entry
 func (bcm *BookClubMysql) AddClubBook(addBookRequest *models.AddBookRequest) error {
 	stmt, err := bcm.mysql.db.PrepareNamed(addClubBookQuery)
 
