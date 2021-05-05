@@ -37,6 +37,7 @@ type Clubs struct {
 	Clubs []Club
 }
 
+//ErrorResponse is an error response
 // swagger:model ErrorResponse
 //ErrorResponse ...
 type ErrorResponse struct {
