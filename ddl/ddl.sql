@@ -46,11 +46,7 @@ CREATE TABLE IF NOT EXISTS club (
 INSERT INTO club VALUES
 ("1","1","Keaton Club","1", "test description 1"),
 ("2","2","Ethen Club","2", "test description 2"),
-("3","3","Meghan Club","3", "Here is a long description of a club Here 
-is a long description of a club Here is a long description of a club 
-Here is a long description of a club Here is a long description of a 
-club Here is a long description of a club Here is a long description 
-of a club Here is a long description of a club Here is a long description of a club");
+("3","3","Meghan Club","3", "Here is a long description of a club Here is a long description of a club Here is a long description of a club);
 
 CREATE TABLE IF NOT EXISTS club_member (
   entryID VARCHAR(255) NOT NULL,
