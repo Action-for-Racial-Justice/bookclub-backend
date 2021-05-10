@@ -3,6 +3,7 @@
 package validator
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 
@@ -12,6 +13,7 @@ import (
 
 const (
 	genericErrMessage string = "cannot validate user_id field"
+	tokenErrMessage   string = "token cannot be validated"
 )
 
 // Module to associate wire bindings
@@ -21,7 +23,8 @@ var Module = wire.NewSet(
 
 //Validator interface
 type Validator interface {
-	ValidateUserID(userID string) error
+	ValidateUserID(string) error
+	ValidateSSOToken(string) error
 }
 
 //BCValidator short for book club validator
@@ -43,5 +46,15 @@ func (bcv *BCValidator) ValidateUserID(userID string) error {
 			WithExternalMessage("user_id must be of integer type").
 			WithRootCause(err)
 	}
+	return nil
+}
+
+//ValidateSSOToken validates sso token format
+func (bcv *BCValidator) ValidateSSOToken(token string) error {
+	if tokenLength := len(token); tokenLength != 36 {
+		return bcerrors.NewError(genericErrMessage, bcerrors.ValidationError).
+			WithExternalMessage(fmt.Sprintf("sso token must be of length 36, got: %d", tokenLength))
+	}
+
 	return nil
 }

@@ -3,6 +3,7 @@ package requests
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -29,15 +30,19 @@ func (r *Requests) GetLoginResponse(userLoginRequest *models.UserLoginRequest) (
 	resp, err := http.Post(r.config.ArjBackendURL+authEndpoint, "application/json", reqBodyBytes)
 
 	if err != nil {
-		log.Printf("Response error #1 --> %s", err.Error())
+		log.Printf("[GetLoginResponse] Response error #1 --> %s", err.Error())
 		return nil, err
 	}
 
 	defer closeResponse(resp)
+
+	if resp.StatusCode != 200 {
+		return nil, bcerrors.NewError(fmt.Sprintf("request failed, expected status 200, got %d", resp.StatusCode), bcerrors.InternalError)
+	}
 	var decodedResponse models.ArjAPILoginResponse
 
 	if err := json.NewDecoder(resp.Body).Decode(&decodedResponse); err != nil {
-		log.Printf("Response error #2 --> %s", err.Error())
+		log.Printf("[GetLoginResponse] Response error #2 --> %s", err.Error())
 		return nil, err
 	}
 
@@ -52,7 +57,7 @@ func (r *Requests) GetUserData(ssoToken string) (*models.ArjAPIUserDataResponse,
 	req, err := http.NewRequest("GET", r.config.ArjBackendURL+userEndpoint, nil)
 
 	if err != nil {
-		log.Printf("Response error #1 --> %s", err.Error())
+		log.Printf("[GetUserData] Response error #1 --> %s", err.Error())
 		return nil, err
 	}
 	req.Header.Add("Authorization", bearer)
@@ -61,7 +66,7 @@ func (r *Requests) GetUserData(ssoToken string) (*models.ArjAPIUserDataResponse,
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("Response error #2 --> %s", err.Error())
+		log.Printf("[GetUserData] Response error --> %s", err.Error())
 		return nil, err
 	}
 	defer closeResponse(resp)
@@ -69,10 +74,37 @@ func (r *Requests) GetUserData(ssoToken string) (*models.ArjAPIUserDataResponse,
 	var decodedResponse models.ArjAPIUserDataResponse
 	if err := json.NewDecoder(resp.Body).Decode(&decodedResponse); err != nil {
 		if err != nil {
-			log.Printf("Response error #3 --> %s", err.Error())
+			log.Printf("[GetUserData] Response error #3 --> %s", err.Error())
 			return nil, err
 		}
 	}
 
 	return &decodedResponse, nil
+}
+
+//EndUserSession ends user session by sending request to crummy backend api
+func (r *Requests) EndUserSession(ssoToken string) error {
+	var bearer string = "Bearer " + ssoToken
+
+	req, err := http.NewRequest("DELETE", r.config.ArjBackendURL+authEndpoint, nil)
+
+	if err != nil {
+		log.Printf("[EndUserSession] Response error #1 --> %s", err.Error())
+		return err
+	}
+	req.Header.Add("Authorization", bearer)
+
+	client := http.Client{}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Printf("[EndUserSession] Response error #2 --> %s", err.Error())
+		return err
+	}
+	defer closeResponse(resp)
+
+	if resp.StatusCode != http.StatusOK {
+		return bcerrors.NewError("Delete request failed", resp.StatusCode)
+	}
+	return nil
 }

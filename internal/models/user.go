@@ -24,6 +24,8 @@ type ArjAPILoginResponse struct {
 	Success bool              `json:"success"`
 }
 
+// ArjUser is the user data from the ARJ database
+// swagger:model ArjUser
 //ArjUser ...
 type ArjUser struct {
 	GUID             string `json:"guid"`

@@ -46,6 +46,18 @@ func (mr *MockHandlersMockRecorder) CreateClub(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockHandlers)(nil).CreateClub), arg0, arg1)
 }
 
+// EndUserSession mocks base method.
+func (m *MockHandlers) EndUserSession(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "EndUserSession", arg0, arg1)
+}
+
+// EndUserSession indicates an expected call of EndUserSession.
+func (mr *MockHandlersMockRecorder) EndUserSession(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EndUserSession", reflect.TypeOf((*MockHandlers)(nil).EndUserSession), arg0, arg1)
+}
+
 // GetBookData mocks base method.
 func (m *MockHandlers) GetBookData(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
