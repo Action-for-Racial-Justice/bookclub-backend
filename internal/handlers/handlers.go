@@ -38,6 +38,7 @@ var Module = wire.NewSet(
 type Handlers interface {
 	CreateUserClubMember(w http.ResponseWriter, r *http.Request)
 	EndUserSession(w http.ResponseWriter, r *http.Request)
+	JoinClub(w http.ResponseWriter, r *http.Request)
 	GetClubs(w http.ResponseWriter, r *http.Request)
 	GetClubData(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
@@ -45,6 +46,7 @@ type Handlers interface {
 	GetSSOToken(w http.ResponseWriter, r *http.Request)
 	GetBookData(w http.ResponseWriter, r *http.Request)
 	HealthCheck(w http.ResponseWriter, r *http.Request)
+	LeaveClub(w http.ResponseWriter, r *http.Request)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
 	CreateClub(w http.ResponseWriter, r *http.Request)
 }
@@ -77,10 +79,10 @@ func New(service service.Service) (*BookClubHandler, error) {
 
 	//club endpoints
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
-	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
 	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
-	registerEndpoint("/v1/club/join", router.Post, handlers.CreateUserClubMember)
-	registerEndpoint("/v1/club", router.Get, handlers.GetClubData)
+	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)
+	registerEndpoint("/v1/club/join", router.Post, handlers.JoinClub)
+	registerEndpoint("/v1/club/leave", router.Post, handlers.LeaveClub)
 
 	handlers.router = router
 

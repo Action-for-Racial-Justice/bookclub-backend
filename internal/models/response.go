@@ -13,10 +13,11 @@ type UserData struct {
 // swagger:model Club
 //Club ...
 type Club struct {
-	EntryID  string `json:"entry_id" db:"entryID"`
-	LeaderID string `json:"user_id" db:"leaderID"`
-	ClubName string `json:"club_name" db:"clubName"`
-	BookID   string `json:"book_id" db:"bookID"`
+	EntryID     string `json:"entry_id" db:"entryID"`
+	LeaderID    string `json:"user_id" db:"leaderID"`
+	ClubName    string `json:"club_name" db:"clubName"`
+	BookID      string `json:"book_id" db:"bookID"`
+	Description string `json:"description" db:"description"`
 }
 
 // Book is a book data entry
@@ -36,6 +37,7 @@ type Clubs struct {
 	Clubs []Club
 }
 
+//ErrorResponse is an error response
 // swagger:model ErrorResponse
 //ErrorResponse ...
 type ErrorResponse struct {
