@@ -53,6 +53,7 @@ func (svc *BookClubService) FetchUserDataFromToken(ssoToken string) (*models.Arj
 	return &arjResponse.User, nil
 }
 
+//DeleteUserSession deletes a users session
 func (svc *BookClubService) DeleteUserSession(ssoToken string) error {
 
 	// if err := svc.validator.ValidateSSOToken(ssoToken); err != nil {

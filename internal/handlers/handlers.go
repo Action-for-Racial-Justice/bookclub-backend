@@ -13,6 +13,7 @@
 //	Produces:
 //	- application/json
 //	swagger:meta
+
 package handlers
 
 //go:generate mockgen -package=mocks -destination=../mocks/handlers.go github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers Handlers
@@ -36,7 +37,6 @@ var Module = wire.NewSet(
 
 //Handlers interface to describe BookClubHandlers struct receiver functions
 type Handlers interface {
-	CreateUserClubMember(w http.ResponseWriter, r *http.Request)
 	EndUserSession(w http.ResponseWriter, r *http.Request)
 	JoinClub(w http.ResponseWriter, r *http.Request)
 	GetClubs(w http.ResponseWriter, r *http.Request)
