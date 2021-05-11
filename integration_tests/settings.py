@@ -13,3 +13,7 @@ DB_PORT: int = int(config("MYSQL_PORT"))
 DB_NAME: str = config("MYSQL_DATABASE")
 DB_USER: str = config("MYSQL_USER")
 DB_PASSWORD: str = config("MYSQL_PASSWORD")
+
+## arj user vars 
+TEST_EMAIL="m.johnson@qa.arj.today"
+TEST_PASSWORD="Mnbvcxz1"

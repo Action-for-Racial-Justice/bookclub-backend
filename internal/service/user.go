@@ -11,6 +11,7 @@ import (
 func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error) {
 
 	if err := svc.validator.ValidateUserID(userID); err != nil {
+		svc.logger.Errorw(err.Error())
 		return nil, err
 	}
 
@@ -28,6 +29,7 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 	arjResponse, err := svc.requests.GetLoginResponse(userLoginRequest)
 
 	if err != nil {
+		svc.logger.Errorw(err.Error())
 		return "", err
 	}
 
@@ -39,16 +41,33 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 }
 
 //FetchUserDataFromToken gets user data from monolith API for a provided sso session token
-func (svc *BookClubService) FetchUserDataFromToken(SSOToken string) (*models.ArjUser, error) {
-	arjResponse, err := svc.requests.GetUserData(SSOToken)
+func (svc *BookClubService) FetchUserDataFromToken(ssoToken string) (*models.ArjUser, error) {
+	arjResponse, err := svc.requests.GetUserData(ssoToken)
 
 	if err != nil {
+		svc.logger.Errorw(err.Error())
 		return nil, err
 	}
 
 	if !arjResponse.Success {
+		println("ARJ SAID NAH")
 		return nil, bcerrors.NewError("request failed", bcerrors.InternalError)
 	}
 
 	return &arjResponse.User, nil
+}
+
+//DeleteUserSession deletes a users session
+func (svc *BookClubService) DeleteUserSession(ssoToken string) error {
+
+	// if err := svc.validator.ValidateSSOToken(ssoToken); err != nil {
+	// 	return err
+	// }
+
+	if err := svc.requests.EndUserSession(ssoToken); err != nil {
+		svc.logger.Errorw(err.Error())
+		return err
+	}
+
+	return nil
 }

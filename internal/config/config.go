@@ -7,6 +7,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/server"
+	"go.uber.org/zap"
 
 	"github.com/joho/godotenv"
 
@@ -67,6 +68,10 @@ func NewDBConfig(cfg *Config) *mysql.Config {
 //NewRequestsConfig returns requests config from global config
 func NewRequestsConfig(cfg *Config) *requests.Config {
 	return &cfg.requestsConfig
+}
+
+func NewLoggerOptions() []zap.Option {
+	return []zap.Option{}
 }
 
 func convertToInt(str string) int {

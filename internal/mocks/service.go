@@ -63,6 +63,20 @@ func (mr *MockServiceMockRecorder) CreateClub(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateClub", reflect.TypeOf((*MockService)(nil).CreateClub), arg0)
 }
 
+// DeleteUserSession mocks base method.
+func (m *MockService) DeleteUserSession(arg0 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteUserSession", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteUserSession indicates an expected call of DeleteUserSession.
+func (mr *MockServiceMockRecorder) DeleteUserSession(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUserSession", reflect.TypeOf((*MockService)(nil).DeleteUserSession), arg0)
+}
+
 // FetchUserDataFromToken mocks base method.
 func (m *MockService) FetchUserDataFromToken(arg0 string) (*models.ArjUser, error) {
 	m.ctrl.T.Helper()
