@@ -28,7 +28,6 @@ func (r *Requests) QueryBooksByName(searchQuery string) (*models.SearchQueryResp
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		println("HESKLWHJSKDHG")
 		return nil, bcerrors.NewError(
 			"Got invalid response code from API", bcerrors.InternalError,
 		).WithExternalMessage(fmt.Sprintf("Expected: 200, Got: %d", resp.StatusCode))

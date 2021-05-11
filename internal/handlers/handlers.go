@@ -75,6 +75,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)
 	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
 	registerEndpoint("/v1/user/session", router.Post, handlers.GetSSOToken)
+	registerEndpoint("/v1/user", router.Get, handlers.GetArjBackendUserData)
 	registerEndpoint("/v1/user/session", router.Delete, handlers.EndUserSession)
 
 	//club endpoints

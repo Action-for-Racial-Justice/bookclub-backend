@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS club (
   leaderID VARCHAR(255) NOT NULL,
   clubName VARCHAR(255) NOT NULL,
   bookID VARCHAR(255) NOT NULL,
+  clubDescription VARCHAR(1000) NOT NULL,
   CONSTRAINT c_fk_1 FOREIGN KEY (leaderID) REFERENCES user (id),
   CONSTRAINT c_fk_2 FOREIGN KEY (bookID) REFERENCES book (entryID),
   PRIMARY KEY (entryID, clubName)
