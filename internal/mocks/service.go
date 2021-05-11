@@ -165,7 +165,7 @@ func (mr *MockServiceMockRecorder) GetUserData(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserData", reflect.TypeOf((*MockService)(nil).GetUserData), arg0)
 }
 
-// User	Club mocks base method.
+// UserJoinClub mocks base method.
 func (m *MockService) UserJoinClub(arg0 *models.JoinClubRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UserJoinClub", arg0)
