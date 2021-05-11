@@ -1,11 +1,11 @@
 FROM python:3.8.7
-WORKDIR /app
 
-COPY integration_tests/* /app/
-COPY config.env /app/config.env
+RUN mkdir app
+COPY integration_tests/requirements.txt /app/
+RUN pip install -r /app/requirements.txt
 
-RUN pip install -r requirements.txt
+COPY integration_tests/*.py /app/
+COPY config.env config.env
 
-WORKDIR /app
 
-RUN pytest -vv 
+RUN pytest -vv /app/

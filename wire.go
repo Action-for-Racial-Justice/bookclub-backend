@@ -14,6 +14,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
 
 	"github.com/google/wire"
+	"go.uber.org/zap"
 )
 
 func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server, func(), error) {
@@ -24,6 +25,8 @@ func InitializeAndRun(ctx context.Context, cfg config.FilePath) (*server.Server,
 			config.NewServerConfig,
 			config.NewDBConfig,
 			config.NewRequestsConfig,
+			config.NewLoggerOptions,
+			zap.NewProduction,
 			databaseModule,
 			validatorModule,
 			requestsModule,

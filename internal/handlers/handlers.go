@@ -20,12 +20,15 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
+	"github.com/felixge/httpsnoop"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/google/wire"
 )
@@ -58,10 +61,10 @@ type BookClubHandler struct {
 }
 
 //New ... constructor
-func New(service service.Service) (*BookClubHandler, error) {
+func New(service service.Service, logger *zap.Logger) (*BookClubHandler, error) {
 	handlers := &BookClubHandler{service: service}
 	router := chi.NewRouter()
-	router.Use(middleware.Logger)
+	router.Use(accessLogger(logger))
 
 	router.Use(cors.Handler(setCorsOptions()))
 
@@ -72,7 +75,7 @@ func New(service service.Service) (*BookClubHandler, error) {
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
 
 	//user endpoints
-	registerEndpoint("/v1/user", router.Post, handlers.GetUserData)
+	registerEndpoint("/v1/user", router.Post, handlers.GetArjBackendUserData)
 	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
 	registerEndpoint("/v1/user/session", router.Post, handlers.GetSSOToken)
 	registerEndpoint("/v1/user/session", router.Delete, handlers.EndUserSession)
@@ -120,4 +123,46 @@ func curateJSONError(errs ...error) models.ErrorResponse {
 		errList = append(errList, err.Error())
 	}
 	return models.ErrorResponse{ErrList: errList}
+}
+
+func accessLogger(logger *zap.Logger) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			response := httpsnoop.CaptureMetrics(next, w, r)
+			host := r.Header.Get("x-forwarded-for")
+			if len(host) == 0 {
+				host = r.RemoteAddr
+			}
+
+			contentLength := r.Header.Get("Content-Length")
+			if len(contentLength) == 0 {
+				contentLength = "-"
+			}
+
+			referer := r.Header.Get("referer")
+			if len(referer) == 0 {
+				referer = "-"
+			}
+
+			userAgent := r.Header.Get("user-agent")
+			if len(userAgent) == 0 {
+				userAgent = "-"
+			}
+
+			xCorrelationID := r.Header.Get("X-Correlation-Id")
+			if len(xCorrelationID) == 0 {
+				xCorrelationID = "-"
+			}
+
+			var logFunction func(msg string, fields ...zapcore.Field)
+			logFunction = logger.Info
+			logFunction("access", zap.String("host", host),
+				zap.String("time", time.Now().Format("2006-01-02 15:04:05.999Z")),
+				zap.String("user-name", "-"), zap.String("content-length", contentLength),
+				zap.String("user-agent", userAgent), zap.String("referer", referer),
+				zap.Int("status-code", response.Code), zap.String("request-method", r.Method),
+				zap.String("correlation-id", xCorrelationID),
+				zap.String("request-uri", r.URL.RequestURI()), zap.Duration("response-time", response.Duration))
+		})
+	}
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
+	"go.uber.org/zap"
 
 	"github.com/google/wire"
 )
@@ -39,12 +40,14 @@ type BookClubService struct {
 	requests  requests.IRequests
 	validator validator.Validator
 	mysql     mysql.Mysql
+	logger    *zap.SugaredLogger
 }
 
 //New ... constructor
-func New(db mysql.Mysql, requests requests.IRequests, validator validator.Validator) *BookClubService {
+func New(db mysql.Mysql, requests requests.IRequests, validator validator.Validator, logger *zap.Logger) *BookClubService {
 	return &BookClubService{
 		mysql:     db,
+		logger:    logger.Sugar(),
 		requests:  requests,
 		validator: validator,
 	}

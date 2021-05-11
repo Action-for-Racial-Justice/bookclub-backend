@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/epociask/go-rest-api-template v0.0.0-20210215062511-352fc53a0919
+	github.com/felixge/httpsnoop v1.0.2 // indirect
 	github.com/go-chi/chi v1.5.2
 	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/render v1.0.1
@@ -22,4 +23,6 @@ require (
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.7.0
+	go.uber.org/multierr v1.7.0 // indirect
+	go.uber.org/zap v1.16.0 // indirect
 )

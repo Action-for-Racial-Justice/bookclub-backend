@@ -2,7 +2,7 @@ import requests
 from settings import API_HOST, API_PORT, HEADERS
 
 
-def test_Health_Endpoint_Returns_Healthy():
+def test_health_endpoint_returns_healthy():
     resp: dict = requests.get(
                         params = HEADERS,
                         url=f"{API_HOST}:{API_PORT}/health"

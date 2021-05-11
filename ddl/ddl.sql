@@ -5,11 +5,6 @@ CREATE TABLE IF NOT EXISTS user (
   PRIMARY KEY (id)
 );
 
-INSERT INTO user VALUES
-("1","Keaton Currie",0),
-("2","Ethen Pociask",0),
-("3","Meghan Johnson",0),
-("4","Stephanie Grasso",0);
 
 CREATE TABLE IF NOT EXISTS session (
   entryID VARCHAR(255) NOT NULL,
@@ -27,10 +22,6 @@ CREATE TABLE IF NOT EXISTS book (
   PRIMARY KEY (entryID)
 );
 
-INSERT INTO book VALUES
-("1","The Divine Comedy","Dante Alighieri",1),
-("2","SQL For Dummies","Allen G. Taylor",1),
-("3","Inactive Book","Not A. Author",1);
 
 CREATE TABLE IF NOT EXISTS club (
   entryID VARCHAR(255) NOT NULL,
@@ -44,10 +35,6 @@ CREATE TABLE IF NOT EXISTS club (
   UNIQUE INDEX clubName_UNIQUE (clubName ASC)
 );
 
-INSERT INTO club VALUES
-("1","1","Keaton Club","1", "test description 1"),
-("2","2","Ethen Club","2", "test description 2"),
-("3","3","Meghan Club","3", "Here is a long description of a club Here is a long description of a club Here is a long description of a club);
 
 CREATE TABLE IF NOT EXISTS club_member (
   entryID VARCHAR(255) NOT NULL,

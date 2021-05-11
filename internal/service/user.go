@@ -11,6 +11,7 @@ import (
 func (svc *BookClubService) GetUserData(userID string) (*models.UserData, error) {
 
 	if err := svc.validator.ValidateUserID(userID); err != nil {
+		svc.logger.Errorw(err.Error())
 		return nil, err
 	}
 
@@ -28,6 +29,7 @@ func (svc *BookClubService) GetSSOToken(userLoginRequest *models.UserLoginReques
 	arjResponse, err := svc.requests.GetLoginResponse(userLoginRequest)
 
 	if err != nil {
+		svc.logger.Errorw(err.Error())
 		return "", err
 	}
 
@@ -43,10 +45,12 @@ func (svc *BookClubService) FetchUserDataFromToken(ssoToken string) (*models.Arj
 	arjResponse, err := svc.requests.GetUserData(ssoToken)
 
 	if err != nil {
+		svc.logger.Errorw(err.Error())
 		return nil, err
 	}
 
 	if !arjResponse.Success {
+		println("ARJ SAID NAH")
 		return nil, bcerrors.NewError("request failed", bcerrors.InternalError)
 	}
 
@@ -61,6 +65,7 @@ func (svc *BookClubService) DeleteUserSession(ssoToken string) error {
 	// }
 
 	if err := svc.requests.EndUserSession(ssoToken); err != nil {
+		svc.logger.Errorw(err.Error())
 		return err
 	}
 

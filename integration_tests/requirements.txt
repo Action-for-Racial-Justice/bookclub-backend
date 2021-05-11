@@ -5,3 +5,4 @@ pytest-flask-sqlalchemy==1.0.2  # via -r test.in
 pytest-mock==1.10.4       # via pytest-flask-sqlalchemy
 python-decouple==3.3
 python-decouple==3.3
+psycopg2-binary==2.8.6
