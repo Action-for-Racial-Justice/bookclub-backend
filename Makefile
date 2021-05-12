@@ -78,3 +78,6 @@ gen-swagger:
 serve-swagger:
 	swagger serve -F swagger api/swagger.yaml
 
+.PHONY: logs 
+logs:
+	docker logs -f bookclub_api

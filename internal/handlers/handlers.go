@@ -68,19 +68,19 @@ func New(service service.Service, logger *zap.Logger) (*BookClubHandler, error) 
 
 	router.Use(cors.Handler(setCorsOptions()))
 
-	//health endpoint
-	registerEndpoint("/health", router.Get, handlers.HealthCheck)
+	// health endpoint
+	registerEndpoint("/health", router.Get, handlers.HealthCheck) // integration tested
 
-	//book endpoints
+	// book endpoints
 	registerEndpoint("/v1/book", router.Get, handlers.GetBookData)
 
-	//user endpoints
-	registerEndpoint("/v1/user", router.Post, handlers.GetArjBackendUserData)
+	// user endpoints
+	registerEndpoint("/v1/user", router.Get, handlers.GetArjBackendUserData) //integration tested
 	registerEndpoint("/v1/user/clubs", router.Post, handlers.GetUserClubs)
-	registerEndpoint("/v1/user/session", router.Post, handlers.GetSSOToken)
-	registerEndpoint("/v1/user/session", router.Delete, handlers.EndUserSession)
+	registerEndpoint("/v1/user/session", router.Post, handlers.GetSSOToken)      // integration tested
+	registerEndpoint("/v1/user/session", router.Delete, handlers.EndUserSession) // integration tested
 
-	//club endpoints
+	// club endpoints
 	registerEndpoint("/v1/club", router.Get, handlers.GetClubs)
 	registerEndpoint("/v1/club/create", router.Post, handlers.CreateClub)
 	registerEndpoint("/v1/club/id", router.Post, handlers.GetClubData)

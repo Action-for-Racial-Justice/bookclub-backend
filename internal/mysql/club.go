@@ -12,7 +12,7 @@ const (
 	getAllClubsQuery        = "SELECT * FROM club;"
 	getUserClubMembersQuery = "SELECT * FROM club_member where userID = ?;"
 	getClubDataQuery        = "SELECT * FROM club where entryID = ?;"
-	createClubQuery         = "INSERT IGNORE INTO club(entryID, leaderID, clubName, bookID, description) VALUES(:entryID, :leaderID, :clubName, :bookID, :description);"
+	createClubQuery         = "INSERT INTO club(entryID, leaderID, clubName, bookID, bookDescription) VALUES(:entryID, :leaderID, :clubName, :bookID, :bookDescription);"
 	deleteClubMembersQuery  = "DELETE FROM club_member WHERE clubID = :clubID;"
 	deleteClubQuery         = "DELETE FROM club WHERE leaderID = :userID AND entryID = :clubID;"
 )
@@ -159,7 +159,7 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 	}
 	if rowsAffected == 0 {
 		return bcerrors.NewError(
-			fmt.Sprintf("club already exist: ID:%s, ClubName:%s",
+			fmt.Sprintf("club already exists or user does not exist: ID:%s, ClubName:%s",
 				createRequest.EntryID,
 				createRequest.ClubName),
 			bcerrors.InternalError,

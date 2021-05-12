@@ -22,7 +22,6 @@ var (
 type (
 	//Mysql interface which describes BookClubMysql struct functions (currently none)
 	Mysql interface {
-		CreateClub(createRequest *models.CreateClubRequest) error
 		CreateUserClubMember(joinRequest *models.JoinClubRequest) error
 		DeleteClub(deleteRequest *models.LeaveClubRequest) error
 		DeleteUserClubMember(deleteRequest *models.LeaveClubRequest) error
@@ -34,6 +33,8 @@ type (
 		GetListClubs() (*models.Clubs, error)
 		IsUserClubLeader(*models.LeaveClubRequest) (bool, error)
 		UserJoinClub(*models.JoinClubRequest) (string, error)
+		InsertUser(*models.ArjUser) error
+		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 
 	//BookClubMysql struct to hold relevant inner data members and functions for database connection
