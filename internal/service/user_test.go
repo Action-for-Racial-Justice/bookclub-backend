@@ -1,28 +1,68 @@
 package service_test
 
-// var (
-// 	user = &models.Book{
-// 		EntryID:  "1",
-// 		Name:     "A Farewell to Arms",
-// 		Author:   "Ernest Hemingway",
-// 		IsActive: true,
-// 	}
-// )
+import (
+	"errors"
+	"testing"
 
-// func TestGetSSOToken(t *testing.T) {
-// 	ts := createTestSuite(t)
+	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+)
 
-// 	ts.mockMysql.EXPECT().GetLoginResponse("1").Return(book, nil).Times(1)
-// 	bookData := ts.svc.GetBookData("1")
+var (
+	userData = &models.UserData{
+		ID:       "1",
+		FullName: "A Farewell to Arms",
+	}
 
-// 	assert.Equal(t, book, bookData)
-// }
+	expectedUserLoginRequest = &models.UserLoginRequest{
+		Email:    "k.currie@qa.arj.today",
+		Password: "Mnbvcxz1",
+	}
 
-// func TestGetBookDataForEntryIDFail(t *testing.T) {
-// 	ts := createTestSuite(t)
+	expectedArjAPILoginResponse = &models.ArjAPILoginResponse{
+		Success: true,
+	}
 
-// 	ts.mockMysql.EXPECT().GetBookDataForEntryID("1").Return(nil, errors.New("GetBookDataForEntryID error")).Times(1)
-// 	bookData := ts.svc.GetBookData("1")
+	expectedArjAPIUserDataResponse = &models.ArjAPIUserDataResponse{
+		Success: true,
+	}
+)
 
-// 	assert.NotEqual(t, book, bookData)
-// }
+func TestGetSSOToken(t *testing.T) {
+	ts := createTestSuite(t)
+	expectedArjAPILoginResponse.Auth = make(map[string]string)
+	expectedArjAPILoginResponse.Auth["token"] = gomock.Any().String()
+
+	ts.mockRequests.EXPECT().GetLoginResponse(expectedUserLoginRequest).Return(expectedArjAPILoginResponse, nil).Times(1)
+	token, err := ts.svc.GetSSOToken(expectedUserLoginRequest)
+
+	assert.NotNil(t, token)
+	assert.NoError(t, err)
+}
+
+func TestGetSSOTokenFail(t *testing.T) {
+	ts := createTestSuite(t)
+	expectedArjAPILoginResponse.Auth = make(map[string]string)
+	errorMessage := errors.New("TestGetSSOTokenFail error")
+
+	ts.mockRequests.EXPECT().GetLoginResponse(expectedUserLoginRequest).Return(nil, errorMessage).Times(1)
+	token, err := ts.svc.GetSSOToken(expectedUserLoginRequest)
+
+	assert.Empty(t, token)
+	assert.Error(t, err)
+	assert.Equal(t, err.Error(), errorMessage.Error())
+
+}
+
+func TestFetchUserDataFromToken(t *testing.T) {
+	ts := createTestSuite(t)
+	expectedArjAPIUserDataResponse.User = &models.ArjUser
+	expectedArjAPILoginResponse.Auth["token"] = gomock.Any().String()
+
+	ts.mockRequests.EXPECT().GetLoginResponse(expectedUserLoginRequest).Return(expectedArjAPILoginResponse, nil).Times(1)
+	token, err := ts.svc.GetSSOToken(expectedUserLoginRequest)
+
+	assert.NotNil(t, token)
+	assert.NoError(t, err)
+}

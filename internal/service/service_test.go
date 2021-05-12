@@ -26,7 +26,7 @@ func createTestSuite(t *testing.T) *testSuite {
 	mockLogger := zap.NewNop()
 	service := service.New(mockSql, mockRequests, mockValidator, mockLogger)
 
-	return &testSuite{mockMysql: mockSql, svc: service, mockController: mockController}
+	return &testSuite{mockMysql: mockSql, mockRequests: mockRequests, svc: service, mockController: mockController}
 }
 
 func TestMain(m *testing.M) {
