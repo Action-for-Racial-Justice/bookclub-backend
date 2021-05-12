@@ -218,7 +218,7 @@ func TestCreateClub(t *testing.T) {
 
 func TestCreateClubFail(t *testing.T) {
 	ts := createTestSuite(t)
-	errorMessage := errors.New("CreateClub error")
+	errorMessage := errors.New("CreateClubFail error")
 
 	ts.mockMysql.EXPECT().CreateClub(gomock.Any()).Return(errorMessage).Times(1)
 	id, err := ts.svc.CreateClub(expectedClubRequest)
