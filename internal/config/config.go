@@ -70,6 +70,7 @@ func NewRequestsConfig(cfg *Config) *requests.Config {
 	return &cfg.requestsConfig
 }
 
+//NewLoggerOptions ...
 func NewLoggerOptions() []zap.Option {
 	return []zap.Option{}
 }

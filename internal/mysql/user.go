@@ -129,7 +129,7 @@ func (bcm *BookClubMysql) DeleteUserClubMember(clubMember *models.LeaveClubReque
 	return nil
 }
 
-//CreateUserClubMember creates club member in the clubmember mysql table s
+//UserJoinClub creates club member in the clubmember mysql table s
 func (bcm *BookClubMysql) UserJoinClub(joinRequest *models.JoinClubRequest) (string, error) {
 	if _, err := bcm.GetUserDataForUserID(joinRequest.UserID); err != nil {
 		return "", err
