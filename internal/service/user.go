@@ -71,3 +71,13 @@ func (svc *BookClubService) DeleteUserSession(ssoToken string) error {
 
 	return nil
 }
+
+//InsertUserToDataBase inserts user to database
+func (svc *BookClubService) InsertUserToDataBase(user *models.ArjUser) {
+
+	//TODO add validation here
+
+	if err := svc.mysql.InsertUser(user); err != nil {
+		svc.logger.Errorw(err.Error())
+	}
+}

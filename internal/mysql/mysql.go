@@ -32,6 +32,7 @@ type (
 		GetBookDataForEntryID(entryID string) (*models.Book, error)
 		GetListClubs() (*models.Clubs, error)
 		IsUserClubLeader(*models.LeaveClubRequest) (bool, error)
+		InsertUser(*models.ArjUser) error
 		CreateClub(createRequest *models.CreateClubRequest) error
 	}
 

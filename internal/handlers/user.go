@@ -66,8 +66,8 @@ func (bh *BookClubHandler) GetUserClubs(w http.ResponseWriter, r *http.Request) 
 // swagger:route GET /user user getUserSSOToken
 // Returns a sso token if exists for a email and password
 // responses:
-//	200:
-//	400:
+//	200: Token
+//	400: ErrorResponse
 
 //GetSSOToken grabs sso token for login info
 func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
@@ -101,21 +101,21 @@ func (bh *BookClubHandler) GetSSOToken(w http.ResponseWriter, r *http.Request) {
 //GetArjBackendUserData gets user data from ARJ monolithic api through SSO token
 func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var tokenizedRequest models.SingleSignOn
+	ssoToken := strings.TrimSpace(
+		strings.Split(
+			r.Header.Get("Authorization"), "Bearer")[1],
+	)
 
-	if err := json.NewDecoder(r.Body).Decode(&tokenizedRequest); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		render.JSON(w, r, err)
-		return
-	}
-
-	userData, err := bh.service.FetchUserDataFromToken(tokenizedRequest.Token)
+	userData, err := bh.service.FetchUserDataFromToken(ssoToken)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		render.JSON(w, r, curateJSONError(err))
 		return
 	}
+
+	// go here
+	go bh.service.InsertUserToDataBase(userData)
 	w.WriteHeader(http.StatusOK)
 	render.JSON(w, r, userData)
 }
@@ -126,9 +126,10 @@ func (bh *BookClubHandler) GetArjBackendUserData(w http.ResponseWriter, r *http.
 //	200:
 //	400: ErrorResponse
 
-//EndUserSession ends user session by talking to crappy monolith API
+//EndUserSession ends user session by talking to monolith API
 func (bh *BookClubHandler) EndUserSession(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
 	splitToken := strings.TrimSpace(
 		strings.Split(
 			r.Header.Get("Authorization"), "Bearer")[1],

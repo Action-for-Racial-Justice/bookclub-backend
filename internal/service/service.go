@@ -26,6 +26,7 @@ type Service interface {
 	GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error)
 	GetUserClubs(string) (*models.Clubs, error)
 	GetUserData(string) (*models.UserData, error)
+	InsertUserToDataBase(*models.ArjUser)
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 	UserLeaveClub(leaveRequest *models.LeaveClubRequest) error
 }

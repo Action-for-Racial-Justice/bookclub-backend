@@ -26,7 +26,7 @@ type CreateClubRequest struct {
 	ClubName    string    `json:"club_name" db:"clubName"`
 	EntryID     uuid.UUID `db:"entryID"`
 	BookID      string    `json:"book_id" db:"bookID"`
-	Description string    `json:"description" db:"description"`
+	Description string    `json:"description" db:"bookDescription"`
 }
 
 //ClubMember ...

@@ -13,6 +13,7 @@ const (
 	deleteClubMemberQuery = "DELETE FROM club_member WHERE userID = :userID AND clubID = :clubID;"
 	getUserDataQuery      = "SELECT * FROM user where id = ?;"
 	isUserLeaderQuery     = "SELECT COUNT(*) FROM club WHERE leaderID = :userID AND entryID = :clubID;"
+	insertUserQuery       = "INSERT INTO user(id, fullName) VALUES(:id, :fullName);"
 )
 
 //GetUserDataForUserID returns userData struct holding bookclub user data for a userID string
@@ -124,6 +125,23 @@ func (bcm *BookClubMysql) DeleteUserClubMember(clubMember *models.LeaveClubReque
 			),
 			bcerrors.InternalError,
 		)
+	}
+	return nil
+}
+
+//InsertUser inserts user to database
+func (bcm *BookClubMysql) InsertUser(user *models.ArjUser) error {
+	stmt, err := bcm.mysql.db.PrepareNamed(insertUserQuery)
+
+	if err != nil {
+		log.Printf("error while preparing user insert: %s", err)
+		return err
+	}
+	defer closeNamedStatement(stmt)
+
+	if _, err = stmt.Exec(user); err != nil {
+		log.Printf("error while executing user insert: %s", err)
+		return err
 	}
 	return nil
 }
