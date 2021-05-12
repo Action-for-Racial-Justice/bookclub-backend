@@ -180,6 +180,20 @@ func (mr *MockMysqlMockRecorder) GetUserDataForUserID(arg0 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserDataForUserID", reflect.TypeOf((*MockMysql)(nil).GetUserDataForUserID), arg0)
 }
 
+// InsertUser mocks base method.
+func (m *MockMysql) InsertUser(arg0 *models.ArjUser) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertUser", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// InsertUser indicates an expected call of InsertUser.
+func (mr *MockMysqlMockRecorder) InsertUser(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockMysql)(nil).InsertUser), arg0)
+}
+
 // IsUserClubLeader mocks base method.
 func (m *MockMysql) IsUserClubLeader(arg0 *models.LeaveClubRequest) (bool, error) {
 	m.ctrl.T.Helper()

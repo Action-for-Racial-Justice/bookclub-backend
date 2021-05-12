@@ -179,6 +179,18 @@ func (mr *MockServiceMockRecorder) GetUserData(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserData", reflect.TypeOf((*MockService)(nil).GetUserData), arg0)
 }
 
+// InsertUserToDataBase mocks base method.
+func (m *MockService) InsertUserToDataBase(arg0 *models.ArjUser) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "InsertUserToDataBase", arg0)
+}
+
+// InsertUserToDataBase indicates an expected call of InsertUserToDataBase.
+func (mr *MockServiceMockRecorder) InsertUserToDataBase(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUserToDataBase", reflect.TypeOf((*MockService)(nil).InsertUserToDataBase), arg0)
+}
+
 // UserJoinClub mocks base method.
 func (m *MockService) UserJoinClub(arg0 *models.JoinClubRequest) (string, error) {
 	m.ctrl.T.Helper()

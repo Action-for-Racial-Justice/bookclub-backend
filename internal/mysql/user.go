@@ -144,6 +144,7 @@ func (bcm *BookClubMysql) UserJoinClub(joinRequest *models.JoinClubRequest) (str
 	}
 
 	return id.String(), nil
+}
 
 //InsertUser inserts user to database
 func (bcm *BookClubMysql) InsertUser(user *models.ArjUser) error {
