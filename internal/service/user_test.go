@@ -57,12 +57,44 @@ func TestGetSSOTokenFail(t *testing.T) {
 
 func TestFetchUserDataFromToken(t *testing.T) {
 	ts := createTestSuite(t)
-	expectedArjAPIUserDataResponse.User = &models.ArjUser
-	expectedArjAPILoginResponse.Auth["token"] = gomock.Any().String()
+	expectedArjAPIUserDataResponse.User = models.ArjUser{GUID: "2", FullName: "Keaton"}
 
-	ts.mockRequests.EXPECT().GetLoginResponse(expectedUserLoginRequest).Return(expectedArjAPILoginResponse, nil).Times(1)
-	token, err := ts.svc.GetSSOToken(expectedUserLoginRequest)
+	ts.mockRequests.EXPECT().GetUserData("2").Return(expectedArjAPIUserDataResponse, nil).Times(1)
+	arjUser, err := ts.svc.FetchUserDataFromToken("2")
 
-	assert.NotNil(t, token)
+	assert.NotNil(t, arjUser)
 	assert.NoError(t, err)
+}
+
+func TestFetchUserDataFromTokenFail(t *testing.T) {
+	ts := createTestSuite(t)
+	expectedArjAPIUserDataResponse.User = models.ArjUser{GUID: "2", FullName: "Keaton"}
+	errorMessage := errors.New("TestFetchUserDataFromTokenFail error")
+
+	ts.mockRequests.EXPECT().GetUserData("2").Return(nil, errorMessage).Times(1)
+	arjUser, err := ts.svc.FetchUserDataFromToken("2")
+
+	assert.Empty(t, arjUser)
+	assert.Error(t, err)
+	assert.Equal(t, err.Error(), errorMessage.Error())
+}
+
+func TestDeleteUserSession(t *testing.T) {
+	ts := createTestSuite(t)
+
+	ts.mockRequests.EXPECT().EndUserSession("2").Return(nil).Times(1)
+	err := ts.svc.DeleteUserSession("2")
+
+	assert.NoError(t, err)
+}
+
+func TestDeleteUserSessionFail(t *testing.T) {
+	ts := createTestSuite(t)
+	errorMessage := errors.New("TestDeleteUserSessionFail error")
+
+	ts.mockRequests.EXPECT().EndUserSession("2").Return(errorMessage).Times(1)
+	err := ts.svc.DeleteUserSession("2")
+
+	assert.Error(t, err)
+	assert.Equal(t, err.Error(), errorMessage.Error())
 }
