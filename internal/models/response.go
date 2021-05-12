@@ -17,7 +17,7 @@ type Club struct {
 	LeaderID    string `json:"user_id" db:"leaderID"`
 	ClubName    string `json:"club_name" db:"clubName"`
 	BookID      string `json:"book_id" db:"bookID"`
-	Description string `json:"description" db:"description"`
+	Description string `json:"description" db:"bookDescription"`
 }
 
 // Book is a book data entry
