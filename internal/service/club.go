@@ -3,7 +3,6 @@ package service
 import (
 	"log"
 
-	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/bcerrors"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
 	"github.com/google/uuid"
 )
@@ -17,7 +16,6 @@ func (svc *BookClubService) UserJoinClub(joinRequest *models.JoinClubRequest) (s
 
 	id := uuid.New()
 	joinRequest.EntryID = id
-	//TODO validate user struct values exist
 
 	if err := svc.mysql.CreateUserClubMember(joinRequest); err != nil {
 		return "", err
@@ -99,12 +97,10 @@ func (svc *BookClubService) CreateClub(createRequest *models.CreateClubRequest) 
 
 	if err := svc.mysql.CreateClub(createRequest); err != nil {
 		svc.logger.Errorw(err.Error())
-		return "", bcerrors.NewError("MYSQL failed creating club", bcerrors.InternalError).
-			WithExternalMessage("could not creat club").
-			WithRootCause(err)
+		return "", err
 	}
 
-	_, err := svc.UserJoinClub(&models.JoinClubRequest{
+	_, err := svc.mysql.UserJoinClub(&models.JoinClubRequest{
 		UserID: createRequest.LeaderID,
 		ClubID: createRequest.EntryID.String(),
 	})

@@ -7,6 +7,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mocks"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/service"
 	"github.com/golang/mock/gomock"
+	"go.uber.org/zap"
 )
 
 type testSuite struct {
@@ -22,9 +23,10 @@ func createTestSuite(t *testing.T) *testSuite {
 	mockSql := mocks.NewMockMysql(mockController)
 	mockValidator := mocks.NewMockValidator(mockController)
 	mockRequests := mocks.NewMockIRequests(mockController)
-	service := service.New(mockSql, mockRequests, mockValidator)
+	mockLogger := zap.NewNop()
+	service := service.New(mockSql, mockRequests, mockValidator, mockLogger)
 
-	return &testSuite{mockMysql: mockSql, svc: service, mockController: mockController}
+	return &testSuite{mockMysql: mockSql, mockRequests: mockRequests, svc: service, mockController: mockController}
 }
 
 func TestMain(m *testing.M) {

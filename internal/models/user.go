@@ -60,6 +60,7 @@ type ArjAPIUserDataResponse struct {
 
 //Token is the sso token
 //swagger:model Token
+
 //SingleSignOn ...
 type SingleSignOn struct {
 	Token string `json:"sso_token"`

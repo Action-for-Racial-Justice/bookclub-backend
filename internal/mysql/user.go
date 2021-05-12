@@ -6,6 +6,7 @@ import (
 
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/bcerrors"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/models"
+	"github.com/google/uuid"
 )
 
 const (
@@ -127,6 +128,22 @@ func (bcm *BookClubMysql) DeleteUserClubMember(clubMember *models.LeaveClubReque
 		)
 	}
 	return nil
+}
+
+//UserJoinClub creates club member in the clubmember mysql table s
+func (bcm *BookClubMysql) UserJoinClub(joinRequest *models.JoinClubRequest) (string, error) {
+	if _, err := bcm.GetUserDataForUserID(joinRequest.UserID); err != nil {
+		return "", err
+	}
+
+	id := uuid.New()
+	joinRequest.EntryID = id
+
+	if err := bcm.CreateUserClubMember(joinRequest); err != nil {
+		return "", err
+	}
+
+	return id.String(), nil
 }
 
 //InsertUser inserts user to database

@@ -7,6 +7,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/handlers"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mocks"
 	"github.com/golang/mock/gomock"
+	"go.uber.org/zap"
 )
 
 type testSuite struct {
@@ -19,7 +20,8 @@ func createTestSuite(t *testing.T) *testSuite {
 	mockController := gomock.NewController(t)
 
 	mockSvc := mocks.NewMockService(mockController)
-	handlers, err := handlers.New(mockSvc)
+	mockLogger := zap.NewNop()
+	handlers, err := handlers.New(mockSvc, mockLogger)
 
 	if err != nil {
 		panic(err)

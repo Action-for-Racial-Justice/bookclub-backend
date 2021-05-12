@@ -180,6 +180,20 @@ func (mr *MockMysqlMockRecorder) GetUserDataForUserID(arg0 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserDataForUserID", reflect.TypeOf((*MockMysql)(nil).GetUserDataForUserID), arg0)
 }
 
+// InsertUser mocks base method.
+func (m *MockMysql) InsertUser(arg0 *models.ArjUser) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertUser", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// InsertUser indicates an expected call of InsertUser.
+func (mr *MockMysqlMockRecorder) InsertUser(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockMysql)(nil).InsertUser), arg0)
+}
+
 // IsUserClubLeader mocks base method.
 func (m *MockMysql) IsUserClubLeader(arg0 *models.LeaveClubRequest) (bool, error) {
 	m.ctrl.T.Helper()
@@ -193,4 +207,19 @@ func (m *MockMysql) IsUserClubLeader(arg0 *models.LeaveClubRequest) (bool, error
 func (mr *MockMysqlMockRecorder) IsUserClubLeader(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsUserClubLeader", reflect.TypeOf((*MockMysql)(nil).IsUserClubLeader), arg0)
+}
+
+// UserJoinClub mocks base method.
+func (m *MockMysql) UserJoinClub(arg0 *models.JoinClubRequest) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UserJoinClub", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UserJoinClub indicates an expected call of UserJoinClub.
+func (mr *MockMysqlMockRecorder) UserJoinClub(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserJoinClub", reflect.TypeOf((*MockMysql)(nil).UserJoinClub), arg0)
 }
