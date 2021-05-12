@@ -9,7 +9,7 @@ MYSQL_PORT: int = int(config("MYSQL_PORT"))
 MYSQL_DATABASE: str = config("MYSQL_DATABASE")
 MYSQL_USER: str = config("MYSQL_USER")
 MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
-SEED: bool = config("`SEED_DB`")
+SEED: bool = config("SEED_DB")
 
 if __name__ == '__main__':
     sleep(20)
