@@ -159,7 +159,7 @@ func (bcm *BookClubMysql) CreateClub(createRequest *models.CreateClubRequest) er
 	}
 	if rowsAffected == 0 {
 		return bcerrors.NewError(
-			fmt.Sprintf("club already exist: ID:%s, ClubName:%s",
+			fmt.Sprintf("club already exists or user does not exist: ID:%s, ClubName:%s",
 				createRequest.EntryID,
 				createRequest.ClubName),
 			bcerrors.InternalError,
