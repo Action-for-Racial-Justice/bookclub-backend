@@ -9,6 +9,7 @@ MYSQL_PORT: int = int(config("MYSQL_PORT"))
 MYSQL_DATABASE: str = config("MYSQL_DATABASE")
 MYSQL_USER: str = config("MYSQL_USER")
 MYSQL_PASSWORD: str = config("MYSQL_PASSWORD")
+SEED: bool = config("`SEED_DB`")
 
 if __name__ == '__main__':
     sleep(20)
@@ -22,17 +23,24 @@ if __name__ == '__main__':
 
     cur = conn.cursor()
 
-    with open("ddl.sql", "r") as fr:
-        seed_data: str = fr.read()
+    files = ['ddl.sql']
 
-        try:
-            print("seeding -> ", seed_data)
-            cur.execute(seed_data)
-            print("Cursor executed")
-            conn.commit()
-            print("Committed sql transaction")
-        
+    if SEED:
+        files.append("seed.sql")
 
-        finally:
-            cur.close()
-            conn.close()
+    for file in files:
+        with open(file, "r") as fr:
+            sql_data: str = fr.read().split(";")
+
+            for statement in sql_data:
+                if statement.replace(" ", "") == "":
+                    continue
+                print("seeding -> ", statement)
+                cur.execute(statement)
+                print("Cursor executed")
+                conn.commit()
+                print("Committed sql transaction")
+
+
+    conn.close()
+

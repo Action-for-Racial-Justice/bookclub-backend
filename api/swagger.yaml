@@ -5,19 +5,74 @@ definitions:
   Book:
     description: Book is a book data entry
     properties:
-      author:
+      address1:
         type: string
-        x-go-name: Author
-      entry_id:
+        x-go-name: Address1
+      address2:
         type: string
-        x-go-name: EntryID
-      is_active:
+        x-go-name: Address2
+      city:
+        type: string
+        x-go-name: City
+      createdAt:
+        type: string
+        x-go-name: CreatedAt
+      email:
+        type: string
+        x-go-name: Email
+      emailVerified:
         type: boolean
-        x-go-name: IsActive
-      name:
+        x-go-name: EmailVerified
+      fullName:
         type: string
-        x-go-name: Name
+        x-go-name: FullName
+      guid:
+        type: string
+        x-go-name: GUID
+      isAdmin:
+        type: boolean
+        x-go-name: IsAdmin
+      isEnvoy:
+        type: boolean
+        x-go-name: IsEnvoy
+      isFacilitator:
+        type: boolean
+        x-go-name: IsFacilitator
+      isFlagged:
+        type: boolean
+        x-go-name: IsFlagged
+      isObserver:
+        type: boolean
+        x-go-name: IsObserver
+      lastModified:
+        type: string
+        x-go-name: LastModified
+      locale:
+        type: string
+        x-go-name: Locale
+      nickname:
+        type: string
+        x-go-name: NickName
+      phone:
+        type: string
+        x-go-name: Phone
+      podRestrictLocal:
+        type: boolean
+        x-go-name: PodRestrictLocal
+      race:
+        type: string
+        x-go-name: Race
+      state:
+        type: string
+        x-go-name: State
+      timezone:
+        type: string
+        x-go-name: Timezone
+      zip:
+        type: string
+        x-go-name: ZipCode
     type: object
+    x-go-name: ArjUser
     x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
   Club:
     description: Club is a book club
@@ -45,6 +100,22 @@ definitions:
         type: array
     type: object
     x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  CreateClubRequest:
+    description: CreateClubRequest contains a timestamp and a boolean indicator
+    properties:
+      EntryID:
+        $ref: '#/definitions/UUID'
+      book_id:
+        type: string
+        x-go-name: BookID
+      club_name:
+        type: string
+        x-go-name: ClubName
+      user_id:
+        type: string
+        x-go-name: LeaderID
+    type: object
+    x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
   ErrorResponse:
     properties:
       error_slice:
@@ -66,6 +137,15 @@ definitions:
         x-go-name: Timestamp
     type: object
     x-go-package: github.com/Action-for-Racial-Justice/bookclub-backend/internal/models
+  UUID:
+    description: |-
+      A UUID is a 128 bit (16 byte) Universal Unique IDentifier as defined in RFC
+      4122.
+    items:
+      format: uint8
+      type: integer
+    type: array
+    x-go-package: github.com/google/uuid
   UserData:
     description: UserData is a user for the bookclub application
     properties:
@@ -182,8 +262,12 @@ paths:
       operationId: getUserSSOToken
       responses:
         "200":
-          description: ""
+          $ref: '#/responses/ArjUser'
         "400":
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
           description: ErrorResponse
           schema:
             $ref: '#/definitions/ErrorResponse'
@@ -213,6 +297,19 @@ paths:
           description: UserData
           schema:
             $ref: '#/definitions/UserData'
+        "400":
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - user
+  /user/session:
+    delete:
+      description: Returns Nothing
+      operationId: EndUserSession
+      responses:
+        "200":
+          description: ""
         "400":
           description: ErrorResponse
           schema:

@@ -9,6 +9,7 @@ import (
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/mysql"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/requests"
 	"github.com/Action-for-Racial-Justice/bookclub-backend/internal/validator"
+	"go.uber.org/zap"
 
 	"github.com/google/wire"
 )
@@ -17,6 +18,7 @@ import (
 type Service interface {
 	CheckHealth() *models.HealthCheck
 	CreateClub(joinRequest *models.CreateClubRequest) (string, error)
+	DeleteUserSession(string) error
 	FetchUserDataFromToken(string) (*models.ArjUser, error)
 	GetBookData(string) *models.Book
 	GetClubData(string) *models.Club
@@ -24,6 +26,7 @@ type Service interface {
 	GetSSOToken(userLoginRequest *models.UserLoginRequest) (string, error)
 	GetUserClubs(string) (*models.Clubs, error)
 	GetUserData(string) (*models.UserData, error)
+	InsertUserToDataBase(*models.ArjUser)
 	UserJoinClub(joinRequest *models.JoinClubRequest) (string, error)
 	UserLeaveClub(leaveRequest *models.LeaveClubRequest) error
 }
@@ -38,12 +41,14 @@ type BookClubService struct {
 	requests  requests.IRequests
 	validator validator.Validator
 	mysql     mysql.Mysql
+	logger    *zap.SugaredLogger
 }
 
 //New ... constructor
-func New(db mysql.Mysql, requests requests.IRequests, validator validator.Validator) *BookClubService {
+func New(db mysql.Mysql, requests requests.IRequests, validator validator.Validator, logger *zap.Logger) *BookClubService {
 	return &BookClubService{
 		mysql:     db,
+		logger:    logger.Sugar(),
 		requests:  requests,
 		validator: validator,
 	}

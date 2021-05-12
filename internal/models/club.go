@@ -17,13 +17,16 @@ type BookDataRequest struct {
 	EntryID string `json:"entry_id"`
 }
 
+// CreateClubRequest contains a timestamp and a boolean indicator
+// swagger:model CreateClubRequest
+//CreateClubRequest struct to describe current system health
 //CreateClubRequest ...
 type CreateClubRequest struct {
 	LeaderID    string    `json:"user_id" db:"leaderID"` //UserID of club creator
 	ClubName    string    `json:"club_name" db:"clubName"`
 	EntryID     uuid.UUID `db:"entryID"`
 	BookID      string    `json:"book_id" db:"bookID"`
-	Description string    `json:"description" db:"description"`
+	Description string    `json:"description" db:"bookDescription"`
 }
 
 //ClubMember ...

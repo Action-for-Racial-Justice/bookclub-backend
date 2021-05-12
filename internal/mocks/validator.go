@@ -33,6 +33,20 @@ func (m *MockValidator) EXPECT() *MockValidatorMockRecorder {
 	return m.recorder
 }
 
+// ValidateSSOToken mocks base method.
+func (m *MockValidator) ValidateSSOToken(arg0 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ValidateSSOToken", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ValidateSSOToken indicates an expected call of ValidateSSOToken.
+func (mr *MockValidatorMockRecorder) ValidateSSOToken(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateSSOToken", reflect.TypeOf((*MockValidator)(nil).ValidateSSOToken), arg0)
+}
+
 // ValidateUserID mocks base method.
 func (m *MockValidator) ValidateUserID(arg0 string) error {
 	m.ctrl.T.Helper()

@@ -24,10 +24,12 @@ type ArjAPILoginResponse struct {
 	Success bool              `json:"success"`
 }
 
+// ArjUser is the user data from the ARJ database
+// swagger:model ArjUser
 //ArjUser ...
 type ArjUser struct {
-	GUID             string `json:"guid"`
-	FullName         string `json:"fullName"`
+	GUID             string `json:"guid" db:"id"`
+	FullName         string `json:"fullName" db:"fullName"`
 	Email            string `json:"email"`
 	Locale           string `json:"locale"`
 	Timezone         string `json:"timezone"`
@@ -56,6 +58,8 @@ type ArjAPIUserDataResponse struct {
 	User    ArjUser `json:"user"`
 }
 
+//Token is the sso token
+//swagger:model Token
 //SingleSignOn ...
 type SingleSignOn struct {
 	Token string `json:"sso_token"`
